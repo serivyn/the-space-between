@@ -1059,9 +1059,14 @@ function openApp(id){
     safari:''
   })[id]||'';
 
-  render(id);
+  
+if (id !== 'instagram') {
+  document.querySelectorAll('.ig-bottom').forEach(el => el.remove());
+}
 
-  if(id==='calendar')updateCalendarDates();
+render(id);
+if(id==='calendar')updateCalendarDates();
+
 }
 
 function goHome(){if(document.getElementById("lock-screen")?.classList.contains("visible")){unlockPhone();return}view.classList.remove("open");home.style.display="flex";active="";currentInstagramProfile=""}function goBack(){if(active==='instagram'&&currentInstagramProfile){currentInstagramProfile='';instagramHome();document.getElementById('app-title').textContent='Instagram';document.getElementById('app-sub').textContent='For you';document.getElementById('back-button').textContent='Home';return}if(document.getElementById('chat')){view.classList.remove('chat-open');document.getElementById('back-button').textContent='‹ Home';render(active);document.getElementById('app-title').textContent=active==='kakao'?'Chats':'Messages';document.getElementById('app-sub').textContent=active==='kakao'?'':'iMessage'}else goHome()}function avatar(name,color){const photos={[ownerName]:"images/owner-profile.jpg",Jungwon:"images/jungwon-profile.jpg",Jake:"images/jake.jpg",Sunoo:"images/sunoo.jpg","Ni-ki":"images/niki-profile.jpg",Sunghoon:"images/sunghoon-profile.jpg",Jay:"images/jay-profile.jpg"};const url=photos[name];if(name==="ENHYPEN")return '<div class="avatar photo"><img src="images/enhypen-profile.jpg" alt="ENHYPEN" loading="lazy"></div>';if(name==="Constants")return '<div class="avatar photo group-photo" aria-label="Constants group"><img src="images/jungwon-profile.jpg" alt=""><img src="images/jay-profile.jpg" alt=""><img src="images/jake.jpg" alt=""><img src="images/sunoo.jpg" alt=""></div>';return url?'<div class="avatar photo"><img src="'+url+'" alt="'+name+'" loading="lazy"><span class="avatar-initial">'+name[0]+'</span></div>':'<div class="avatar" style="background:'+color+'">'+name+'</div>'}
