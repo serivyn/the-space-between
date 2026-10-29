@@ -1222,14 +1222,45 @@ else if(id==='x'){
 
         <div class="x-post-text">${t.text}</div>
 
-        <div class="x-actions">
-          <button><span>♡</span></button>
-          <button><span>♧</span></button>
-          <button><span>♡</span></button>
-          <button><span>▥</span></button>
-          <button><span>♧</span></button>
-          <button><span>↥</span></button>
-        </div>
+       
+<div class="x-actions">
+  <button aria-label="Reply">
+    <svg viewBox="0 0 24 24">
+      <path d="M3.5 11.5a8 8 0 0 1 8-8h1a8 8 0 0 1 8 8v1a8 8 0 0 1-8 8h-2l-5 2v-5a8 8 0 0 1-2-6z"/>
+    </svg>
+  </button>
+
+  <button aria-label="Repost">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 7h13l-3-3m3 3-3 3M17 17H4l3 3m-3-3 3-3"/>
+    </svg>
+  </button>
+
+  <button aria-label="Like">
+    <svg viewBox="0 0 24 24">
+      <path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.4a4.8 4.8 0 0 1 8.8 2.4z"/>
+    </svg>
+  </button>
+
+  <button aria-label="Views">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 20V11M10 20V4M16 20v-7M22 20V8"/>
+    </svg>
+  </button>
+
+  <button aria-label="Bookmark">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 3.5h12v17l-6-4-6 4z"/>
+    </svg>
+  </button>
+
+  <button aria-label="Share">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/>
+    </svg>
+  </button>
+</div>
+
       </div>
     </article>
   `).join('')}
