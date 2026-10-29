@@ -551,27 +551,38 @@
   z-index: 2;
 }
 
-/* Fix: Instagram owner story profile photo */
-.appview.instagram-theme .ig-home-stories .ig-story .ig-story-avatar > img.ig-story-owner-photo {
+
+/* Fix owner story photo positioning */
+.ig-home-stories .ig-story-avatar {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  isolation: isolate;
+}
+
+.ig-home-stories .ig-story-avatar > img.ig-story-owner-photo {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
   display: block !important;
-  position: absolute !important;
   width: 50px !important;
   height: 50px !important;
   min-width: 50px !important;
   min-height: 50px !important;
-  max-width: none !important;
-  max-height: none !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
   padding: 0 !important;
   margin: 0 !important;
   border: 0 !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  aspect-ratio: 1 / 1 !important;
-  inset: 50% auto auto 50% !important;
-  transform: translate(-50%, -50%) !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
+  z-index: 1;
+}
+
+.ig-home-stories .ig-story-avatar > i {
+  z-index: 2;
 }
 
 </style></head>
