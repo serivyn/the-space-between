@@ -1764,7 +1764,57 @@ const oldReceivePhotoDeletionMessageV1=window.receivePhotoDeletionMessage;
 window.receivePhotoDeletionMessage=function(name,message){oldReceivePhotoDeletionMessageV1(name,message);const path=window.storyV1PhotoEnding&&window.storyV1PhotoEnding.path;if(!path)return;try{const list=name==="Jake"?jakeDynamicMessages:name==="Jungwon"?jungwonDynamicMessages:sunooDynamicMessages;sessionStorage.setItem("phone-peek-"+name.toLowerCase()+"-chat-"+ownerName,JSON.stringify(list));localStorage.setItem(endingStorageKey,JSON.stringify({path:path,sender:name,message:message}))}catch(e){}};
 window.deleteSelectedCameraRollPhotos=function(){const selected=window.cameraRollSelection||[];if(!selected.length||window.storyV1PhotoEnding||window.storyEndingLocked)return;if(!confirm("Delete "+selected.length+" selected photo(s) from Recents?"))return;const jakeIds=["HVKECp5bgAAbQFV","HVcE8NEaoAAxHIQ"],deletedJake=selected.some(photo=>jakeIds.includes(photo)),deletedJungwon=selected.some(photo=>!jakeIds.includes(photo));if(!deletedJake&&!deletedJungwon)return;const order=(window.cameraRollOrder||[]).filter(photo=>!selected.includes(photo));window.cameraRollOrder=order;try{localStorage.setItem("cameraRollOrderV6",JSON.stringify(order))}catch(e){}window.cameraRollSelection=[];window.cameraRollSelectMode=false;const path=deletedJake&&deletedJungwon?"self":deletedJake?"jungwon":"jake",sender=path==="self"?"Sunoo":path==="jake"?"Jake":"Jungwon",message=endingMessages[path];window.storyV1PhotoEnding={path:path,sender:sender,message:message};try{localStorage.setItem(endingStorageKey,JSON.stringify(window.storyV1PhotoEnding));localStorage.removeItem(endingSeenKey)}catch(e){}window.receivePhotoDeletionMessage(sender,message);render("photos")};
 window.beginStoryMessageRead=function(name){if(window.photoDeletionStoryUnread!==name||window.storyEndingLocked)return;window.photoDeletionStoryUnread=null;window.storyEndingLocked=true;const blocker=document.createElement("div");blocker.id="story-read-lock";blocker.setAttribute("aria-label","Please stay with this message for a moment");blocker.tabIndex=0;blocker.style.cssText="position:fixed;inset:0;z-index:99999;background:transparent;cursor:wait;touch-action:none";document.body.appendChild(blocker);const stopKeys=function(event){event.preventDefault();event.stopImmediatePropagation()};window.storyEndingKeyBlocker=stopKeys;document.addEventListener("keydown",stopKeys,true);blocker.focus({preventScroll:true});window.storyEndingTimer=setTimeout(function(){window.showPersonalEnding()},10000)};
-window.showPersonalEnding=function(){document.removeEventListener("keydown",window.storyEndingKeyBlocker,true);const data=window.storyV1PhotoEnding;if(!data)return;const ending=document.createElement("main");ending.id="personal-ending";ending.setAttribute("role","dialog");ending.setAttribute("aria-label",endingTitles[data.path]||"Story ending");ending.style.cssText="position:absolute;inset:0;z-index:100000;overflow-y:auto;box-sizing:border-box;background:#f7f4ee;color:#28262a;display:flex;align-items:center;justify-content:center;padding:28px 24px;font-family:DM Sans,sans-serif;cursor:pointer";ending.innerHTML='<article style="width:min(100%,420px);margin:auto;text-align:center"><div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9d8066;font-weight:700">The Space Between</div><h1 style="font-family:Manrope,sans-serif;font-size:clamp(28px,8vw,36px);line-height:1.08;letter-spacing:-.04em;margin:14px 0 18px">'+escapeHtml(endingTitles[data.path]||"The End")+'</h1><p style="font-size:15px;line-height:1.55;color:#55515a;margin:0">'+formatChatText(data.message)+'</p><p style="margin:22px 0 0;font-size:14px;line-height:1.5;color:#80604b">And don’t forget to vote for ENHYPEN on MAMA 2026!</p></article>';document.querySelector(".screen").appendChild(ending);try{localStorage.setItem(endingSeenKey,"true")}catch(e){}};
+
+window.showPersonalEnding=function(){
+  document.removeEventListener("keydown",window.storyEndingKeyBlocker,true);
+
+  const data=window.storyV1PhotoEnding;
+  if(!data)return;
+
+  const ending=document.createElement("main");
+  ending.id="personal-ending";
+  ending.setAttribute("role","dialog");
+  ending.setAttribute("aria-label",endingTitles[data.path]||"Story ending");
+
+  ending.style.cssText="position:absolute;inset:0;z-index:100000;overflow-y:auto;box-sizing:border-box;background:#f7f4ee;color:#28262a;display:flex;align-items:center;justify-content:center;padding:28px 24px;font-family:DM Sans,sans-serif";
+
+  ending.innerHTML=
+    '<article style="width:min(100%,420px);margin:auto;text-align:center">'+
+      '<div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9d8066;font-weight:700">The Space Between</div>'+
+      '<h1 style="font-family:Manrope,sans-serif;font-size:clamp(28px,8vw,36px);line-height:1.08;letter-spacing:-.04em;margin:14px 0 18px">'+
+        escapeHtml(endingTitles[data.path]||"The End")+
+      '</h1>'+
+      '<p style="font-size:15px;line-height:1.55;color:#55515a;margin:0">'+
+        formatChatText(data.message)+
+      '</p>'+
+      '<p style="margin:22px 0;font-size:14px;line-height:1.5;color:#80604b">And don’t forget to vote for ENHYPEN on MAMA 2026!</p>'+
+      '<button id="story-replay-btn" style="border:0;border-radius:999px;background:#28262a;color:#fff;padding:14px 32px;font:600 14px DM Sans,sans-serif;cursor:pointer">Replay story ↻</button>'+
+    '</article>';
+
+  document.querySelector(".screen").appendChild(ending);
+
+  ending.querySelector("#story-replay-btn").onclick=function(){
+    if(window.storyEndingTimer)clearTimeout(window.storyEndingTimer);
+    document.removeEventListener("keydown",window.storyEndingKeyBlocker,true);
+    document.getElementById("story-read-lock")?.remove();
+    ending.remove();
+
+    window.storyV1PhotoEnding=null;
+    window.storyEndingLocked=false;
+    window.photoDeletionStoryUnread=null;
+
+    try{
+      localStorage.removeItem(endingStorageKey);
+      localStorage.removeItem(endingSeenKey);
+    }catch(e){}
+
+    location.reload();
+  };
+
+  try{
+    localStorage.setItem(endingSeenKey,"true");
+  }catch(e){}
+};
 const oldUnlockPhoneV1=window.unlockPhone;
 window.unlockPhone=function(){oldUnlockPhoneV1();if(window.storyV1PhotoEnding&&localStorage.getItem(endingSeenKey)==="true"&&!document.getElementById("personal-ending"))setTimeout(function(){window.showPersonalEnding()},80)};
 })();
