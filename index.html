@@ -1102,6 +1102,59 @@ function goHome(){if(document.getElementById("lock-screen")?.classList.contains(
 function openNote(row){const title=row.querySelector('summary b').textContent;const preview=row.querySelector('.notes-preview').textContent;const date=preview.split(String.fromCharCode(160))[0].trim()||'Notes';const content=row.querySelector('.notes-full').innerHTML;body.innerHTML='<div class=\"notes-detail-toolbar\"><button onclick=\"render(&quot;notes&quot;)\">‹ All iCloud</button><div><button aria-label=\"Share note\" onclick=\"notify(&quot;Share&quot;,&quot;Choose an app to share this note.&quot;)\">⇧</button><button aria-label=\"More options\" onclick=\"notify(&quot;Note options&quot;,&quot;Note options&quot;)\">•••</button></div></div><div class=\"notes-detail-date\">'+escapeHtml(date)+'</div><h1 class=\"notes-detail-title\">'+escapeHtml(title)+'</h1><div class=\"notes-detail-content\">'+content+'</div><footer class=\"notes-detail-bottom\"><button aria-label=\"Checklist\">☑</button><button aria-label=\"Camera\">▣</button><button aria-label=\"Markup\">ⓐ</button><button aria-label=\"New note\">▱</button></footer>'}
 function updateCalendarDates(){const now=new Date(),day=now.getDate();const iconWeekday=document.getElementById('calendar-weekday-icon'),iconDay=document.getElementById('calendar-day-icon');if(iconWeekday)iconWeekday.textContent=now.toLocaleDateString('en-US',{weekday:'short'});if(iconDay)iconDay.textContent=day;const label=document.getElementById('calendar-month-label');if(label)label.textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'});const week=document.getElementById('calendar-week');if(week){const start=new Date(now);start.setDate(now.getDate()-((now.getDay()+6)%7));week.innerHTML=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);const selected=d.toDateString()===now.toDateString();return '<span>'+d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase()+'<br><b style=\"color:'+(selected?'#f34b4b':'#222')+';font-size:14px'+(selected?';background:#fff0f0;border-radius:50%;padding:3px 5px':'')+'\">'+d.getDate()+'</b></span>'}).join('')}}
 function toggleCameraRollSelectMode(){window.cameraRollSelectMode=!window.cameraRollSelectMode;if(!window.cameraRollSelectMode)window.cameraRollSelection=[];render('photos')}function toggleSelectAllCameraRollPhotos(){const order=window.cameraRollOrder||[];const selected=window.cameraRollSelection||[];window.cameraRollSelection=selected.length===order.length?[]:order.slice();render('photos')}function toggleCameraRollSelection(photo){const order=window.cameraRollOrder||[];const jakeIds=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];const chooseJake=jakeIds.includes(photo);const group=order.filter(item=>jakeIds.includes(item)===chooseJake);const selected=window.cameraRollSelection||[];const allSelected=group.length>0&&group.every(item=>selected.includes(item));window.cameraRollSelection=allSelected?selected.filter(item=>!group.includes(item)):[...new Set([...selected,...group])];render('photos')}function showMessageBanner(name,message){const t=document.getElementById('toast');if(!t)return;t.innerHTML='<b>'+escapeHtml(name)+' · now</b>'+escapeHtml(message);t.setAttribute('role','button');t.setAttribute('tabindex','0');t.setAttribute('aria-label','Open '+name+' message');t.style.cursor='pointer';t.onclick=()=>{t.classList.remove('show');t.onclick=null;openApp('messages');setTimeout(()=>openChat('messages',name),40)};t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click()}};t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.onclick=null},6000)}function receivePhotoDeletionMessage(name,message){window.photoDeletionStoryUnread=name;const messages=name==='Jake'?jakeDynamicMessages:name==='Jungwon'?jungwonDynamicMessages:sunooDynamicMessages;messages.push(['day','JUST NOW'],['in',message]);const row=smsList.find(item=>item[0]===name);if(row){row[1]=message;row[2]='now';smsList.splice(smsList.indexOf(row),1);smsList.unshift(row)}showMessageBanner(name,message)}function deleteSelectedCameraRollPhotos(){const selected=window.cameraRollSelection||[];if(!selected.length||!confirm('Delete '+selected.length+' selected photo(s) from Recents?'))return;const deletedJake=selected.some(photo=>photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ');const deletedJungwon=selected.some(photo=>photo!=='HVKECp5bgAAbQFV'&&photo!=='HVcE8NEaoAAxHIQ');let order=(window.cameraRollOrder||[]).filter(photo=>!selected.includes(photo));window.cameraRollOrder=order;window.cameraRollSelection=[];window.cameraRollSelectMode=false;if(deletedJake&&deletedJungwon){receivePhotoDeletionMessage('Sunoo','I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?')}else if(deletedJungwon){receivePhotoDeletionMessage('Jake','Thank you for meeting up with me. That coffee felt easy in a way I didn’t expect. Maybe this is the start of something new, if you want it too.')}else if(deletedJake){receivePhotoDeletionMessage('Jungwon','Thank you for meeting with me and giving us another chance. I’ll protect the time we promised and won’t take your trust for granted.')}render('photos')}function openCameraRollPhoto(photo){if(!Array.isArray(window.cameraRollOrder)){try{window.cameraRollOrder=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'[]')}catch(e){window.cameraRollOrder=[]}}window.cameraRollIndex=Math.max(0,window.cameraRollOrder.indexOf(photo));showCameraRollPhoto()}function stepCameraRollPhoto(direction){const total=window.cameraRollOrder?.length||0;if(!total)return;window.cameraRollIndex=(window.cameraRollIndex+direction+total)%total;showCameraRollPhoto()}function showCameraRollPhoto(){const order=window.cameraRollOrder||[];const photo=order[window.cameraRollIndex];if(!photo)return;const isJake=photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ';const src='images/'+(isJake?'jake-photo-':'jungwon-photo-')+photo+'.jpeg';body.innerHTML='<div style="height:100%;min-height:100%;margin:-12px -16px -25px;background:#111;color:#fff;display:flex;flex-direction:column"><div style="display:flex;justify-content:space-between;align-items:center"><button onclick="render(\'photos\')" style="border:0;background:none;color:white;padding:18px;font:16px \'DM Sans\',sans-serif;cursor:pointer">‹ Recents</button></div><div style="position:relative;flex:1;min-height:0;display:grid;place-items:center"><img src="'+src+'" style="max-width:100%;max-height:100%;object-fit:contain"><button aria-label="Previous photo" onclick="stepCameraRollPhoto(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);border:0;border-radius:50%;width:38px;height:38px;background:#ffffffaa;color:#111;font-size:26px;cursor:pointer">‹</button><button aria-label="Next photo" onclick="stepCameraRollPhoto(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;border-radius:50%;width:38px;height:38px;background:#ffffffaa;color:#111;font-size:26px;cursor:pointer">›</button></div></div>'}
+
+function openGmailMessage(index){
+  const mail = window.gmailEmails?.[index];
+  if(!mail) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'gmail-reader';
+  overlay.style.cssText = `
+    position:absolute;
+    inset:0;
+    z-index:999;
+    background:#f6f8fc;
+    color:#202124;
+    font-family:Arial,sans-serif;
+    padding:20px 16px;
+    box-sizing:border-box;
+    overflow-y:auto;
+  `;
+
+  const close = document.createElement('button');
+  close.textContent = '← Back to inbox';
+  close.style.cssText = `
+    border:0;background:none;font-size:15px;
+    padding:10px 0 24px;color:#444;cursor:pointer;
+  `;
+  close.onclick = () => overlay.remove();
+
+  const subject = document.createElement('h2');
+  subject.textContent = mail.subject;
+  subject.style.cssText =
+    'font-size:22px;font-weight:400;line-height:1.35;margin:8px 0 22px;';
+
+  const sender = document.createElement('div');
+  sender.textContent = mail.sender;
+  sender.style.cssText = 'font-weight:bold;font-size:14px;margin-bottom:6px;';
+
+  const date = document.createElement('div');
+  date.textContent = mail.date;
+  date.style.cssText = 'font-size:12px;color:#666;margin-bottom:24px;';
+
+  const message = document.createElement('div');
+  message.textContent = mail.body || mail.preview;
+  message.style.cssText = `
+    font-size:15px;
+    line-height:1.8;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+  `;
+
+  overlay.append(close,subject,sender,date,message);
+  document.querySelector('.screen').appendChild(overlay);
+}
+
 function render(id){if(id==='kakao'||id==='messages'){view.classList.remove('chat-open');let list=id==='kakao'?kakaoList:smsList;const nav=id==='kakao'?`<div class="tabbar kakao-nav"><button onclick="notify('Friends','Your KakaoTalk friends list')"><b>♙</b>Friends</button><button class="selected" onclick="render('kakao')"><b>▤</b>Chats</button><button onclick="notify('Open Chat','Browse open chat rooms')"><b>⌕</b>Open Chat</button><button onclick="notify('Shopping','KakaoTalk Shopping')"><b>♡</b>Shopping</button><button onclick="notify('More','More KakaoTalk services')"><b>•••</b>More</button></div>`:`<div class="tabbar"><span>Chats</span><span>Friends</span><b>More</b></div>`;body.innerHTML=`<div class="search">⌕ &nbsp; Search</div>${list.map(([n,p,t,a],i)=>`<div class="row" onclick="openChat('${id}','${n}')">${avatar(n,chats[n]?.color||"#778")}<div class="rowtext"><div class="rowtop"><b>${n}</b><span class="time">${t}</span></div><div class="preview">${p}</div></div></div>`).join('')}${nav}`}
 else if(id==='instagram'){instagramHome();}
 else if(id==='photos'){let jungwonPhotos=Array.isArray(window.cameraRollOrder)?window.cameraRollOrder:null;if(!Array.isArray(jungwonPhotos)){try{jungwonPhotos=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'null')}catch(e){jungwonPhotos=null}}if(!Array.isArray(jungwonPhotos)){jungwonPhotos=['HBDLovWbQAEJHlD','HBDLoKCagAEwXKw','HBDLnG8aYAAGGlg','HBDLnG_bsAAZTQF','HBDLlfPakAAybxP','HBDLkc8awAAbUT5','HBDLkc3awAEn5Z0','HBDLjyTaMAAv8Bl','HBDLjSrbMAAVMWc','HBDLjSfbsAA5HsW','HVfbg5yaYAAevaX','arcade-extra','cap-extra'];for(let i=jungwonPhotos.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[jungwonPhotos[i],jungwonPhotos[j]]=[jungwonPhotos[j],jungwonPhotos[i]]}const jakePhotos=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];if(Math.random()<0.5)jakePhotos.reverse();jungwonPhotos.unshift(...jakePhotos);try{localStorage.setItem('cameraRollOrderV6',JSON.stringify(jungwonPhotos))}catch(e){}}window.cameraRollOrder=jungwonPhotos;window.cameraRollSelection=window.cameraRollSelection||[];window.cameraRollSelectMode=window.cameraRollSelectMode||false;body.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><div class="subtitle">Recents · '+(248+jungwonPhotos.length)+' photos</div><div style="display:flex;gap:10px">'+(window.cameraRollSelectMode?'<button onclick="toggleSelectAllCameraRollPhotos()" style="border:0;background:none;color:#087cff;font:12px \'DM Sans\',sans-serif;cursor:pointer">'+(window.cameraRollSelection.length===jungwonPhotos.length?'Deselect all':'Select all')+'</button>':'')+'<button onclick="toggleCameraRollSelectMode()" style="border:0;background:none;color:#087cff;font:12px \'DM Sans\',sans-serif;cursor:pointer">'+(window.cameraRollSelectMode?'Cancel':'Select')+'</button>'+(window.cameraRollSelection.length?'<button onclick="deleteSelectedCameraRollPhotos()" style="border:0;background:none;color:#ff3b30;font:12px \'DM Sans\',sans-serif;cursor:pointer">Delete ('+window.cameraRollSelection.length+')</button>':'')+'</div></div><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin:0 -16px">'+jungwonPhotos.map((photo,i)=>'<div style="position:relative;aspect-ratio:1;overflow:hidden;background:#eee"><img onclick="window.cameraRollSelectMode?toggleCameraRollSelection(this.dataset.photo):openCameraRollPhoto(this.dataset.photo)" data-photo="'+photo+'" src="images/'+(photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ'?'jake-photo-':'jungwon-photo-')+photo+'.jpeg" alt="Photo '+(i+1)+'" style="width:100%;height:100%;object-fit:cover;cursor:pointer">'+(window.cameraRollSelection.includes(photo)?'<span style="position:absolute;right:7px;top:7px;width:22px;height:22px;border-radius:50%;background:#087cff;color:white;border:2px solid white;display:grid;place-items:center;font-size:14px;pointer-events:none">✓</span>':'')+'</div>').join('')+'</div>'}else if(id==='notes')renderNotesHome();else if(id==='phoneapp')body.innerHTML=`<div style="display:flex;justify-content:center;position:relative;margin:3px 0 18px"><div style="background:#ededf0;border-radius:12px;padding:3px"><button onclick="filterPhoneCalls('all',this)" class="recent-filter" style="border:0;border-radius:10px;padding:7px 22px;background:white">All</button><button onclick="filterPhoneCalls('missed',this)" class="recent-filter" style="border:0;border-radius:10px;padding:7px 18px;background:transparent">Missed</button></div><button onclick="toggleRecentEdit()" id="recent-edit" style="position:absolute;right:2px;border:0;background:none;color:#087cff;font-size:14px">Edit</button></div><h1 style="font:800 32px Manrope;margin:0 0 10px;color:#111">Recents</h1><div id="recent-call-list">${[['Jungwon','Sat, Oct 10','incoming'],['Mom','Thu, Oct 8','incoming'],['Jungwon','Sun, Oct 4','incoming'],['Sunoo','Wed, Sep 30','incoming'],['Jake','Sat, Sep 26','incoming'],['Jungwon','Sat, Sep 19','incoming']].map(([n,t,type])=>`<div data-calltype="${type}" onclick="callPerson('${n.startsWith('+')?'Jungwon':n}')" style="height:62px;border-top:1px solid #ddd;display:flex;align-items:center;padding:7px 2px;gap:8px"><div style="flex:1"><div style="font-size:14px;color:${type==='missed'?'#ff3b30':'#111'}">${n}</div></div><span style="font-size:12px;color:#8e8e93">${t}</span><button onclick="event.stopPropagation();notify('Call details','${n}')" style="border:0;background:none;color:#087cff;font-size:20px">ⓘ</button></div>`).join('')}</div><div style="position:sticky;bottom:-25px;margin:12px -16px -25px;padding:10px 2px calc(12px + env(safe-area-inset-bottom));background:#fafafa;border-top:1px solid #ddd;display:flex;justify-content:space-around">${[['★','Favorites'],['◷','Recents'],['◉','Contacts'],['⠿','Keypad'],['◯','Voicemail']].map(([i,n])=>`<button onclick="phoneTab('${n}')" style="border:0;background:none;color:${n==='Recents'?'#087cff':'#929292'};font-size:10px">${i}<br>${n}</button>`).join('')}</div>`;
@@ -1473,7 +1526,7 @@ your won`,
 },
 
 ];
-
+window.gmailEmails = emails;
 
 
 body.innerHTML = `
@@ -1552,7 +1605,7 @@ padding:12px;
     ">
       ${emails.map((mail,i)=>`
         <div
-          onclick="notify('${mail.sender.replace(/'/g,"&#39;")}','${mail.subject.replace(/'/g,"&#39;")}')"
+          onclick="openGmailMessage(${i})"
           style="
             display:flex;
             gap:11px;
