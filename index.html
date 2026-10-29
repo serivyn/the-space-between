@@ -692,9 +692,13 @@
   <button class="app-icon" onclick="openApp('messages')">
     <span class="glyph messages">●</span>
   </button>
-  <button class="app-icon" onclick="openApp('photos')">
-    <span class="glyph photos"><img src="images/photos-icon.png" alt=""></span>
-  </button>
+ 
+<button class="app-icon" onclick="openApp('photos')">
+  <span class="glyph photos">
+    <img src="https://cdn.iconscout.com/icon/free/png-256/free-apple-photos-icon-svg-download-png-493155.png?f=webp" alt="Photos">
+  </span>
+</button>
+
 </div>
 </section>
 <section class="appview" id="appview"><header class="apphead"><button class="back" id="back-button" onclick="goBack()">‹ Home</button><div class="title" id="app-title"></div><div class="sub" id="app-sub"></div><div class="kakao-actions"><button aria-label="Search" onclick="notify('Search','Search your KakaoTalk chats.')">⌕</button><button aria-label="New chat" onclick="notify('New chat','Choose a friend to start a chat.')">＋</button><button aria-label="Settings" onclick="notify('Settings','KakaoTalk settings')">⚙</button></div></header><div class="appbody" id="appbody"></div><div class="home-indicator"></div></section><div class="homebar" onclick="goHome()"></div></div></div>
