@@ -1202,97 +1202,36 @@ else if(id==='x'){
         <button>ENHYPEN COMMUNITY</button>
       </nav>
 
-      <main>
-        <article class="x-post">
-          <div class="x-post-avatar">${avatar(ownerName,'#7b91ad')}</div>
-          <div class="x-post-content">
-            <div class="x-post-meta">
-              <strong>${ownerName}</strong>
-              <span>· 2m</span>
-              <span style="margin-left:auto">•••</span>
-            </div>
-            <div class="x-post-text">one more chapter, i guess.</div>
-            <div class="x-actions">
-              <button><span>♡</span></button>
-              <button><span>♧</span> 3</button>
-              <button><span>♡</span> 12</button>
-              <button><span>▥</span> 432</button>
-              <button><span>♧</span></button>
-              <button><span>↥</span></button>
-            </div>
-          </div>
-        </article>
+      
+<main class="x-feed">
+  ${[...tweets].reverse().map(t => `
+    <article class="x-post">
+      <div class="x-post-avatar">
+        ${avatar(t.character === 'Owner' ? ownerName : t.character, '#7b91ad')}
+      </div>
 
-        <article class="x-post">
-          <div class="x-post-avatar">${avatar('Jungwon','#7b91ad')}</div>
-          <div class="x-post-content">
-            <div class="x-post-meta">
-              <strong>Jungwon</strong>
-              <span class="x-verified">✓</span>
-              <span>@jungwon · 18m</span>
-              <span style="margin-left:auto">•••</span>
-            </div>
-            <div class="x-post-text">some moments are worth keeping.</div>
-            <div class="x-actions">
-              <button><span>♡</span> 4</button>
-              <button><span>♧</span> 12</button>
-              <button><span>♡</span> 128</button>
-              <button><span>▥</span> 2.4K</button>
-              <button><span>♧</span></button>
-              <button><span>↥</span></button>
-            </div>
-          </div>
-        </article>
+      <div class="x-post-content">
+        <div class="x-post-meta">
+          <strong>${t.character === 'Owner' ? ownerName : t.character}</strong>
+          ${t.character !== 'Owner' ? '<span class="x-verified">✓</span>' : ''}
+          <span>${t.handle} · ${t.date}</span>
+          <span style="margin-left:auto">•••</span>
+        </div>
 
-        <article class="x-post">
-          <div class="x-post-avatar">${avatar('Jake','#dc8f70')}</div>
-          <div class="x-post-content">
-            <div class="x-post-meta">
-              <strong>Jake</strong>
-              <span class="x-verified">✓</span>
-              <span>@jake · 34m</span>
-              <span style="margin-left:auto">•••</span>
-            </div>
-            <div class="x-post-text">bookstore runs are never just quick stops</div>
-            <div class="x-quoted">
-              <div class="x-quoted-head">
-                <strong>strawberry bread</strong>
-                <span>@shelfnotes · 1h</span>
-              </div>
-              <p>came in for one book. left with three and a coffee.</p>
-            </div>
-            <div class="x-actions">
-              <button><span>♡</span> 8</button>
-              <button><span>♧</span> 24</button>
-              <button><span>♡</span> 216</button>
-              <button><span>▥</span> 4.8K</button>
-              <button><span>♧</span></button>
-              <button><span>↥</span></button>
-            </div>
-          </div>
-        </article>
+        <div class="x-post-text">${t.text}</div>
 
-        <article class="x-post">
-          <div class="x-post-avatar">${avatar('Sunoo','#697db6')}</div>
-          <div class="x-post-content">
-            <div class="x-post-meta">
-              <strong>Sunoo</strong>
-              <span class="x-verified">✓</span>
-              <span>@sunoo · 1h</span>
-              <span style="margin-left:auto">•••</span>
-            </div>
-            <div class="x-post-text">🙃</div>
-            <div class="x-actions">
-              <button><span>♡</span> 2</button>
-              <button><span>♧</span> 6</button>
-              <button><span>♡</span> 89</button>
-              <button><span>▥</span> 1.2K</button>
-              <button><span>♧</span></button>
-              <button><span>↥</span></button>
-            </div>
-          </div>
-        </article>
-      </main>
+        <div class="x-actions">
+          <button><span>♡</span></button>
+          <button><span>♧</span></button>
+          <button><span>♡</span></button>
+          <button><span>▥</span></button>
+          <button><span>♧</span></button>
+          <button><span>↥</span></button>
+        </div>
+      </div>
+    </article>
+  `).join('')}
+</main>
 
  
       
