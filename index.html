@@ -1799,16 +1799,18 @@ window.showPersonalEnding=function(){
     document.getElementById("story-read-lock")?.remove();
     ending.remove();
 
-    window.storyV1PhotoEnding=null;
-    window.storyEndingLocked=false;
-    window.photoDeletionStoryUnread=null;
+   
+window.storyV1PhotoEnding=null;
+window.storyEndingLocked=false;
+window.photoDeletionStoryUnread=null;
 
-    try{
-      localStorage.removeItem(endingStorageKey);
-      localStorage.removeItem(endingSeenKey);
-    }catch(e){}
+try{
+  localStorage.clear();
+  sessionStorage.clear();
+}catch(e){}
 
-    location.reload();
+location.reload();
+
   };
 
   try{
