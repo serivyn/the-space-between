@@ -1103,7 +1103,19 @@ function openInstagramStory(name){
       <div style="position:absolute;top:10px;left:12px;right:12px;height:3px;background:rgba(255,255,255,.35);border-radius:5px;overflow:hidden;z-index:5;">
   <div id="ig-story-progress" style="height:100%;width:0%;background:white;border-radius:5px;"></div>
 </div>
-        <div style="font-size:23px;text-align:center;padding:28px;line-height:1.5">${s.text}</div>
+        
+${s.name==="Jungwon"
+  ? `<video
+      id="ig-story-video"
+      src="videos/jungwon_story.mp4"
+      autoplay
+      playsinline
+      muted
+      style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"
+    ></video>`
+  : `<div style="font-size:23px;text-align:center;padding:28px;line-height:1.5;position:relative;z-index:1">${s.text}</div>`
+}
+
 
         <button id="ig-story-prev" aria-label="Previous story" style="position:absolute;left:0;top:0;bottom:0;width:30%;background:transparent;border:0"></button>
         <button id="ig-story-next" aria-label="Next story" style="position:absolute;right:0;top:0;bottom:0;width:70%;background:transparent;border:0"></button>
