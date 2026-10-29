@@ -1086,9 +1086,7 @@ function openInstagramStory(name){
     const s=stories[current];
 
     viewer.innerHTML=`
-      <div style="height:4px;background:#555;margin:12px 8px 10px;border-radius:5px">
-        <div style="height:100%;width:100%;background:white;border-radius:5px"></div>
-      </div>
+      
 
       <div style="display:flex;align-items:center;gap:9px;padding:8px 12px">
         <div style="width:36px;height:36px;border-radius:50%;background:${s.color};display:grid;place-items:center;overflow:hidden">
@@ -1102,6 +1100,9 @@ function openInstagramStory(name){
       </div>
 
       <div style="flex:1;position:relative;display:grid;place-items:center;background:${s.bg};">
+      <div style="position:absolute;top:10px;left:12px;right:12px;height:3px;background:rgba(255,255,255,.35);border-radius:5px;overflow:hidden;z-index:5;">
+  <div id="ig-story-progress" style="height:100%;width:0%;background:white;border-radius:5px;"></div>
+</div>
         <div style="font-size:23px;text-align:center;padding:28px;line-height:1.5">${s.text}</div>
 
         <button id="ig-story-prev" aria-label="Previous story" style="position:absolute;left:0;top:0;bottom:0;width:30%;background:transparent;border:0"></button>
@@ -1119,10 +1120,58 @@ function openInstagramStory(name){
       if(current>0){current--;showStory();}
     };
 
-    document.getElementById("ig-story-next").onclick=()=>{
-      if(current<stories.length-1){current++;showStory();}
-      else{viewer.remove();}
-    };
+    
+    const duration = 5000;
+    const bar = document.getElementById("ig-story-progress");
+    const startedAt = performance.now();
+    let frame;
+    let closed = false;
+
+    function animate(now){
+      if(closed || !viewer.isConnected)return;
+
+      const progress = Math.min((now-startedAt)/duration*100,100);
+      bar.style.width = progress+"%";
+
+      if(progress>=100){
+        nextStory();
+        return;
+      }
+
+      frame=requestAnimationFrame(animate);
+    }
+
+    function nextStory(){
+      if(closed)return;
+      closed=true;
+      cancelAnimationFrame(frame);
+
+      if(current<stories.length-1){
+        current++;
+        showStory();
+      }else{
+        viewer.remove();
+      }
+    }
+
+    function prevStory(){
+      if(closed)return;
+      closed=true;
+      cancelAnimationFrame(frame);
+
+      if(current>0){
+        current--;
+        showStory();
+      }else{
+        showStory();
+      }
+    }
+
+    document.getElementById("ig-story-next").onclick=nextStory;
+    document.getElementById("ig-story-prev").onclick=prevStory;
+
+    frame=requestAnimationFrame(animate);
+
   }
 
   showStory();
