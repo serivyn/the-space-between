@@ -1768,6 +1768,8 @@ window.beginStoryMessageRead=function(name){if(window.photoDeletionStoryUnread!=
 window.showPersonalEnding=function(){
   document.removeEventListener("keydown",window.storyEndingKeyBlocker,true);
 
+  document.getElementById("story-read-lock")?.remove();
+
   const data=window.storyV1PhotoEnding;
   if(!data)return;
 
