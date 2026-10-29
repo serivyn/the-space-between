@@ -1088,7 +1088,7 @@ function openInstagramStory(name){
     viewer.innerHTML=`
       
 
-      <div style="display:flex;align-items:center;gap:9px;padding:8px 12px">
+       <div style="display:flex;align-items:center;gap:9px;padding:12px 12px 14px;margin-top:32px;position:relative;z-index:6;">   <div style="width:36px;height:36px;border-radius:50%;background:${s.color};display:grid;place-items:center;overflow:hidden;flex-shrink:0">     ${s.name===ownerName       ? '<img src="images/owner-profile.jpg" style="width:100%;height:100%;object-fit:cover">'       : avatar(s.name,s.color)}   </div>   <b style="font-size:13px;flex:1;min-width:0">${s.name===ownerName?"Your story":s.handle}</b>   <button onclick="document.getElementById('ig-story-viewer')?.remove()" style="background:none;border:0;color:white;font-size:26px;line-height:1;flex-shrink:0">×</button> </div>
         <div style="width:36px;height:36px;border-radius:50%;background:${s.color};display:grid;place-items:center;overflow:hidden">
           ${s.name===ownerName
             ? '<img src="images/owner-profile.jpg" style="width:100%;height:100%;object-fit:cover">'
