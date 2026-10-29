@@ -1103,57 +1103,301 @@ function openNote(row){const title=row.querySelector('summary b').textContent;co
 function updateCalendarDates(){const now=new Date(),day=now.getDate();const iconWeekday=document.getElementById('calendar-weekday-icon'),iconDay=document.getElementById('calendar-day-icon');if(iconWeekday)iconWeekday.textContent=now.toLocaleDateString('en-US',{weekday:'short'});if(iconDay)iconDay.textContent=day;const label=document.getElementById('calendar-month-label');if(label)label.textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'});const week=document.getElementById('calendar-week');if(week){const start=new Date(now);start.setDate(now.getDate()-((now.getDay()+6)%7));week.innerHTML=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);const selected=d.toDateString()===now.toDateString();return '<span>'+d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase()+'<br><b style=\"color:'+(selected?'#f34b4b':'#222')+';font-size:14px'+(selected?';background:#fff0f0;border-radius:50%;padding:3px 5px':'')+'\">'+d.getDate()+'</b></span>'}).join('')}}
 function toggleCameraRollSelectMode(){window.cameraRollSelectMode=!window.cameraRollSelectMode;if(!window.cameraRollSelectMode)window.cameraRollSelection=[];render('photos')}function toggleSelectAllCameraRollPhotos(){const order=window.cameraRollOrder||[];const selected=window.cameraRollSelection||[];window.cameraRollSelection=selected.length===order.length?[]:order.slice();render('photos')}function toggleCameraRollSelection(photo){const order=window.cameraRollOrder||[];const jakeIds=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];const chooseJake=jakeIds.includes(photo);const group=order.filter(item=>jakeIds.includes(item)===chooseJake);const selected=window.cameraRollSelection||[];const allSelected=group.length>0&&group.every(item=>selected.includes(item));window.cameraRollSelection=allSelected?selected.filter(item=>!group.includes(item)):[...new Set([...selected,...group])];render('photos')}function showMessageBanner(name,message){const t=document.getElementById('toast');if(!t)return;t.innerHTML='<b>'+escapeHtml(name)+' · now</b>'+escapeHtml(message);t.setAttribute('role','button');t.setAttribute('tabindex','0');t.setAttribute('aria-label','Open '+name+' message');t.style.cursor='pointer';t.onclick=()=>{t.classList.remove('show');t.onclick=null;openApp('messages');setTimeout(()=>openChat('messages',name),40)};t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click()}};t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.onclick=null},6000)}function receivePhotoDeletionMessage(name,message){window.photoDeletionStoryUnread=name;const messages=name==='Jake'?jakeDynamicMessages:name==='Jungwon'?jungwonDynamicMessages:sunooDynamicMessages;messages.push(['day','JUST NOW'],['in',message]);const row=smsList.find(item=>item[0]===name);if(row){row[1]=message;row[2]='now';smsList.splice(smsList.indexOf(row),1);smsList.unshift(row)}showMessageBanner(name,message)}function deleteSelectedCameraRollPhotos(){const selected=window.cameraRollSelection||[];if(!selected.length||!confirm('Delete '+selected.length+' selected photo(s) from Recents?'))return;const deletedJake=selected.some(photo=>photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ');const deletedJungwon=selected.some(photo=>photo!=='HVKECp5bgAAbQFV'&&photo!=='HVcE8NEaoAAxHIQ');let order=(window.cameraRollOrder||[]).filter(photo=>!selected.includes(photo));window.cameraRollOrder=order;window.cameraRollSelection=[];window.cameraRollSelectMode=false;if(deletedJake&&deletedJungwon){receivePhotoDeletionMessage('Sunoo','I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?')}else if(deletedJungwon){receivePhotoDeletionMessage('Jake','Thank you for meeting up with me. That coffee felt easy in a way I didn’t expect. Maybe this is the start of something new, if you want it too.')}else if(deletedJake){receivePhotoDeletionMessage('Jungwon','Thank you for meeting with me and giving us another chance. I’ll protect the time we promised and won’t take your trust for granted.')}render('photos')}function openCameraRollPhoto(photo){if(!Array.isArray(window.cameraRollOrder)){try{window.cameraRollOrder=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'[]')}catch(e){window.cameraRollOrder=[]}}window.cameraRollIndex=Math.max(0,window.cameraRollOrder.indexOf(photo));showCameraRollPhoto()}function stepCameraRollPhoto(direction){const total=window.cameraRollOrder?.length||0;if(!total)return;window.cameraRollIndex=(window.cameraRollIndex+direction+total)%total;showCameraRollPhoto()}function showCameraRollPhoto(){const order=window.cameraRollOrder||[];const photo=order[window.cameraRollIndex];if(!photo)return;const isJake=photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ';const src='images/'+(isJake?'jake-photo-':'jungwon-photo-')+photo+'.jpeg';body.innerHTML='<div style="height:100%;min-height:100%;margin:-12px -16px -25px;background:#111;color:#fff;display:flex;flex-direction:column"><div style="display:flex;justify-content:space-between;align-items:center"><button onclick="render(\'photos\')" style="border:0;background:none;color:white;padding:18px;font:16px \'DM Sans\',sans-serif;cursor:pointer">‹ Recents</button></div><div style="position:relative;flex:1;min-height:0;display:grid;place-items:center"><img src="'+src+'" style="max-width:100%;max-height:100%;object-fit:contain"><button aria-label="Previous photo" onclick="stepCameraRollPhoto(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);border:0;border-radius:50%;width:38px;height:38px;background:#ffffffaa;color:#111;font-size:26px;cursor:pointer">‹</button><button aria-label="Next photo" onclick="stepCameraRollPhoto(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;border-radius:50%;width:38px;height:38px;background:#ffffffaa;color:#111;font-size:26px;cursor:pointer">›</button></div></div>'}
 
+
 function openGmailMessage(index){
   const mail = window.gmailEmails?.[index];
   if(!mail) return;
 
-  const overlay = document.createElement('div');
-  overlay.id = 'gmail-reader';
-  overlay.style.cssText = `
+  document.getElementById('gmail-reader')?.remove();
+
+  const reader = document.createElement('div');
+  reader.id = 'gmail-reader';
+
+  reader.style.cssText = `
     position:absolute;
-    inset:0;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
     z-index:999;
-    background:#f6f8fc;
+    background:#f1f4f9;
     color:#202124;
     font-family:Arial,sans-serif;
-    padding:20px 16px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
     box-sizing:border-box;
-    overflow-y:auto;
   `;
 
-  const close = document.createElement('button');
-  close.textContent = '← Back to inbox';
-  close.style.cssText = `
-    border:0;background:none;font-size:15px;
-    padding:10px 0 24px;color:#444;cursor:pointer;
+  reader.innerHTML = `
+    <style>
+      #gmail-reader * {
+        box-sizing:border-box;
+      }
+
+      #gmail-reader button {
+        font-family:Arial,sans-serif;
+        cursor:pointer;
+      }
+
+      #gmail-reader .gr-toolbar {
+        flex:none;
+        height:62px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 14px;
+      }
+
+      #gmail-reader .gr-tools {
+        display:flex;
+        align-items:center;
+        gap:12px;
+      }
+
+      #gmail-reader .gr-icon {
+        border:0;
+        background:transparent;
+        color:#292d32;
+        font-size:24px;
+        padding:6px;
+        line-height:1;
+      }
+
+      #gmail-reader .gr-subject-row {
+        flex:none;
+        padding:10px 20px 24px;
+      }
+
+      #gmail-reader .gr-subject {
+        font-size:23px;
+        font-weight:400;
+        line-height:1.35;
+        overflow-wrap:anywhere;
+      }
+
+      #gmail-reader .gr-inbox {
+        display:inline-block;
+        vertical-align:middle;
+        background:#dce8fc;
+        color:#185abc;
+        border-radius:5px;
+        padding:5px 8px;
+        font-size:12px;
+        margin-left:5px;
+        white-space:nowrap;
+      }
+
+      #gmail-reader .gr-scroll {
+        flex:1;
+        min-height:0;
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        padding:0 0 12px;
+      }
+
+      #gmail-reader .gr-card {
+        background:#fff;
+        border-radius:28px 28px 0 0;
+        padding:25px 18px 32px;
+        min-height:100%;
+      }
+
+      #gmail-reader .gr-sender {
+        display:flex;
+        align-items:flex-start;
+        gap:12px;
+        margin-bottom:30px;
+      }
+
+      #gmail-reader .gr-avatar {
+        width:48px;
+        height:48px;
+        flex:none;
+        border-radius:50%;
+        display:grid;
+        place-items:center;
+        background:#5d6bc1;
+        color:white;
+        font-size:23px;
+      }
+
+      #gmail-reader .gr-sender-info {
+        flex:1;
+        min-width:0;
+      }
+
+      #gmail-reader .gr-sender-line {
+        display:flex;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:7px;
+        margin:3px 0 6px;
+      }
+
+      #gmail-reader .gr-sender-name {
+        font-size:15px;
+        font-weight:600;
+      }
+
+      #gmail-reader .gr-date {
+        font-size:12px;
+        color:#5f6368;
+      }
+
+      #gmail-reader .gr-recipient {
+        font-size:12px;
+        color:#5f6368;
+      }
+
+      #gmail-reader .gr-message {
+        font-size:15px;
+        line-height:1.7;
+        color:#111;
+        white-space:pre-wrap;
+        overflow-wrap:anywhere;
+      }
+
+      #gmail-reader .gr-actions {
+        flex:none;
+        display:flex;
+        align-items:center;
+        gap:7px;
+        padding:12px 14px 14px;
+        background:#f1f4f9;
+      }
+
+      #gmail-reader .gr-reply {
+        flex:1;
+        min-width:0;
+        height:52px;
+        border:1px solid #aab4c2;
+        border-radius:28px;
+        background:transparent;
+        color:#35465b;
+        font-size:14px;
+        font-weight:500;
+      }
+
+      #gmail-reader .gr-reply.primary {
+        background:#08699e;
+        border-color:#08699e;
+        color:white;
+      }
+
+      #gmail-reader .gr-react {
+        width:48px;
+        height:48px;
+        flex:none;
+        border-radius:50%;
+        border:1px solid #aab4c2;
+        background:transparent;
+        color:#35465b;
+        font-size:20px;
+      }
+    </style>
+
+    <!-- TOP TOOLBAR -->
+    <div class="gr-toolbar">
+      <button class="gr-icon" id="gr-back"
+        aria-label="Back">‹</button>
+
+      <div class="gr-tools">
+        <button class="gr-icon" data-action="Archive"
+          aria-label="Archive">▣</button>
+        <button class="gr-icon" data-action="Delete"
+          aria-label="Delete">♜</button>
+        <button class="gr-icon" data-action="Mark as unread"
+          aria-label="Mark unread">✉</button>
+        <button class="gr-icon" data-action="More options"
+          aria-label="More options">•••</button>
+      </div>
+    </div>
+
+    <!-- SUBJECT -->
+    <div class="gr-subject-row">
+      <div class="gr-subject">
+        <span id="gr-subject-text"></span>
+        <span class="gr-inbox">Inbox</span>
+      </div>
+    </div>
+
+    <!-- SCROLLABLE EMAIL -->
+    <div class="gr-scroll">
+      <div class="gr-card">
+
+        <div class="gr-sender">
+          <div class="gr-avatar" id="gr-avatar"></div>
+
+          <div class="gr-sender-info">
+            <div class="gr-sender-line">
+              <span class="gr-sender-name" id="gr-sender"></span>
+              <span class="gr-date" id="gr-date"></span>
+            </div>
+            <div class="gr-recipient">to me　⌄</div>
+          </div>
+
+          <button class="gr-icon" data-action="Reply"
+            aria-label="Reply">↶</button>
+          <button class="gr-icon" data-action="More options"
+            aria-label="More">•••</button>
+        </div>
+
+        <div class="gr-message" id="gr-message"></div>
+
+      </div>
+    </div>
+
+    <!-- BOTTOM ACTIONS -->
+    <div class="gr-actions">
+      <button class="gr-reply primary" data-action="Reply">
+        ↶　Reply
+      </button>
+      <button class="gr-reply" data-action="Forward">
+        ↗　Forward
+      </button>
+      <button class="gr-react" data-action="React"
+        aria-label="React">☻</button>
+    </div>
   `;
-  close.onclick = () => overlay.remove();
 
-  const subject = document.createElement('h2');
-  subject.textContent = mail.subject;
-  subject.style.cssText =
-    'font-size:22px;font-weight:400;line-height:1.35;margin:8px 0 22px;';
+  // Fill email information safely
+  reader.querySelector('#gr-subject-text').textContent =
+    mail.subject || '';
 
-  const sender = document.createElement('div');
-  sender.textContent = mail.sender;
-  sender.style.cssText = 'font-weight:bold;font-size:14px;margin-bottom:6px;';
+  reader.querySelector('#gr-sender').textContent =
+    mail.sender || '';
 
-  const date = document.createElement('div');
-  date.textContent = mail.date;
-  date.style.cssText = 'font-size:12px;color:#666;margin-bottom:24px;';
+  reader.querySelector('#gr-avatar').textContent =
+    mail.initial || 'J';
 
-  const message = document.createElement('div');
-  message.textContent = mail.body || mail.preview;
-  message.style.cssText = `
-    font-size:15px;
-    line-height:1.8;
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
-  `;
+  reader.querySelector('#gr-date').textContent =
+    mail.date || '';
 
-  overlay.append(close,subject,sender,date,message);
-  document.querySelector('.screen').appendChild(overlay);
+  reader.querySelector('#gr-message').textContent =
+    mail.body || mail.preview || '';
+
+  // Return to inbox
+  reader.querySelector('#gr-back').onclick = () => {
+    reader.remove();
+  };
+
+  // Action buttons
+  reader.querySelectorAll('[data-action]').forEach(button => {
+    button.onclick = () => {
+      const action = button.dataset.action;
+
+      if(action === 'Reply' || action === 'Forward'){
+        notify('Gmail',action + ' is not available yet');
+      } else {
+        notify('Gmail',action);
+      }
+    };
+  });
+
+  document.querySelector('.screen').appendChild(reader);
 }
+
 
 function render(id){if(id==='kakao'||id==='messages'){view.classList.remove('chat-open');let list=id==='kakao'?kakaoList:smsList;const nav=id==='kakao'?`<div class="tabbar kakao-nav"><button onclick="notify('Friends','Your KakaoTalk friends list')"><b>♙</b>Friends</button><button class="selected" onclick="render('kakao')"><b>▤</b>Chats</button><button onclick="notify('Open Chat','Browse open chat rooms')"><b>⌕</b>Open Chat</button><button onclick="notify('Shopping','KakaoTalk Shopping')"><b>♡</b>Shopping</button><button onclick="notify('More','More KakaoTalk services')"><b>•••</b>More</button></div>`:`<div class="tabbar"><span>Chats</span><span>Friends</span><b>More</b></div>`;body.innerHTML=`<div class="search">⌕ &nbsp; Search</div>${list.map(([n,p,t,a],i)=>`<div class="row" onclick="openChat('${id}','${n}')">${avatar(n,chats[n]?.color||"#778")}<div class="rowtext"><div class="rowtop"><b>${n}</b><span class="time">${t}</span></div><div class="preview">${p}</div></div></div>`).join('')}${nav}`}
 else if(id==='instagram'){instagramHome();}
