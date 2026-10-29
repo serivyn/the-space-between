@@ -1165,13 +1165,19 @@
 
 /* Bottom tab bar */
 
+.appview.phoneapp-theme {
+  position: relative !important;
+}
+
+
 .phoneapp-theme .ios-phone-tabs {
-  position: fixed !important;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 28px;
-  width: calc(100% - 32px);
-  max-width: 680px;
+  position: absolute !important;
+  left: 16px;
+  right: 16px;
+  bottom: 28px !important;
+  width: auto;
+  max-width: none;
+  transform: none;
   z-index: 9999;
   box-sizing: border-box;
   height: 76px;
@@ -1186,6 +1192,7 @@
   border-radius: 40px;
   box-shadow: 0 4px 24px rgba(0,0,0,.08);
 }
+
 
 
 
