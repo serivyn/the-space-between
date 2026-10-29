@@ -1168,38 +1168,42 @@
   position: absolute !important;
   left: 16px;
   right: 16px;
-  bottom: 28px;
+  bottom: 8px !important;
   z-index: 10;
-  height: 64px;
-  padding: 4px !important;
+  height: 76px;
+  padding: 5px 4px !important;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: #ffffffed;
-  backdrop-filter: blur(18px);
-  border: 1px solid #eee;
-  border-radius: 34px;
-  box-shadow: 0 3px 18px #00000012;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid #e8e8e8;
+  border-radius: 40px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
 }
+
+
 
 .phoneapp-theme .ios-phone-tabs button {
   flex: 1;
   min-width: 0;
   height: 100%;
   border: 0;
+  border-radius: 32px;
   background: transparent;
-  color: #888;
+  color: #8e8e93;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  font: 10px -apple-system, sans-serif;
+  gap: 3px;
+  font: 11px -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .phoneapp-theme .ios-phone-tabs button svg {
-  width: 24px;
-  height: 24px;
+  width: 27px;
+  height: 27px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -1207,7 +1211,9 @@
 
 .phoneapp-theme .ios-phone-tabs button.active {
   color: #087cff;
+  background: #e9e9eb;
 }
+
 
 /* Reserve space for the floating tabs */
 .phoneapp-theme .appbody {
