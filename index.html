@@ -1398,13 +1398,64 @@ else if(id==='gmail'){
   view.classList.remove('chat-open');
 
   const emails = [
-    {sender:'Indeed',subject:'Remote Digital Operations Assistant',preview:'Hi Pauline, we have an update regarding your application...',date:'12:32 AM',initial:'i',color:'#174ea6',unread:true},
-    {sender:'New Chapter Reactions',subject:'ATEEZ is 8 Years Old',preview:'Celebrate another year of music and memories...',date:'Oct 29',initial:'N',color:'#b7a1cf',unread:true},
-    {sender:'Bunpo',subject:'Your daily reminder',preview:"Time for today's Korean lesson!",date:'Oct 29',initial:'B',color:'#2eaa68',unread:true},
-    {sender:'AirAsia rewards',subject:'Ready for More with Companion Pass?',preview:"Discover what's waiting for you...",date:'Oct 29',initial:'A',color:'#e43d39',unread:false},
-    {sender:'Jake',subject:'A little update',preview:'Hey, just wanted to check in...',date:'Oct 28',initial:'J',color:'#54a79d',unread:true},
-    {sender:'Jungwon',subject:'Did you get home safely?',preview:'Just making sure you got home okay.',date:'Oct 27',initial:'J',color:'#7992bd',unread:false}
-  ];
+    
+const emails = [
+  {
+    sender:'Jungwon',
+    subject:'i wanted to tell you this properly',
+    preview:'hey love, i was going to tell you all of this when we saw each other...',
+    date:'Oct 23',
+    initial:'J',
+    color:'#7992bd',
+    unread:true
+  },
+  {
+    sender:'People & Culture',
+    subject:'Holiday schedule announcement',
+    preview:'Hi everyone, please find the upcoming holiday schedule for your reference...',
+    date:'Oct 29',
+    initial:'P',
+    color:'#527b9c',
+    unread:false
+  },
+  {
+    sender:'Travel Finds',
+    subject:'a little escape to jeju? 🍊',
+    preview:'Discover cozy stays, coastal views, and seasonal travel inspiration...',
+    date:'Oct 28',
+    initial:'T',
+    color:'#6c9b91',
+    unread:false
+  },
+  {
+    sender:'Everyday Finds',
+    subject:'your order is confirmed! #EF20481',
+    preview:'Canvas tote bag · Order confirmation and payment summary...',
+    date:'Oct 27',
+    initial:'E',
+    color:'#b99b82',
+    unread:false
+  },
+  {
+    sender:'Team Calendar',
+    subject:'Your meeting reminder',
+    preview:'Reminder: Weekly team check-in, Friday at 10:00 AM...',
+    date:'Oct 26',
+    initial:'T',
+    color:'#8b83b5',
+    unread:false
+  },
+  {
+    sender:'The Reading Room',
+    subject:'your next cozy read awaits',
+    preview:'New arrivals, weekend reading picks, and little stories worth getting lost in...',
+    date:'Oct 24',
+    initial:'R',
+    color:'#c49bba',
+    unread:false
+  }
+];
+
 
 
 body.innerHTML = `
