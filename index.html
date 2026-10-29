@@ -97,6 +97,74 @@
   margin-left: 12px;
   margin-right: 12px;
 }
+  
+/* Instagram bottom navigation: flat bar */
+.appview.instagram-theme .ig-bottom {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 20;
+  flex-shrink: 0;
+  width: 100%;
+  height: 54px;
+  min-height: 54px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  border-top: 1px solid #efefef !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  color: #111;
+}
+
+.appview.instagram-theme .ig-bottom > button {
+  flex: 1;
+  width: 20%;
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: #111;
+}
+
+.appview.instagram-theme .ig-bottom svg.ig-nav-icon {
+  display: block !important;
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px;
+  min-height: 25px;
+  font-size: initial;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.appview.instagram-theme .ig-bottom .ig-nav-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appview.instagram-theme .ig-bottom .ig-nav-profile img,
+.appview.instagram-theme .ig-bottom .ig-nav-profile svg {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
 </style></head>
 <body><main class="stage"><div class="phone" id="phone"><div class="screen"><div class="wallpaper"></div><div class="status"><span id="status-time">9:41</span><span class="right" aria-label="Cellular signal, Wi-Fi, battery"><svg class="status-signal" viewBox="0 0 18 14" aria-hidden="true"><rect x="0" y="10" width="3.2" height="4" rx=".7"/><rect x="4.7" y="7" width="3.2" height="7" rx=".7"/><rect x="9.4" y="4" width="3.2" height="10" rx=".7"/><rect x="14.1" y="0" width="3.2" height="14" rx=".7"/></svg><svg class="status-wifi" viewBox="0 0 18 16" aria-hidden="true"><path d="M1 4.5a12.6 12.6 0 0 1 16 0M4 8a8 8 0 0 1 10 0m-7 3.4a3.4 3.4 0 0 1 4 0"/><circle cx="9" cy="14" r="1"/></svg><svg class="status-battery" viewBox="0 0 28 14" aria-hidden="true"><rect x=".8" y=".8" width="23.2" height="12.4" rx="3"/><path d="M25.3 4.5h1.1a1.2 1.2 0 0 1 0 2.4h-1.1"/><rect class="status-battery-fill" x="3" y="3" width="17.5" height="7.8" rx="1.5"/></svg></span></div><div class="island"></div><div class="toast" id="toast"></div><section class="lock-screen" id="lock-screen" aria-label="Phone lock screen"><div class="lock-date" id="lock-date"></div><div class="lock-time" id="lock-time">9:41</div><div class="push-stack" id="push-stack" aria-live="polite"></div><section class="passcode-screen" id="passcode-screen" aria-label="Enter passcode"></section><button class="unlock-button" onclick="showPasscode()">Swipe up to open</button></section><section class="entry" id="entry"><div class="entry-eyebrow">A story in little pieces</div><h2>The Space<br>between</h2><p>This is your phone. Explore your messages, photos, and notes to piece together your story.</p><p class="entry-context">Caught between someone from your past who wants another chance and someone new who showed up when you needed someone.</p><label class="entry-name-label" for="visitor-name">Enter your name to make this phone yours.</label><form onsubmit="enterPhone(event)"><input id="visitor-name" placeholder="Phone owner’s name" maxlength="24" autocomplete="given-name" required><button type="submit">Set up this phone&nbsp; →</button></form><div class="entry-foot">The name stays in this browser session.</div></section>
 <section class="home" id="home"><div class="date" id="date">Tuesday, October 24</div><div class="welcome" onclick="openApp('calendar')" style="cursor:pointer"><b>Voting reminder</b><p>Voting has begun for 2026 MAMA AWARDS · ROUND 2.</p></div><div class="grid">
