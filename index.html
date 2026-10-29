@@ -358,6 +358,7 @@
 }
 
 
+
 .appview.instagram-theme .ig-home-stories .ig-story-avatar {
   width: 62px;
   height: 62px;
@@ -366,32 +367,57 @@
   max-width: 62px;
   max-height: 62px;
   flex: 0 0 62px;
-  aspect-ratio: 1 / 1;
   box-sizing: border-box;
   padding: 3px;
   border: 2px solid #d7d7d7;
   border-radius: 50%;
   position: relative;
-  overflow: hidden;
-  display: block;
+  overflow: visible;
+  display: grid;
+  place-items: center;
 }
 
 
 
 
-.appview.instagram-theme .ig-home-stories .ig-story-avatar img,
-.appview.instagram-theme .ig-home-stories .ig-story-avatar > * {
-  max-width: 100%;
-}
 
 
 
-.appview.instagram-theme .ig-home-stories .ig-story-avatar img {
+
+
+.appview.instagram-theme .ig-home-stories .ig-story-avatar > .avatar.photo {
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  flex: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.appview.instagram-theme .ig-home-stories .ig-story-avatar > .avatar.photo > img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
   object-fit: cover;
   border-radius: 50%;
 }
+
+.appview.instagram-theme .ig-home-stories .ig-story-avatar > .avatar.photo > .avatar-initial {
+  display: none;
+}
+
 
 .appview.instagram-theme .ig-home-stories .ig-story-name {
   display: block;
