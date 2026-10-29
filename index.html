@@ -700,6 +700,223 @@
   border-radius: 9px !important;
 }
 
+/* X mobile home feed */
+.appview.x-theme > .apphead {
+  display: none;
+}
+
+.appview.x-theme .appbody {
+  padding: 0;
+  background: #fff;
+  color: #0f1419;
+}
+
+.x-screen {
+  background: #fff;
+  color: #0f1419;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding-bottom: 62px;
+}
+
+.x-topbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: #ffffffed;
+}
+
+.x-topbar img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.x-logo {
+  font-size: 35px;
+  font-weight: 400;
+  color: #0f1419;
+}
+
+.x-tabs {
+  height: 57px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #eff3f4;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+
+.x-tabs button {
+  position: relative;
+  flex: 1;
+  min-width: max-content;
+  padding: 0 15px;
+  border: 0;
+  background: #fff;
+  color: #657786;
+  font: 600 13px Arial;
+}
+
+.x-tabs button.selected {
+  color: #0f1419;
+  font-weight: 700;
+}
+
+.x-tabs button.selected::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  width: 76%;
+  height: 4px;
+  border-radius: 5px;
+  background: #1d9bf0;
+}
+
+.x-post {
+  display: flex;
+  gap: 10px;
+  padding: 13px 12px 10px;
+  border-bottom: 1px solid #eff3f4;
+}
+
+.x-post-avatar {
+  flex: 0 0 42px;
+}
+
+.x-post-avatar .avatar {
+  width: 42px;
+  height: 42px;
+  font-size: 11px;
+}
+
+.x-post-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.x-post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  color: #657786;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.x-post-meta strong {
+  color: #0f1419;
+  font-size: 13px;
+}
+
+.x-verified {
+  color: #1d9bf0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.x-post-text {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 3px 0 10px;
+  overflow-wrap: anywhere;
+}
+
+.x-quoted {
+  border: 1px solid #cfd9de;
+  border-radius: 14px;
+  padding: 10px;
+  margin: 8px 0 9px;
+}
+
+.x-quoted-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #657786;
+  font-size: 11px;
+}
+
+.x-quoted-head strong {
+  color: #0f1419;
+}
+
+.x-quoted p {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 7px 0 2px;
+}
+
+.x-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  color: #657786;
+  padding-top: 2px;
+}
+
+.x-actions button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: 11px Arial;
+}
+
+.x-actions span {
+  font-size: 17px;
+}
+
+.x-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 52px;
+  background: #ffffffed;
+  border-top: 1px solid #eff3f4;
+}
+
+.x-bottom button {
+  width: 20%;
+  height: 100%;
+  background: none;
+  border: 0;
+  color: #0f1419;
+  font-size: 23px;
+}
+
+.x-compose {
+  position: fixed;
+  z-index: 6;
+  bottom: 75px;
+  right: max(22px, calc((100% - 390px) / 2 + 20px));
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: #1d9bf0;
+  color: white;
+  box-shadow: 0 3px 10px #0002;
+  font-size: 28px;
+}
+
 </style></head>
 <body><main class="stage"><div class="phone" id="phone"><div class="screen"><div class="wallpaper"></div><div class="status"><span id="status-time">9:41</span><span class="right" aria-label="Cellular signal, Wi-Fi, battery"><svg class="status-signal" viewBox="0 0 18 14" aria-hidden="true"><rect x="0" y="10" width="3.2" height="4" rx=".7"/><rect x="4.7" y="7" width="3.2" height="7" rx=".7"/><rect x="9.4" y="4" width="3.2" height="10" rx=".7"/><rect x="14.1" y="0" width="3.2" height="14" rx=".7"/></svg><svg class="status-wifi" viewBox="0 0 18 16" aria-hidden="true"><path d="M1 4.5a12.6 12.6 0 0 1 16 0M4 8a8 8 0 0 1 10 0m-7 3.4a3.4 3.4 0 0 1 4 0"/><circle cx="9" cy="14" r="1"/></svg><svg class="status-battery" viewBox="0 0 28 14" aria-hidden="true"><rect x=".8" y=".8" width="23.2" height="12.4" rx="3"/><path d="M25.3 4.5h1.1a1.2 1.2 0 0 1 0 2.4h-1.1"/><rect class="status-battery-fill" x="3" y="3" width="17.5" height="7.8" rx="1.5"/></svg></span></div><div class="island"></div><div class="toast" id="toast"></div><section class="lock-screen" id="lock-screen" aria-label="Phone lock screen"><div class="lock-date" id="lock-date"></div><div class="lock-time" id="lock-time">9:41</div><div class="push-stack" id="push-stack" aria-live="polite"></div><section class="passcode-screen" id="passcode-screen" aria-label="Enter passcode"></section><button class="unlock-button" onclick="showPasscode()">Swipe up to open</button></section><section class="entry" id="entry"><div class="entry-eyebrow">A story in little pieces</div><h2>The Space<br>between</h2><p>This is your phone. Explore your messages, photos, and notes to piece together your story.</p><p class="entry-context">Caught between someone from your past who wants another chance and someone new who showed up when you needed someone.</p><label class="entry-name-label" for="visitor-name">Enter your name to make this phone yours.</label><form onsubmit="enterPhone(event)"><input id="visitor-name" placeholder="Phone owner’s name" maxlength="24" autocomplete="given-name" required><button type="submit">Set up this phone&nbsp; →</button></form><div class="entry-foot">The name stays in this browser session.</div></section>
 <section class="home" id="home"><div class="date" id="date">Tuesday, October 24</div><div class="welcome" onclick="openApp('calendar')" style="cursor:pointer"><b>Voting reminder</b><p>Voting has begun for 2026 MAMA AWARDS · ROUND 2.</p></div>
@@ -791,7 +1008,8 @@ function openApp(id){
   view.classList.toggle('messages-theme',id==='messages');
   view.classList.toggle('instagram-theme',id==='instagram');
   view.classList.toggle('notes-theme',id==='notes');
-
+  view.classList.toggle('x-theme',id==='x');
+  
   document.getElementById('app-title').textContent=({
     kakao:'Chats',
     instagram:'Instagram',
@@ -837,41 +1055,128 @@ function render(id){if(id==='kakao'||id==='messages'){view.classList.remove('cha
 else if(id==='instagram'){instagramHome();}
 else if(id==='photos'){let jungwonPhotos=Array.isArray(window.cameraRollOrder)?window.cameraRollOrder:null;if(!Array.isArray(jungwonPhotos)){try{jungwonPhotos=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'null')}catch(e){jungwonPhotos=null}}if(!Array.isArray(jungwonPhotos)){jungwonPhotos=['HBDLovWbQAEJHlD','HBDLoKCagAEwXKw','HBDLnG8aYAAGGlg','HBDLnG_bsAAZTQF','HBDLlfPakAAybxP','HBDLkc8awAAbUT5','HBDLkc3awAEn5Z0','HBDLjyTaMAAv8Bl','HBDLjSrbMAAVMWc','HBDLjSfbsAA5HsW','HVfbg5yaYAAevaX','arcade-extra','cap-extra'];for(let i=jungwonPhotos.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[jungwonPhotos[i],jungwonPhotos[j]]=[jungwonPhotos[j],jungwonPhotos[i]]}const jakePhotos=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];if(Math.random()<0.5)jakePhotos.reverse();jungwonPhotos.unshift(...jakePhotos);try{localStorage.setItem('cameraRollOrderV6',JSON.stringify(jungwonPhotos))}catch(e){}}window.cameraRollOrder=jungwonPhotos;window.cameraRollSelection=window.cameraRollSelection||[];window.cameraRollSelectMode=window.cameraRollSelectMode||false;body.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><div class="subtitle">Recents · '+(248+jungwonPhotos.length)+' photos</div><div style="display:flex;gap:10px">'+(window.cameraRollSelectMode?'<button onclick="toggleSelectAllCameraRollPhotos()" style="border:0;background:none;color:#087cff;font:12px \'DM Sans\',sans-serif;cursor:pointer">'+(window.cameraRollSelection.length===jungwonPhotos.length?'Deselect all':'Select all')+'</button>':'')+'<button onclick="toggleCameraRollSelectMode()" style="border:0;background:none;color:#087cff;font:12px \'DM Sans\',sans-serif;cursor:pointer">'+(window.cameraRollSelectMode?'Cancel':'Select')+'</button>'+(window.cameraRollSelection.length?'<button onclick="deleteSelectedCameraRollPhotos()" style="border:0;background:none;color:#ff3b30;font:12px \'DM Sans\',sans-serif;cursor:pointer">Delete ('+window.cameraRollSelection.length+')</button>':'')+'</div></div><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin:0 -16px">'+jungwonPhotos.map((photo,i)=>'<div style="position:relative;aspect-ratio:1;overflow:hidden;background:#eee"><img onclick="window.cameraRollSelectMode?toggleCameraRollSelection(this.dataset.photo):openCameraRollPhoto(this.dataset.photo)" data-photo="'+photo+'" src="images/'+(photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ'?'jake-photo-':'jungwon-photo-')+photo+'.jpeg" alt="Photo '+(i+1)+'" style="width:100%;height:100%;object-fit:cover;cursor:pointer">'+(window.cameraRollSelection.includes(photo)?'<span style="position:absolute;right:7px;top:7px;width:22px;height:22px;border-radius:50%;background:#087cff;color:white;border:2px solid white;display:grid;place-items:center;font-size:14px;pointer-events:none">✓</span>':'')+'</div>').join('')+'</div>'}else if(id==='notes')renderNotesHome();else if(id==='phoneapp')body.innerHTML=`<div style="display:flex;justify-content:center;position:relative;margin:3px 0 18px"><div style="background:#ededf0;border-radius:12px;padding:3px"><button onclick="filterPhoneCalls('all',this)" class="recent-filter" style="border:0;border-radius:10px;padding:7px 22px;background:white">All</button><button onclick="filterPhoneCalls('missed',this)" class="recent-filter" style="border:0;border-radius:10px;padding:7px 18px;background:transparent">Missed</button></div><button onclick="toggleRecentEdit()" id="recent-edit" style="position:absolute;right:2px;border:0;background:none;color:#087cff;font-size:14px">Edit</button></div><h1 style="font:800 32px Manrope;margin:0 0 10px;color:#111">Recents</h1><div id="recent-call-list">${[['Jungwon','Sat, Oct 10','incoming'],['Mom','Thu, Oct 8','incoming'],['Jungwon','Sun, Oct 4','incoming'],['Sunoo','Wed, Sep 30','incoming'],['Jake','Sat, Sep 26','incoming'],['Jungwon','Sat, Sep 19','incoming']].map(([n,t,type])=>`<div data-calltype="${type}" onclick="callPerson('${n.startsWith('+')?'Jungwon':n}')" style="height:62px;border-top:1px solid #ddd;display:flex;align-items:center;padding:7px 2px;gap:8px"><div style="flex:1"><div style="font-size:14px;color:${type==='missed'?'#ff3b30':'#111'}">${n}</div></div><span style="font-size:12px;color:#8e8e93">${t}</span><button onclick="event.stopPropagation();notify('Call details','${n}')" style="border:0;background:none;color:#087cff;font-size:20px">ⓘ</button></div>`).join('')}</div><div style="position:sticky;bottom:-25px;margin:12px -16px -25px;padding:10px 2px calc(12px + env(safe-area-inset-bottom));background:#fafafa;border-top:1px solid #ddd;display:flex;justify-content:space-around">${[['★','Favorites'],['◷','Recents'],['◉','Contacts'],['⠿','Keypad'],['◯','Voicemail']].map(([i,n])=>`<button onclick="phoneTab('${n}')" style="border:0;background:none;color:${n==='Recents'?'#087cff':'#929292'};font-size:10px">${i}<br>${n}</button>`).join('')}</div>`;
 else if(id==='calendar')body.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 2px 16px"><div><div style="font-size:11px;color:#92929a">YOUR CALENDAR</div><h2 style="font:800 25px Manrope;margin:3px 0" id="calendar-month-label">October</h2></div><button onclick="notify('Calendar','Voting reminder saved.')" style="border:0;border-radius:50%;width:32px;height:32px;background:#f34b4b;color:white;font-size:20px">+</button></div><div id="calendar-week" style="display:flex;justify-content:space-between;text-align:center;padding:10px 4px;margin-bottom:14px;background:white;border-radius:14px;color:#777;font-size:9px"></div><div class="subtitle">UPCOMING REMINDER</div><div class="post" style="border-left:4px solid #f34b4b;padding:15px 13px"><div style="font-size:10px;color:#f34b4b;font-weight:700;letter-spacing:.08em">VOTING · ROUND 2</div><h3 style="font:700 16px Manrope;margin:8px 0">2026 MAMA AWARDS</h3><p style="font-size:12px;line-height:1.6;margin:0 0 12px">Voting has begun for 2026 MAMA AWARDS - ROUND 2.<br><br>Don&#39;t forget to vote on Mnet Plus App and on X.</p><div style="font-size:11px;color:#777">#ENHYPEN &nbsp; #2026MAMAVOTE</div><button id="vote-done" onclick="toggleVoteReminder()" style="margin-top:15px;width:100%;border:0;border-radius:10px;background:#f1f0f2;padding:10px;color:#333;font:600 11px 'DM Sans',sans-serif;cursor:pointer">○ &nbsp; Mark as done</button></div><div class="subtitle">No other events</div>`;else if(id==='camera')body.innerHTML=`<div style="height:68%;border-radius:18px;background:linear-gradient(145deg,#aab0aa,#4d5961 48%,#27303b);display:grid;place-items:center;color:#ffffffb0;font-size:12px">CAMERA · 1×</div><div style="display:flex;justify-content:space-around;align-items:center;padding:25px"><button onclick="notify('Camera','A photo of the empty passenger seat.')" style="font-size:27px;border:4px solid white;background:#333;border-radius:50%;width:58px;height:58px;color:white">●</button><span style="font-size:10px;color:#999">PHOTO</span></div>`;
-else if(id==='music')body.innerHTML='<div class="music-song-list" style="padding:0 2px">'+[["Two Fools","ENHYPEN"],["Stuck","ENHYPEN"],["Bad For You","ENHYPEN"],["Bloody Paradise","ENHYPEN"],["Checkmate","ENHYPEN"],["Highlight","ENHYPEN"],["Still Monster","ENHYPEN"],["Polaroid Love","ENHYPEN"],["Just a Little Bit","ENHYPEN"],["Bills","ENHYPEN"],["XO (Only If You Say Yes)","ENHYPEN"],["No One Noticed","The Marías"],["BIRDS OF A FEATHER","Billie Eilish"],["Sailor Song","Gigi Perez"],["back to friends","sombr"],["That's So True","Gracie Abrams"],["Messy","Lola Young"],["Die With A Smile","Lady Gaga, Bruno Mars"],["The Subway","Chappell Roan"]].map(([title,artist])=>'<div style="min-height:57px;display:flex;align-items:center;gap:11px;padding:7px 2px;border-bottom:1px solid #e9e8e6"><div aria-hidden="true" style="width:38px;height:38px;border-radius:9px;flex:none;display:grid;place-items:center;background:linear-gradient(145deg,#f0eaf4,#e7e2dc);color:#705c78;font-size:18px">♫</div><div style="min-width:0;display:flex;flex-direction:column;gap:3px"><b style="font-size:12px;color:#20212a;line-height:1.2">'+title+'</b><span style="font-size:10px;color:#86868d;line-height:1.2">'+artist+'</span></div></div>').join('')+'</div>';else if(id==='x'){
+else if(id==='music')body.innerHTML='<div class="music-song-list" style="padding:0 2px">'+[["Two Fools","ENHYPEN"],["Stuck","ENHYPEN"],["Bad For You","ENHYPEN"],["Bloody Paradise","ENHYPEN"],["Checkmate","ENHYPEN"],["Highlight","ENHYPEN"],["Still Monster","ENHYPEN"],["Polaroid Love","ENHYPEN"],["Just a Little Bit","ENHYPEN"],["Bills","ENHYPEN"],["XO (Only If You Say Yes)","ENHYPEN"],["No One Noticed","The Marías"],["BIRDS OF A FEATHER","Billie Eilish"],["Sailor Song","Gigi Perez"],["back to friends","sombr"],["That's So True","Gracie Abrams"],["Messy","Lola Young"],["Die With A Smile","Lady Gaga, Bruno Mars"],["The Subway","Chappell Roan"]].map(([title,artist])=>'<div style="min-height:57px;display:flex;align-items:center;gap:11px;padding:7px 2px;border-bottom:1px solid #e9e8e6"><div aria-hidden="true" style="width:38px;height:38px;border-radius:9px;flex:none;display:grid;place-items:center;background:linear-gradient(145deg,#f0eaf4,#e7e2dc);color:#705c78;font-size:18px">♫</div><div style="min-width:0;display:flex;flex-direction:column;gap:3px"><b style="font-size:12px;color:#20212a;line-height:1.2">'+title+'</b><span style="font-size:10px;color:#86868d;line-height:1.2">'+artist+'</span></div></div>').join('')+'</div>';
+
+else if(id==='x'){
   body.innerHTML = `
-    <div style="padding:12px 14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-        <b style="font-size:23px;">𝕏</b>
-        <b style="font-size:17px;">For you</b>
-        <span>⚙</span>
-      </div>
+    <div class="x-screen">
+      <header class="x-topbar">
+        <img src="images/owner-profile.jpg" alt="Profile">
+        <span class="x-logo">𝕏</span>
+        <span style="font-size:22px">✦</span>
+      </header>
 
-      <div style="padding:12px 0;border-bottom:1px solid #eee;">
-        <b>@${ownerName}</b>
-        <p style="margin:8px 0;font-size:14px;">one more chapter, i guess.</p>
-        <small style="color:#888;">2m</small>
-      </div>
+      <nav class="x-tabs">
+        <button class="selected">For you</button>
+        <button>Following</button>
+        <button>ENHYPEN COMMUNITY</button>
+      </nav>
 
-      <div style="padding:12px 0;border-bottom:1px solid #eee;">
-        <b>@Jungwon</b>
-        <p style="margin:8px 0;font-size:14px;">some moments are worth keeping.</p>
-        <small style="color:#888;">18m</small>
-      </div>
+      <main>
+        <article class="x-post">
+          <div class="x-post-avatar">${avatar(ownerName,'#7b91ad')}</div>
+          <div class="x-post-content">
+            <div class="x-post-meta">
+              <strong>${ownerName}</strong>
+              <span>· 2m</span>
+              <span style="margin-left:auto">•••</span>
+            </div>
+            <div class="x-post-text">one more chapter, i guess.</div>
+            <div class="x-actions">
+              <button><span>♡</span></button>
+              <button><span>♧</span> 3</button>
+              <button><span>♡</span> 12</button>
+              <button><span>▥</span> 432</button>
+              <button><span>♧</span></button>
+              <button><span>↥</span></button>
+            </div>
+          </div>
+        </article>
 
-      <div style="padding:12px 0;border-bottom:1px solid #eee;">
-        <b>@Jake</b>
-        <p style="margin:8px 0;font-size:14px;">bookstore runs are never just quick stops</p>
-        <small style="color:#888;">34m</small>
-      </div>
+        <article class="x-post">
+          <div class="x-post-avatar">${avatar('Jungwon','#7b91ad')}</div>
+          <div class="x-post-content">
+            <div class="x-post-meta">
+              <strong>Jungwon</strong>
+              <span class="x-verified">✓</span>
+              <span>@jungwon · 18m</span>
+              <span style="margin-left:auto">•••</span>
+            </div>
+            <div class="x-post-text">some moments are worth keeping.</div>
+            <div class="x-actions">
+              <button><span>♡</span> 4</button>
+              <button><span>♧</span> 12</button>
+              <button><span>♡</span> 128</button>
+              <button><span>▥</span> 2.4K</button>
+              <button><span>♧</span></button>
+              <button><span>↥</span></button>
+            </div>
+          </div>
+        </article>
 
-      <div style="padding:12px 0;border-bottom:1px solid #eee;">
-        <b>@sunoo</b>
-        <p style="margin:8px 0;font-size:14px;">🙃</p>
-        <small style="color:#888;">1h</small>
-      </div>
+        <article class="x-post">
+          <div class="x-post-avatar">${avatar('Jake','#dc8f70')}</div>
+          <div class="x-post-content">
+            <div class="x-post-meta">
+              <strong>Jake</strong>
+              <span class="x-verified">✓</span>
+              <span>@jake · 34m</span>
+              <span style="margin-left:auto">•••</span>
+            </div>
+            <div class="x-post-text">bookstore runs are never just quick stops</div>
+            <div class="x-quoted">
+              <div class="x-quoted-head">
+                <strong>strawberry bread</strong>
+                <span>@shelfnotes · 1h</span>
+              </div>
+              <p>came in for one book. left with three and a coffee.</p>
+            </div>
+            <div class="x-actions">
+              <button><span>♡</span> 8</button>
+              <button><span>♧</span> 24</button>
+              <button><span>♡</span> 216</button>
+              <button><span>▥</span> 4.8K</button>
+              <button><span>♧</span></button>
+              <button><span>↥</span></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="x-post">
+          <div class="x-post-avatar">${avatar('Sunoo','#697db6')}</div>
+          <div class="x-post-content">
+            <div class="x-post-meta">
+              <strong>Sunoo</strong>
+              <span class="x-verified">✓</span>
+              <span>@sunoo · 1h</span>
+              <span style="margin-left:auto">•••</span>
+            </div>
+            <div class="x-post-text">🙃</div>
+            <div class="x-actions">
+              <button><span>♡</span> 2</button>
+              <button><span>♧</span> 6</button>
+              <button><span>♡</span> 89</button>
+              <button><span>▥</span> 1.2K</button>
+              <button><span>♧</span></button>
+              <button><span>↥</span></button>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <button class="x-compose" aria-label="Compose post">＋</button>
+
+      <nav class="x-bottom">
+        <button aria-label="Home">⌂</button>
+        <button aria-label="Search">⌕</button>
+        <button aria-label="Explore">𝕏</button>
+        <button aria-label="Notifications">♧</button>
+        <button aria-label="Messages">✉</button>
+      </nav>
     </div>
   `;
 }
+
 else if(id==='reminders'){
   body.innerHTML = `
     <div style="padding:16px;color:#222;">
