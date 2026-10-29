@@ -1147,8 +1147,10 @@ ${s.name==="Jungwon"
     };
 
     
-    const duration = 3000;
+   
+    const imageDuration = 5000;
     const bar = document.getElementById("ig-story-progress");
+    const video = document.querySelector("#ig-story-video, #ig-story-media video");
     const startedAt = performance.now();
     let frame;
     let closed = false;
@@ -1156,10 +1158,19 @@ ${s.name==="Jungwon"
     function animate(now){
       if(closed || !viewer.isConnected)return;
 
-      const progress = Math.min((now-startedAt)/duration*100,100);
+      let progress;
+
+      if(video && Number.isFinite(video.duration) && video.duration > 0){
+        progress = Math.min(video.currentTime / video.duration * 100, 100);
+      }else if(video){
+        progress = 0;
+      }else{
+        progress = Math.min((now-startedAt)/imageDuration*100,100);
+      }
+
       bar.style.width = progress+"%";
 
-      if(progress>=100){
+      if(!video && progress>=100){
         nextStory();
         return;
       }
@@ -1191,6 +1202,10 @@ ${s.name==="Jungwon"
       }else{
         showStory();
       }
+    }
+
+    if(video){
+      video.addEventListener("ended", nextStory);
     }
 
     document.getElementById("ig-story-next").onclick=nextStory;
