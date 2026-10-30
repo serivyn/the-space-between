@@ -3767,6 +3767,62 @@ function showGmailRewardBanner(email){
   },5000);
 }
 
+function unlockStoryEmailReward(){
+  const ending=window.storyV1PhotoEnding;
+  if(!ending||ending.path==="self")return null;
+
+  if(ending.rewardEmail)return ending.rewardEmail;
+
+  const email=ending.path==="jake"?{
+    sender:"Jake",
+    subject:"about that umbrella... ☂️",
+    preview:"no rain, no forgotten umbrellas, no pretending we just happened to end up at the same place.",
+    date:"now",
+    initial:"J",
+    color:"#7992bd",
+    unread:true,
+    body:`hey, pretty girl.
+
+so... does this mean i finally get to take you on another coffee date? :)
+
+no rain, no forgotten umbrellas, no pretending we just happened to end up at the same place.
+
+just you and me.
+
+i've been thinking about us, and honestly, i'm looking forward to all the little things we haven't gotten around to yet.
+
+i want more bookstore afternoons. more coffee that gets cold because we talk too much. more of your stories, even the ones that go absolutely nowhere.
+
+and maybe, if you'll let me, a few new memories that are just ours.
+
+maybe bring your umbrella this time. then again, if you forget it, i wouldn't mind sharing mine again. :)
+
+see you soon, pretty girl.
+
+jake ☂️`
+  }:{
+    sender:"Jungwon",
+    subject:"I'm glad we still have this 🤍",
+    preview:"I've been thinking about us, and about how we got here.",
+    date:"now",
+    initial:"J",
+    color:"#7992bd",
+    unread:true,
+    body:null
+  };
+
+  ending.rewardEmail=email;
+
+  try{
+    localStorage.setItem(
+      endingStorageKey,
+      JSON.stringify(ending)
+    );
+  }catch(e){}
+
+  return email;
+}
+
   
 const now=new Date();document.getElementById('date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});function updateStatusTime(){const d=new Date(),value=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});document.getElementById('status-time').textContent=value;const lockTime=document.getElementById('lock-time');if(lockTime)lockTime.textContent=value}updateStatusTime();updateCalendarDates();setInterval(updateStatusTime,10000);
 
