@@ -1299,7 +1299,7 @@ const storyV1JungwonOptions=[["i am\ni just miss us","sometimes\nbut lately i've
 const storyV1JungwonReplies=[[ [["in","i miss us too\ni want us to find our way back"]], [["in","i'm sorry, love\ni don't want you to feel alone in this relationship"]], [["in","okay\nthank you for telling me\ni know that wasn't easy"]] ],[ [["in","i think i noticed it too\ni just kept thinking things would get easier"]], [["in","i'm sorry i made it feel that way\ni want you to be able to tell me things"]], [["in","maybe not\nmaybe it happened little by little"]] ],[ [["in","then let's try\nnot just with promises\nwith actual time for us"]], [["in","okay\ntake your time\ni won't rush you"]], [["in","maybe they won't be exactly the same\nbut i wish we could find something that works for both of us"]] ]];
 const storyV1JakeOptions=[["i think i've noticed it too","jake, i don't know what to say","i think we should be careful"],["yeah, i still want to talk to you","maybe we should take a little space","i don't know yet"],["okay\nmaybe we can talk tomorrow?","i think i need to talk to won first","i think i need some time to myself first"]];
 const storyV1JakeReplies=[[ [["in","yeah?"],["out","i guess i've been looking forward to talking to you too"],["in","i'm glad i'm not the only one\nbut i don't want that to put you in a difficult position"]], [["in","that's okay\ni didn't expect you to have an answer"],["out","i wasn't expecting this either"],["in","i know\ni'm sorry if this caught you off guard"]], [["in","yeah\nyou're right"],["out","i don't want to hurt anyone"],["in","neither do i\ni respect that"]] ],[ [["in","okay\ni'd like that too"],["in","but i don't want us to act like nothing changed either"]], [["in","if that's what you need\ni understand"],["out","i just need time to think"],["in","take your time\nyou don't have to explain yourself tonight"]], [["in","that's fair"],["in","you don't have to figure everything out right now"],["out","thank you for understanding"],["in","of course"]] ],[ [["in","tomorrow works for me"],["out","somewhere quiet?"],["in","yeah\nyou can pick the place"],["out","okay\ni'll let you know"],["in","sounds good"],["in","and hey"],["out","yeah?"],["in","thank you for being honest with me too"],["out","goodnight, jake"],["in","goodnight :)"]], [["in","yeah\ni understand"],["in","i think that's something you should do"],["out","i don't know how that conversation's going to go"],["in","you don't have to know yet"],["in","just be honest with him\nand with yourself"],["out","i'll try"],["in","okay"],["out","goodnight, jake"],["in","goodnight"]], [["in","okay\ntake all the time you need"],["out","i'm sorry"],["in","you don't have to apologize"],["in","i don't want you to feel like you owe me an answer"],["out","thank you, jake"],["in","take care of yourself, okay?"],["out","you too"],["in","goodnight"],["out","goodnight"]] ]];
-function formatChatText(text){return escapeHtml(String(text)).replace(/&amp;#39;/g,"&#39;").replace(/\n/g,"<br>")}
+function formatChatText(text){   return escapeHtml(String(text))     .replace(/&amp;#39;/g,"&#39;")     .replace(/\bOWNER\b/g,escapeHtml(String(ownerName || "Owner")))     .replace(//g,"<br>"); }escapeHtml(String(text)).replace(/&amp;#39;/g,"&#39;").replace(/\n/g,"<br>")}
 function persistStoryV1Messages(name){const messages=name==="Jungwon"?jungwonDynamicMessages:jakeDynamicMessages;try{sessionStorage.setItem("phone-peek-"+name.toLowerCase()+"-chat-"+ownerName,JSON.stringify(messages))}catch(e){}}
 function persistStoryV1Stage(name,stage){try{sessionStorage.setItem("space-between-script-"+name.toLowerCase()+"-stage-"+ownerName,String(stage))}catch(e){}}
 function addStoryV1Line(name,type,text){const messages=name==="Jungwon"?jungwonDynamicMessages:jakeDynamicMessages;messages.push([type,text]);persistStoryV1Messages(name);const chat=document.getElementById("chat"),visible=chat&&document.getElementById("app-title").textContent===name;if(visible)chat.insertAdjacentHTML("beforeend",type==="day"?'<div class="day">'+formatChatText(text)+'</div>':'<div class="bubble '+type+'">'+formatChatText(text)+'</div>');body.scrollTop=body.scrollHeight}
@@ -1323,14 +1323,14 @@ const chats={
 ['in','if we had a reality show what would it be called'],
 ['out','sunoo needs supervision'],
 ['in','and you’d be my co-host'],
-['out','absolutely not. i have a reputation HAHAHA'],
+['out','absolutely not. i have a reputation lol'],
 ['in','too late. you’re already in the pilot episode'],
-['out','i want royalties btw'],
-['in','friendship is free. no royalties'],
+['out','😅'],
+
 
 ['day','THU, OCT 8 · 5:42 PM'],
 ['in','OWNER!!'],
-['out','why are we shouting HAHAHA'],
+['out','why are we shouting hahaha'],
 ['in','sunday lunch with everyone!! finally decided na'],
 ['out','OMG finally 😭 where?'],
 ['in','still figuring that out. the important part is you have to come'],
