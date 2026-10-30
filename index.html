@@ -1628,6 +1628,12 @@ max-height: 54px !important;
 ========================================= */
   
 const home=document.getElementById('home'),view=document.getElementById('appview'),body=document.getElementById('appbody');let active='',ownerName='Maya',ownerPersonalized=false,jungTurns=0,jungDynamicMessages=[],jakeTurns=0,jakeDynamicMessages=[],sunooTurns=0,sunooDynamicMessages=[],momTurns=0,momDynamicMessages=[],constantsDynamicMessages=[],enhypenDynamicMessages=[];
+
+/* =========================================
+   2. STORY CLEANUP UTILITIES
+========================================= */  
+  
+  
 function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meeting up with me. That coffee felt easy','Thank you for meeting with me and giving us another chance.','I’m proud of you for choosing yourself.','I’m proud of you for choosing what feels right for you.'];for(let i=messages.length-1;i>=0;i--){if(messages[i]?.[0]==='in'&&prefixes.some(text=>String(messages[i][1]).startsWith(text))){messages.splice(i,1);if(messages[i-1]?.[0]==='day'&&messages[i-1][1]==='JUST NOW')messages.splice(i-1,1)}}return messages}
 let storyV1JungStage=1,storyV1JakeStage=1;
 const storyV1JungOptions=[["i am\ni just miss us","sometimes\nbut lately i've been feeling lonely","i honestly don't know anymore"],["when we started having less time together","i think i started keeping things to myself","i don't think there was one exact moment"],["i still want to try with you","i need more time to understand what i want","i don't know if things can go back to how they were"]];
