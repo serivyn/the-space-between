@@ -3165,11 +3165,19 @@ function deleteSelectedCameraRollPhotos(){
   window.cameraRollSelection=[];
   window.cameraRollSelectMode=false;
 
-  if(deletedJake&&deletedJungwon){
-    receivePhotoDeletionMessage('Sunoo','I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?');
+  
+  if (deletedJake && deletedJungwon) {
+    // Both groups deleted: Sunoo's message
+    receivePhotoDeletionMessage(
+      'Sunoo',
+      'I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?'
+    );
 
-  }else if(deletedJungwon){
-    receivePhotoDeletionMessage('Jungwon',`Hey, I've been thinking about what you told me. I won't pretend it doesn't hurt. Part of me still hoped things would turn out differently. But I know you've made your choice, and I don't want you to feel guilty.
+  } else if (deletedJungwon) {
+    // Jungwon photos only: Jungwon's goodbye
+    receivePhotoDeletionMessage(
+      'Jungwon',
+      `Hey, I've been thinking about what you told me. I won't pretend it doesn't hurt. Part of me still hoped things would turn out differently. But I know you've made your choice, and I don't want you to feel guilty.
 
 Thank you for all the little moments we had. The ordinary days, the conversations that went on longer than they should've, all the things I probably never told you I appreciated.
 
@@ -3179,13 +3187,19 @@ I hope he makes you happy. I really do.
 
 And I hope, someday, when you think of me, it doesn't hurt anymore.
 
-Take care of yourself, okay? I love you...`);
+Take care of yourself, okay? I love you...`
+    );
 
-  }else if(deletedJake){
-    receivePhotoDeletionMessage('Jungwon','Thank you for meeting with me and giving us another chance. I’ll protect the time we promised and won’t take your trust for granted.');
+  } else if (deletedJake) {
+    // Jake photos only: Jake's approved goodbye
+    receivePhotoDeletionMessage(
+      'Jake',
+      jakeGoodbyeMessage
+    );
   }
 
   render('photos');
+
 }
 function openCameraRollPhoto(photo){if(!Array.isArray(window.cameraRollOrder)){try{window.cameraRollOrder=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'[]')}catch(e){window.cameraRollOrder=[]}}window.cameraRollIndex=Math.max(0,window.cameraRollOrder.indexOf(photo));showCameraRollPhoto()}
 function stepCameraRollPhoto(direction){const total=window.cameraRollOrder?.length||0;if(!total)return;window.cameraRollIndex=(window.cameraRollIndex+direction+total)%total;showCameraRollPhoto()}
