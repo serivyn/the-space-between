@@ -1233,94 +1233,117 @@
 }
 
   
-/* Constants group iMessage styling */
+
+/* Constants group iMessage styling - FIXED */
+
 #chat:has(.group-message) {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: stretch;
+  gap: 8px;
   padding: 14px 12px 24px;
   box-sizing: border-box;
 }
 
 #chat .group-message {
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
-  gap: 8px;
-  width: 100%;
+  align-self: flex-start;
+  gap: 7px;
+  width: auto;
+  max-width: 85%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   box-sizing: border-box;
 }
 
 #chat .group-message.in {
+  align-self: flex-start;
   justify-content: flex-start;
 }
 
 #chat .group-message.out {
+  align-self: flex-end;
   justify-content: flex-end;
-}
-
-#chat .group-avatar-space {
-  width: 32px;
-  min-width: 32px;
-}
-
-#chat .group-message > .avatar {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
 }
 
 #chat .group-message-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  max-width: 78%;
+  align-items: flex-start;
+  gap: 3px;
+  width: fit-content;
+  max-width: 100%;
   min-width: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent !important;
+  box-sizing: border-box;
 }
 
 #chat .group-message.out .group-message-content {
   align-items: flex-end;
+  max-width: 100%;
 }
 
 #chat .group-sender {
-  font-size: 11px;
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
   color: #85858c;
-  padding-left: 8px;
+  padding: 0 8px;
+  margin: 0;
+}
+
+#chat .group-message .avatar,
+#chat .group-message img.avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0;
 }
 
 #chat .group-message .bubble {
-  box-sizing: border-box;
-  max-width: 100%;
+  display: block;
   width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 9px 13px;
   margin: 0 !important;
-  padding: 10px 13px;
-  border-radius: 20px;
+  border: none;
+  box-shadow: none;
+  border-radius: 19px;
   font-size: 15px;
   line-height: 1.35;
-  overflow-wrap: anywhere;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 #chat .group-message.in .bubble {
-  background: #e7e7eb;
-  color: #17171a;
-  border-bottom-left-radius: 6px;
+  background: #e7e7eb !important;
+  color: #17171a !important;
+  border-bottom-left-radius: 5px;
 }
 
 #chat .group-message.out .bubble {
-  background: #1685f8;
-  color: #fff;
-  border-bottom-right-radius: 6px;
+  background: #1685f8 !important;
+  color: #ffffff !important;
+  border-bottom-right-radius: 5px;
 }
 
 #chat .group-message.continued {
-  margin-top: -6px;
-}
-
-#chat .group-message.continued .group-message-content {
-  gap: 0;
+  margin-top: -4px;
 }
 
 #chat .group-message.continued .group-sender {
@@ -1333,6 +1356,12 @@
 
 #chat .group-message.continued.out .bubble {
   border-top-right-radius: 7px;
+}
+
+#chat .group-message .group-avatar-space {
+  width: 32px;
+  min-width: 32px;
+  flex-shrink: 0;
 }
 
 </style>
