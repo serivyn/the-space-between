@@ -3725,6 +3725,49 @@ function showEmergency(){document.getElementById('passcode-message').textContent
 function unlockPhone(){const lock=document.getElementById("lock-screen");if(!passcodeUnlocked){showPasscode();return}if(lock)lock.classList.remove("visible");passcodeUnlocked=false;enteredPasscode=""}
 function dismissVoteNotifications(){unlockPhone()}
 function notify(title,msg){const t=document.getElementById('toast');t.innerHTML=`<b>${title}</b>${msg}`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+
+function showGmailRewardBanner(email){
+  const t=document.getElementById('toast');
+  if(!t||!email)return;
+
+  t.innerHTML=`<b>Gmail · now</b>${email.sender}: ${email.subject}`;
+  t.classList.add('show');
+  t.style.cursor='pointer';
+  t.setAttribute('role','button');
+  t.setAttribute('tabindex','0');
+  t.setAttribute('aria-label','Open Gmail email from '+email.sender);
+
+  const openEmail=function(){
+    t.classList.remove('show');
+    t.onclick=null;
+    t.onkeydown=null;
+    t.style.cursor='';
+    openApp('gmail');
+    setTimeout(function(){
+      const index=(window.gmailEmails||[]).findIndex(mail=>
+        mail.subject===email.subject&&mail.sender===email.sender
+      );
+      if(index!==-1)openGmailMessage(index);
+    },100);
+  };
+
+  t.onclick=openEmail;
+  t.onkeydown=function(e){
+    if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      openEmail();
+    }
+  };
+
+  setTimeout(function(){
+    t.classList.remove('show');
+    t.onclick=null;
+    t.onkeydown=null;
+    t.style.cursor='';
+  },5000);
+}
+
+  
 const now=new Date();document.getElementById('date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});function updateStatusTime(){const d=new Date(),value=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});document.getElementById('status-time').textContent=value;const lockTime=document.getElementById('lock-time');if(lockTime)lockTime.textContent=value}updateStatusTime();updateCalendarDates();setInterval(updateStatusTime,10000);
 
 
