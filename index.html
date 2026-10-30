@@ -3190,13 +3190,18 @@ And I hope, someday, when you think of me, it doesn't hurt anymore.
 Take care of yourself, okay? I love you...`
     );
 
-  } else if (deletedJake) {
-    // Jake photos only: Jake's approved goodbye
-    receivePhotoDeletionMessage(
-      'Jake',
-      jakeGoodbyeMessage
-    );
-  }
+  
+} else if (deletedJake) {
+  receivePhotoDeletionMessage(
+    'Jake', 
+    `hey, pretty girl. funny how this all started because you forgot your umbrella. you know what's a little unfair? i met you because of that one little accident, and somehow i ended up wishing i'd met you years earlier. maybe then, things would've been a little simpler. but i guess we don't get to choose when we meet the people we end up caring about.
+i'll miss our coffees, the bookstore afternoons, and how we'd lose track of time just talking about nothing and everything.
+i won't pretend i'm not sad. i liked you more than i planned to. but you don't owe me a different answer just because i care about you.
+thank you for letting me be part of your days.
+take care, pretty girl. and bring an umbrella next time, okay? :)
+jake`);
+}
+
 
   render('photos');
 
