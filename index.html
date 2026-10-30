@@ -618,17 +618,18 @@
   isolation: isolate;
 }
 
+
 .ig-home-stories .ig-story-avatar > img.ig-story-owner-photo {
   position: relative !important;
   inset: auto !important;
   transform: none !important;
   display: block !important;
-  width: 50px !important;
-  height: 50px !important;
-  min-width: 50px !important;
-  min-height: 50px !important;
-  max-width: 50px !important;
-  max-height: 50px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
   object-fit: cover !important;
   object-position: center !important;
   border-radius: 50% !important;
@@ -638,6 +639,7 @@
   box-sizing: border-box !important;
   z-index: 1;
 }
+
 
 .ig-home-stories .ig-story-avatar > i {
   z-index: 2;
@@ -1493,6 +1495,29 @@
 .appview.instagram-theme .ig-home-stories .ig-story-avatar > img.ig-story-owner-photo {
   border: 2px solid #fff !important;
   border-radius: 50% !important;
+}
+
+/* FIX OWNER STORY ADD (+) BADGE */
+.appview.instagram-theme .ig-home-stories .ig-your-story .ig-story-avatar > i {
+  position: absolute !important;
+  right: -2px !important;
+  bottom: -2px !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  z-index: 5 !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #0095f6 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
 }
 
 </style>
