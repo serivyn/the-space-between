@@ -2681,6 +2681,10 @@ function toggleCameraRollSelection(photo){const order=window.cameraRollOrder||[]
   
 function showMessageBanner(name,message){const t=document.getElementById('toast');if(!t)return;t.innerHTML='<b>'+escapeHtml(name)+' · now</b>'+escapeHtml(message);t.setAttribute('role','button');t.setAttribute('tabindex','0');t.setAttribute('aria-label','Open '+name+' message');t.style.cursor='pointer';t.onclick=()=>{t.classList.remove('show');t.onclick=null;openApp('messages');setTimeout(()=>openChat('messages',name,true),40)};t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click()}};t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.onclick=null},6000)}
 
+/* =========================================
+   16. CAMERA ROLL STORY MESSAGES
+========================================= */
+
 function receivePhotoDeletionMessage(name,message){
   window.photoDeletionStoryUnread=name;
 
