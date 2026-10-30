@@ -1657,6 +1657,11 @@ function addStoryV1Line(name,type,text){  const messages=name==="Jungwon"?jungwo
 function playStoryV1Lines(name,lines,done){const panel=document.getElementById(name==="Jung"?"jung-choice-list":"jake-choice-list");if(panel)panel.innerHTML='<div class="day">'+name+' is typing…</div>';let index=0;function step(){if(index>=lines.length){if(done)done();return}const line=lines[index++];setTimeout(()=>{addStoryV1Line(name,line[0],line[1]);step()},220)}step()}
 
 
+/* =========================================
+   5. STORY CHOICE HANDLERS
+========================================= */
+
+
 function updateJungChoicePanel(){const panel=document.getElementById("jung-choice-list");if(!panel)return;if(storyV1JungStage>3){panel.remove();return}panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+storyV1JungOptions[storyV1JungwonStage-1].map((text,index)=>'<button type="button" onclick="chooseJungwonReply('+index+')">'+formatChatText(text)+'</button>').join("")}
 function chooseJungwonReply(index){if(window.storyEndingLocked||storyV1JungwonStage<1||storyV1JungwonStage>3)return;const stage=storyV1JungwonStage,choice=storyV1JungwonOptions[stage-1][index];if(!choice)return;addStoryV1Line("Jungwon","out",choice);let lines=storyV1JungwonReplies[stage-1][index].slice();if(stage===1)lines.push(["in","when do you think things started feeling different?"]);if(stage===2)lines.push(["in","i don't want you to feel like you owe me a future because of our past"],["in","i love you\nbut i want you to be honest with yourself too"]);if(stage===3)lines.push(["in","whatever happens\ni want us to be honest with each other"],["out","i want that too"],["in","goodnight, love ❤️"],["out","goodnight, won ❤️"]);playStoryV1Lines("Jungwon",lines,()=>{storyV1JungwonStage=stage+1;persistStoryV1Stage("Jungwon",storyV1JungwonStage);if(stage<3)updateJungwonChoicePanel();else{const panel=document.getElementById("jungwon-choice-list");if(panel)panel.remove()}})}
 
