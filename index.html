@@ -3760,10 +3760,7 @@ function beginStoryMessageRead(name){
   const data=window.storyV1PhotoEnding;
   if(!data)return;
 
-  if(data.path!=="self"){
-    window.photoDeletionStoryUnread=null;
-    return;
-  }
+
 
   window.photoDeletionStoryUnread=null;
   window.storyEndingLocked=true;
