@@ -3851,6 +3851,8 @@ else if(id==='safari'){
   `;
 }
 }
+
+// SOCIAL MEDIA POST COMPONENT
 function post(name,user,type,caption,likes){return `<div class="post"><div class="posthead">${avatar(name[0],name==='Jungwon'?'#6176a8':'#dc8f70')}<div>${user}<div class="time">${name==='Jungwon'?'2 hours ago':'Yesterday'}</div></div></div><div class="postphoto ${type}">MEMORY</div><div class="likes">♡ ${likes} likes</div><p>${caption}</p><div class="time">View all 12 comments</div></div>`}
 
 function beginStoryMessageRead(name){
