@@ -1636,7 +1636,31 @@ const home=document.getElementById('home'),view=document.getElementById('appview
 ========================================= */  
   
   
-function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meeting up with me. That coffee felt easy','Thank you for meeting with me and giving us another chance.','I’m proud of you for choosing yourself.','I’m proud of you for choosing what feels right for you.'];for(let i=messages.length-1;i>=0;i--){if(messages[i]?.[0]==='in'&&prefixes.some(text=>String(messages[i][1]).startsWith(text))){messages.splice(i,1);if(messages[i-1]?.[0]==='day'&&messages[i-1][1]==='JUST NOW')messages.splice(i-1,1)}}return messages}
+
+function removePhotoDeletionEnding(messages){
+  const prefixes=[
+    'Thank you for meeting up with me. That coffee felt easy',
+    'Thank you for meeting with me and giving us another chance.',
+    'I’m proud of you for choosing yourself.',
+    'I’m proud of you for choosing what feels right for you.',
+    "Hey, I've been thinking about what you told me.",
+    "I'll always be glad it was you.",
+    'hey, funny how this all started because you forgot your umbrella.'
+  ];
+
+  for(let i=messages.length-1;i>=0;i--){
+    if(messages[i]?.[0]==='in'&&
+      prefixes.some(text=>String(messages[i][1]).startsWith(text))){
+      messages.splice(i,1);
+
+      if(messages[i-1]?.[0]==='day'&&messages[i-1][1]==='JUST NOW'){
+        messages.splice(i-1,1);
+      }
+    }
+  }
+
+  return messages;
+}
 
 /* =========================================
    3. STORY STATE & LOGIC
