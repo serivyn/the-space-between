@@ -1643,8 +1643,28 @@ function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meet
 ========================================= */
   
 let storyV1JungStage=1,storyV1JakeStage=1;
-const storyV1JungOptions=[["i am\ni just miss us","sometimes\nbut lately i've been feeling lonely","i honestly don't know anymore"],["when we started having less time together","i think i started keeping things to myself","i don't think there was one exact moment"],["i still want to try with you","i need more time to understand what i want","i don't know if things can go back to how they were"]];
-const storyV1JungReplies=[[ [["in","i miss us too\ni want us to find our way back"]], [["in","i'm sorry, love\ni don't want you to feel alone in this relationship"]], [["in","okay\nthank you for telling me\ni know that wasn't easy"]] ],[ [["in","i think i noticed it too\ni just kept thinking things would get easier"]], [["in","i'm sorry i made it feel that way\ni want you to be able to tell me things"]], [["in","maybe not\nmaybe it happened little by little"]] ],[ [["in","then let's try\nnot just with promises\nwith actual time for us"]], [["in","okay\ntake your time\ni 't rush you"]], [["in","maybe they 't be exactly the same\nbut i wish we could find something that works for both of us"]] ]];
+const storyV1JungOptions=[
+  ["i am, won. i just miss us.","i don't know anymore, won."]];
+const storyV1JungReplies=[
+[
+  [
+    ["in","i miss us too, love."],
+    ["in","i don't want you to keep feeling this way."],
+    ["out","i know"],
+    ["out","i just wish things could be different"],
+    ["in","then let's try to find our way back to us, love."],
+    ["in","i don't want to lose what we have. ❤️"]
+  ],
+  [
+    ["in","is it because you've been unhappy with me?"],
+    ["in","you can be honest with me, love."],
+    ["out","i don't want to hurt you, won"],
+    ["out","but i don't want to keep hurting like this either"],
+    ["in","i hear you, love."],
+    ["in","i don't want loving me to feel this hard for you."]
+  ]
+]
+];
 const storyV1JakeOptions=[["i think i've noticed it too","jake, i don't know what to say","i think we should be careful"],["yeah, i still want to talk to you","maybe we should take a little space","i don't know yet"],["okay\nmaybe we can talk tomorrow?","i think i need to talk to  first","i think i need some time to myself first"]];
 const storyV1JakeReplies=[[ [["in","yeah?"],["out","i guess i've been looking forward to talking to you too"],["in","i'm glad i'm not the only one\nbut i don't want that to put you in a difficult position"]], [["in","that's okay\ni didn't expect you to have an answer"],["out","i wasn't expecting this either"],["in","i know\ni'm sorry if this caught you off guard"]], [["in","yeah\nyou're right"],["out","i don't want to hurt anyone"],["in","neither do i\ni respect that"]] ],[ [["in","okay\ni'd like that too"],["in","but i don't want us to act like nothing changed either"]], [["in","if that's what you need\ni understand"],["out","i just need time to think"],["in","take your time\nyou don't have to explain yourself tonight"]], [["in","that's fair"],["in","you don't have to figure everything out right now"],["out","thank you for understanding"],["in","of course"]] ],[ [["in","tomorrow works for me"],["out","somewhere quiet?"],["in","yeah\nyou can pick the place"],["out","okay\ni'll let you know"],["in","sounds good"],["in","and hey"],["out","yeah?"],["in","thank you for being honest with me too"],["out","goodnight, jake"],["in","goodnight :)"]], [["in","yeah\ni understand"],["in","i think that's something you should do"],["out","i don't know how that conversation's going to go"],["in","you don't have to know yet"],["in","just be honest with him\nand with yourself"],["out","i'll try"],["in","okay"],["out","goodnight, jake"],["in","goodnight"]], [["in","okay\ntake all the time you need"],["out","i'm sorry"],["in","you don't have to apologize"],["in","i don't want you to feel like you owe me an answer"],["out","thank you, jake"],["in","take care of yourself, okay?"],["out","you too"],["in","goodnight"],["out","goodnight"]] ]];
 
