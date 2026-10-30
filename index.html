@@ -2664,6 +2664,12 @@ function openNote(row){const title=row.querySelector('summary b').textContent;co
 ========================================= */
   
 function updateCalendarDates(){const now=new Date(),day=now.getDate();const iconWeekday=document.getElementById('calendar-weekday-icon'),iconDay=document.getElementById('calendar-day-icon');if(iconWeekday)iconWeekday.textContent=now.toLocaleDateString('en-US',{weekday:'short'});if(iconDay)iconDay.textContent=day;const label=document.getElementById('calendar-month-label');if(label)label.textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'});const week=document.getElementById('calendar-week');if(week){const start=new Date(now);start.setDate(now.getDate()-((now.getDay()+6)%7));week.innerHTML=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);const selected=d.toDateString()===now.toDateString();return '<span>'+d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase()+'<br><b style=\"color:'+(selected?'#f34b4b':'#222')+';font-size:14px'+(selected?';background:#fff0f0;border-radius:50%;padding:3px 5px':'')+'\">'+d.getDate()+'</b></span>'}).join('')}}
+
+
+/* =========================================
+   14. CAMERA ROLL & PHOTO SELECTION
+========================================= */
+  
 function toggleCameraRollSelectMode(){window.cameraRollSelectMode=!window.cameraRollSelectMode;if(!window.cameraRollSelectMode)window.cameraRollSelection=[];render('photos')}
 function toggleSelectAllCameraRollPhotos(){const order=window.cameraRollOrder||[];const selected=window.cameraRollSelection||[];window.cameraRollSelection=selected.length===order.length?[]:order.slice();render('photos')}
 function toggleCameraRollSelection(photo){const order=window.cameraRollOrder||[];const jakeIds=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];const chooseJake=jakeIds.includes(photo);const group=order.filter(item=>jakeIds.includes(item)===chooseJake);const selected=window.cameraRollSelection||[];const allSelected=group.length>0&&group.every(item=>selected.includes(item));window.cameraRollSelection=allSelected?selected.filter(item=>!group.includes(item)):[...new Set([...selected,...group])];render('photos')}
