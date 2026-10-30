@@ -3892,6 +3892,8 @@ function callPerson(n){body.innerHTML=`<div class="callcard">${avatar(n,chats[n]
 // ENHYPEN VOTING NOTIFICATIONS
 function showVoteNotifications(){const lock=document.getElementById("lock-screen"),stack=document.getElementById("push-stack");lock.classList.add("visible");document.getElementById("lock-date").textContent=document.getElementById("date").textContent;document.getElementById("lock-time").textContent=document.getElementById("status-time").textContent;stack.innerHTML="";const notes=["ENGENE!!!!!!!","Vote for Enhypen on Mnet Plus App!!","FAN'S CHOICE (Male)","FAN'S CHOICE OF THE YEAR with VISA","Thank you!"];notes.forEach((message,index)=>setTimeout(()=>{stack.insertAdjacentHTML("beforeend",`<div class="push-card"><span class="push-app-icon"><img src="images/enhypen-profile.jpg" alt="ENHYPEN"></span><span class="push-copy"><b>ENHYPEN <small>${index===0?"now":"just now"}</small></b><span>${message}</span></span></div>`)},650+index*1350))}
 let enteredPasscode="",passcodeUnlocked=false;
+
+// LOCK SCREEN & PASSCODE
 function showPasscode(){
 const lock=document.getElementById("lock-screen"),panel=document.getElementById("passcode-screen");
 if(!lock||!panel)return;
