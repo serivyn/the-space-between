@@ -1652,10 +1652,32 @@ let storyV1JungStage=1,storyV1JakeStage=1;
 
 // JUNGWON OPTIONS
 
+
+ // JUNGWON STORY STATE
+
+let storyV1JungStage = 1;
+let storyV1JungBranch = null;
+
+
+// JUNGWON OPTIONS
+
 const storyV1JungOptions = [
+  // FIRST CHOICE
   [
     "i am, won. i just miss us.",
     "i don't know anymore, won."
+  ],
+
+  // SECOND CHOICE: BRANCH 1 (FIRST OPTION)
+  [
+    "i want us to find our way back to each other, won.",
+    "i don't know if things can go back to how they were."
+  ],
+
+  // SECOND CHOICE: BRANCH 2 (SECOND OPTION)
+  [
+    "i'm still willing to work things out with you, won.",
+    "i don't think i can keep pretending i'm happy."
   ]
 ];
 
@@ -1663,25 +1685,54 @@ const storyV1JungOptions = [
 // JUNGWON REPLIES
 
 const storyV1JungReplies = [
+  // FIRST CHOICE REPLIES
   [
     // OPTION 1
     [
       ["in", "I miss us too, love."],
-      ["in", "I don't want you to keep feeling this way."],
-      ["out", "i know"],
-      ["out", "i just wish things could be different"],
-      ["in", "Then let's try to find our way back to us, love."],
-      ["in", "I don't want to lose what we have. ❤️"]
+      ["in", "I don't want you to keep feeling this way."]
     ],
 
     // OPTION 2
     [
       ["in", "Is it because you've been unhappy with me?"],
-      ["in", "You can be honest with me, love."],
-      ["out", "i don't want to hurt you, won"],
-      ["out", "but i don't want to keep hurting like this either"],
-      ["in", "I hear you, love."],
-      ["in", "I don't want loving me to feel this hard for you."]
+      ["in", "You can be honest with me, love."]
+    ]
+  ],
+
+  // SECOND CHOICE REPLIES
+  [
+    // POSITIVE RESPONSE (OPTIONS 1 AND 3)
+    [
+      [
+        ["in", "Then let's take our time, love."],
+        ["in", "We don't have to figure everything out tonight."],
+        ["in", "I just want us to keep choosing each other, one day at a time. ❤️"]
+      ],
+
+      // NEGATIVE RESPONSE (OPTION 2)
+      [
+        ["in", "I understand, love."],
+        ["in", "I wish things were different too, but I don't want you to force yourself to stay just because of me."],
+        ["in", "Whatever happens, I want you to be honest with me. ❤️"]
+      ]
+    ],
+
+    // SECOND BRANCH: OPTIONS 3 AND 4
+    [
+      // POSITIVE RESPONSE (OPTION 3)
+      [
+        ["in", "Then let's take our time, love."],
+        ["in", "We don't have to figure everything out tonight."],
+        ["in", "I just want us to keep choosing each other, one day at a time. ❤️"]
+      ],
+
+      // NEGATIVE RESPONSE (OPTION 4)
+      [
+        ["in", "I understand, love."],
+        ["in", "I wish things were different too, but I don't want you to force yourself to stay just because of me."],
+        ["in", "Whatever happens, I want you to be honest with me. ❤️"]
+      ]
     ]
   ]
 ];
@@ -1693,15 +1744,24 @@ function updateJungwonChoicePanel(){
   const panel = document.getElementById("jungwon-choice-list");
   if(!panel) return;
 
-  // Only one decision stage
-  if(storyV1JungStage !== 1){
+  let options;
+
+  if(storyV1JungStage === 1){
+    options = storyV1JungOptions[0];
+
+  }else if(storyV1JungStage === 2){
+    if(storyV1JungBranch === null) return;
+
+    options = storyV1JungOptions[storyV1JungBranch + 1];
+
+  }else{
     panel.remove();
     return;
   }
 
   panel.innerHTML =
     '<div class="choice-prompt">Choose a reply</div>' +
-    storyV1JungOptions[0]
+    options
       .map((text, index) =>
         '<button type="button" onclick="chooseJungwonReply(' + index + ')">' +
         formatChatText(text) +
@@ -1713,14 +1773,44 @@ function updateJungwonChoicePanel(){
 // JUNGWON CHOICE HANDLER
 
 function chooseJungwonReply(index){
-  if(window.storyEndingLocked || storyV1JungStage !== 1) return;
+  if(window.storyEndingLocked) return;
 
-  const choice = storyV1JungOptions[0][index];
-  const replies = storyV1JungReplies[0][index];
+  if(storyV1JungStage !== 1 && storyV1JungStage !== 2) return;
 
-  if(!choice || !replies) return;
+  const stage = storyV1JungStage;
 
-  // Lock choices while dialogue plays
+  let choice;
+  let lines;
+
+  if(stage === 1){
+    // FIRST CHOICE
+
+    choice = storyV1JungOptions[0][index];
+
+    if(!choice) return;
+
+    lines = storyV1JungReplies[0][index]?.slice();
+
+    if(!lines) return;
+
+  }else{
+    // SECOND CHOICE
+
+    if(storyV1JungBranch === null) return;
+
+    const branchOptions = storyV1JungOptions[storyV1JungBranch + 1];
+
+    choice = branchOptions[index];
+
+    if(!choice) return;
+
+    lines = storyV1JungReplies[1][storyV1JungBranch][index]?.slice();
+
+    if(!lines) return;
+  }
+
+  // LOCK CHOICES WHILE DIALOGUE PLAYS
+
   storyV1JungStage = 0;
 
   const panel = document.getElementById("jungwon-choice-list");
@@ -1731,17 +1821,36 @@ function chooseJungwonReply(index){
     });
   }
 
+  // DISPLAY OWNER'S SELECTED REPLY
+
   addStoryV1Line("Jungwon", "out", choice);
 
-  const lines = replies.slice();
+  // PLAY JUNGWON'S RESPONSE
 
   playStoryV1Lines("Jungwon", lines, ()=>{
-    // Mark Jungwon's branch as completed
-    storyV1JungStage = 2;
-    persistStoryV1Stage("Jungwon", storyV1JungStage);
 
-    const panel = document.getElementById("jungwon-choice-list");
-    if(panel) panel.remove();
+    if(stage === 1){
+      // FIRST CHOICE COMPLETED
+      // REMEMBER OWNER'S FIRST BRANCH
+
+      storyV1JungBranch = index;
+
+      storyV1JungStage = 2;
+      persistStoryV1Stage("Jungwon", storyV1JungStage);
+
+      // SHOW SECOND CHOICE
+
+      updateJungwonChoicePanel();
+
+    }else{
+      // SECOND CHOICE COMPLETED
+
+      storyV1JungStage = 3;
+      persistStoryV1Stage("Jungwon", storyV1JungStage);
+
+      const panel = document.getElementById("jungwon-choice-list");
+      if(panel) panel.remove();
+    }
   });
 }
 
