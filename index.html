@@ -1636,35 +1636,26 @@ function persistStoryV1Stage(name,stage){try{sessionStorage.setItem("space-betwe
 function addStoryV1Line(name,type,text){const messages=name==="Jung"?jungDynamicMessages:jakeDynamicMessages;messages.push([type,text]);persistStoryV1Messages(name);const chat=document.getElementById("chat"),visible=chat&&document.getElementById("app-title").textContent===name;if(visible)chat.insertAdjacentHTML("beforeend",type==="day"?'<div class="day">'+formatChatText(text)+'</div>':'<div class="bubble '+type+'">'+formatChatText(text)+'</div>');body.scrollTop=body.scrollHeight}
 function playStoryV1Lines(name,lines,done){const panel=document.getElementById(name==="Jung"?"jung-choice-list":"jake-choice-list");if(panel)panel.innerHTML='<div class="day">'+name+' is typing…</div>';let index=0;function step(){if(index>=lines.length){if(done)done();return}const line=lines[index++];setTimeout(()=>{addStoryV1Line(name,line[0],line[1]);step()},220)}step()}
 
+
 function updateJungwonChoicePanel(){
   const panel=document.getElementById("jungwon-choice-list");
   if(!panel)return;
 
-  if(storyV1JungwonStage>1){
+  if(storyV1JungwonStage>3){
     panel.remove();
     return;
   }
 
   panel.innerHTML=
     '<div class="choice-prompt">Choose a reply</div>'+
-    '<button type="button" onclick="chooseJungwonReply()">'+
-    formatChatText("thank you for everything, won. i'll always be grateful for us, too. please take care of yourself. 🤍")+
-    '</button>';
+    storyV1JungwonOptions[storyV1JungwonStage-1]
+      .map((text,index)=>
+        '<button type="button" onclick="chooseJungwonReply('+index+')">'+
+        formatChatText(text)+
+        '</button>'
+      ).join("");
 }
 
-function chooseJungwonReply(){
-  if(window.storyEndingLocked||storyV1JungwonStage!==1)return;
-
-  const choice="thank you for everything, won. i'll always be grateful for us, too. please take care of yourself. 🤍";
-
-  addStoryV1Line("Jungwon","out",choice);
-
-  storyV1JungwonStage=2;
-  persistStoryV1Stage("Jungwon",storyV1JungwonStage);
-
-  const panel=document.getElementById("jungwon-choice-list");
-  if(panel)panel.remove();
-}
 function updateJakeChoicePanel(){const panel=document.getElementById("jake-choice-list");if(!panel)return;if(storyV1JakeStage>3){panel.remove();return}panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+storyV1JakeOptions[storyV1JakeStage-1].map((text,index)=>'<button type="button" onclick="chooseJakeReply('+index+')">'+formatChatText(text)+'</button>').join("")}
 function chooseJakeReply(index){if(window.storyEndingLocked||storyV1JakeStage<1||storyV1JakeStage>3)return;const stage=storyV1JakeStage,choice=storyV1JakeOptions[stage-1][index];if(!choice)return;addStoryV1Line("Jake","out",choice);let lines=storyV1JakeReplies[stage-1][index].slice();if(stage===1)lines.push(["in","can i ask you something?"],["out","what is it?"],["in","would you still want to talk to me?"],["in","i mean, even after this"]);if(stage===2)lines.push(["in","would you want to talk sometime?\nproperly, i mean"],["in","we don't have to decide anything\ni just think we should be honest with each other"]);playStoryV1Lines("Jake",lines,()=>{storyV1JakeStage=stage+1;persistStoryV1Stage("Jake",storyV1JakeStage);if(stage<3){updateJakeChoicePanel();return}const panel=document.getElementById("jake-choice-list");if(panel)panel.remove();if(index===1)setTimeout(()=>openChat("messages","Jungwon"),250)})}function replaceOwnerText(value,name){if(typeof value==='string')return value.replaceAll('Maya',name);if(Array.isArray(value))return value.map(item=>replaceOwnerText(item,name));if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[replaceOwnerText(k,name),replaceOwnerText(v,name)]));return value}
 function enterPhone(e){e.preventDefault();const field=document.getElementById('visitor-name'),name=field.value.trim();if(!name){field.focus();return}ownerName=name;if(!ownerPersonalized){const renamed={};for(const [key,value] of Object.entries(chats))renamed[replaceOwnerText(key,name)]=replaceOwnerText(value,name);Object.keys(chats).forEach(key=>delete chats[key]);Object.assign(chats,renamed);for(const list of [kakaoList,smsList])for(let i=0;i<list.length;i++)list[i]=replaceOwnerText(list[i],name);ownerPersonalized=true}try{sessionStorage.setItem('phone-peek-name',name);jungwonDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-jungwon-chat-${name}`)||'[]'));jungwonTurns=jungwonDynamicMessages.filter(m=>m[0]==='out').length;storyV1JungwonStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem('space-between-script-jungwon-stage-'+name)||1)));jakeDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-jake-chat-${name}`)||'[]'));jakeTurns=jakeDynamicMessages.filter(m=>m[0]==='out').length;storyV1JakeStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem('space-between-script-jake-stage-'+name)||1)));sunooDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-sunoo-chat-${name}`)||'[]'));sunooTurns=sunooDynamicMessages.filter(m=>m[0]==='out').length;momDynamicMessages=JSON.parse(sessionStorage.getItem(`phone-peek-mom-chat-${name}`)||'[]');momTurns=momDynamicMessages.filter(m=>m[0]==='out').length;constantsDynamicMessages=JSON.parse(sessionStorage.getItem(`phone-peek-constants-chat-${name}`)||'[]')}catch(_){jungwonDynamicMessages=[];jungwonTurns=0;jakeDynamicMessages=[];jakeTurns=0;sunooDynamicMessages=[];sunooTurns=0;momDynamicMessages=[];momTurns=0;constantsDynamicMessages=[]}document.getElementById('entry').classList.add('hidden');document.querySelector('.welcome b').textContent=`Good evening, ${name}`;showVoteNotifications();}
