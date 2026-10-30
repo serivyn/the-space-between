@@ -1635,6 +1635,11 @@ const home=document.getElementById('home'),view=document.getElementById('appview
   
   
 function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meeting up with me. That coffee felt easy','Thank you for meeting with me and giving us another chance.','I’m proud of you for choosing yourself.','I’m proud of you for choosing what feels right for you.'];for(let i=messages.length-1;i>=0;i--){if(messages[i]?.[0]==='in'&&prefixes.some(text=>String(messages[i][1]).startsWith(text))){messages.splice(i,1);if(messages[i-1]?.[0]==='day'&&messages[i-1][1]==='JUST NOW')messages.splice(i-1,1)}}return messages}
+
+/* =========================================
+   3. STORY STATE & DIALOGUE DATA
+========================================= */
+  
 let storyV1JungStage=1,storyV1JakeStage=1;
 const storyV1JungOptions=[["i am\ni just miss us","sometimes\nbut lately i've been feeling lonely","i honestly don't know anymore"],["when we started having less time together","i think i started keeping things to myself","i don't think there was one exact moment"],["i still want to try with you","i need more time to understand what i want","i don't know if things can go back to how they were"]];
 const storyV1JungReplies=[[ [["in","i miss us too\ni want us to find our way back"]], [["in","i'm sorry, love\ni don't want you to feel alone in this relationship"]], [["in","okay\nthank you for telling me\ni know that wasn't easy"]] ],[ [["in","i think i noticed it too\ni just kept thinking things would get easier"]], [["in","i'm sorry i made it feel that way\ni want you to be able to tell me things"]], [["in","maybe not\nmaybe it happened little by little"]] ],[ [["in","then let's try\nnot just with promises\nwith actual time for us"]], [["in","okay\ntake your time\ni 't rush you"]], [["in","maybe they 't be exactly the same\nbut i wish we could find something that works for both of us"]] ]];
