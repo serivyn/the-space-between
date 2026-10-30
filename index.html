@@ -4735,7 +4735,33 @@ function toggleVoteReminder(){const b=document.getElementById('vote-done');if(!b
 // STORY ENDING SYSTEM
 (function(){
 const endingStorageKey="space-between-photo-ending-v1",endingSeenKey="space-between-photo-ending-seen-v1";
-const endingMessages={jungwon:"Thank you for meeting with me and giving us another chance. I’ll protect the time we promised and won’t take your trust for granted.",jake:"Thank you for meeting up with me. That coffee felt easy in a way I didn’t expect. Maybe this is the start of something new, if you want it too.",self:"I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?"};
+
+const endingMessages = {
+  jungwon: `Hey, I've been thinking about what you told me. I won't pretend it doesn't hurt. Part of me still hoped things would turn out differently. But I know you've made your choice, and I don't want you to feel guilty.
+
+Thank you for all the little moments we had. The ordinary days, the conversations that went on longer than they should've, all the things I probably never told you I appreciated.
+
+I'll always be glad it was you.
+
+I hope he makes you happy. I really do.
+
+And I hope, someday, when you think of me, it doesn't hurt anymore.
+
+Take care of yourself, okay? I love you...`,
+
+  jake: `hey, pretty girl.
+funny how this all started because you forgot your umbrella.
+you know what's a little unfair? i met you because of that one little accident, and somehow i ended up wishing i'd met you years earlier.
+maybe then, things would've been a little simpler. but i guess we don't get to choose when we meet the people we end up caring about.
+i'll miss our coffees, the bookstore afternoons, and how we'd lose track of time just talking about nothing and everything.
+i won't pretend i'm not sad. i liked you more than i planned to. but you don't owe me a different answer just because i care about you.
+thank you for letting me be part of your days.
+take care, pretty girl. and bring an umbrella next time, okay? :)
+jake`,
+
+  self: `I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?`
+};
+
 const endingTitles={jungwon:"Choosing Jungwon",jake:"Choosing Jake",self:"Choosing yourself"};
 window.storyV1PhotoEnding=null;
 const oldEnterPhoneV1=window.enterPhone;
