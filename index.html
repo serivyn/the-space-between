@@ -2673,6 +2673,12 @@ function updateCalendarDates(){const now=new Date(),day=now.getDate();const icon
 function toggleCameraRollSelectMode(){window.cameraRollSelectMode=!window.cameraRollSelectMode;if(!window.cameraRollSelectMode)window.cameraRollSelection=[];render('photos')}
 function toggleSelectAllCameraRollPhotos(){const order=window.cameraRollOrder||[];const selected=window.cameraRollSelection||[];window.cameraRollSelection=selected.length===order.length?[]:order.slice();render('photos')}
 function toggleCameraRollSelection(photo){const order=window.cameraRollOrder||[];const jakeIds=['HVKECp5bgAAbQFV','HVcE8NEaoAAxHIQ'];const chooseJake=jakeIds.includes(photo);const group=order.filter(item=>jakeIds.includes(item)===chooseJake);const selected=window.cameraRollSelection||[];const allSelected=group.length>0&&group.every(item=>selected.includes(item));window.cameraRollSelection=allSelected?selected.filter(item=>!group.includes(item)):[...new Set([...selected,...group])];render('photos')}
+
+
+/* =========================================
+   15. MESSAGE NOTIFICATIONS
+========================================= */
+  
 function showMessageBanner(name,message){const t=document.getElementById('toast');if(!t)return;t.innerHTML='<b>'+escapeHtml(name)+' · now</b>'+escapeHtml(message);t.setAttribute('role','button');t.setAttribute('tabindex','0');t.setAttribute('aria-label','Open '+name+' message');t.style.cursor='pointer';t.onclick=()=>{t.classList.remove('show');t.onclick=null;openApp('messages');setTimeout(()=>openChat('messages',name,true),40)};t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click()}};t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.onclick=null},6000)}
 
 function receivePhotoDeletionMessage(name,message){
