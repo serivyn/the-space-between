@@ -1677,10 +1677,14 @@ function chooseJakeReply(index){if(window.storyEndingLocked||storyV1JakeStage<1|
   
 function replaceOwnerText(value,name){if(typeof value==='string')return value.replaceAll('Maya',name);if(Array.isArray(value))return value.map(item=>replaceOwnerText(item,name));if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[replaceOwnerText(k,name),replaceOwnerText(v,name)]));return value}
 function enterPhone(e){e.preventDefault();const field=document.getElementById('visitor-name'),name=field.value.trim();if(!name){field.focus();return}ownerName=name;if(!ownerPersonalized){const renamed={};for(const [key,value] of Object.entries(chats))renamed[replaceOwnerText(key,name)]=replaceOwnerText(value,name);Object.keys(chats).forEach(key=>delete chats[key]);Object.assign(chats,renamed);for(const list of [kakaoList,smsList])for(let i=0;i<list.length;i++)list[i]=replaceOwnerText(list[i],name);ownerPersonalized=true}try{sessionStorage.setItem('phone-peek-name',name);jungwonDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-jungwon-chat-${name}`)||'[]'));jungwonTurns=jungwonDynamicMessages.filter(m=>m[0]==='out').length;storyV1JungwonStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem('space-between-script-jungwon-stage-'+name)||1)));jakeDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-jake-chat-${name}`)||'[]'));jakeTurns=jakeDynamicMessages.filter(m=>m[0]==='out').length;storyV1JakeStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem('space-between-script-jake-stage-'+name)||1)));sunooDynamicMessages=removePhotoDeletionEnding(JSON.parse(sessionStorage.getItem(`phone-peek-sunoo-chat-${name}`)||'[]'));sunooTurns=sunooDynamicMessages.filter(m=>m[0]==='out').length;momDynamicMessages=JSON.parse(sessionStorage.getItem(`phone-peek-mom-chat-${name}`)||'[]');momTurns=momDynamicMessages.filter(m=>m[0]==='out').length;constantsDynamicMessages=JSON.parse(sessionStorage.getItem(`phone-peek-constants-chat-${name}`)||'[]')}catch(_){jungwonDynamicMessages=[];jungwonTurns=0;jakeDynamicMessages=[];jakeTurns=0;sunooDynamicMessages=[];sunooTurns=0;momDynamicMessages=[];momTurns=0;constantsDynamicMessages=[]}document.getElementById('entry').classList.add('hidden');document.querySelector('.welcome b').textContent=`Good evening, ${name}`;showVoteNotifications();}
+
+  
+
+/* =========================================
+   7. CHAT DATA & CONVERSATIONS
+========================================= */
+
 const chats={
-
-
-
 'Jungwon': {
   color: '#6176a8',
   messages: [
