@@ -1644,6 +1644,8 @@ function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meet
   // STORY STATE
 let storyV1JungStage=1,storyV1JakeStage=1;
 let storyV1JungBranch = null;
+let storyV1JakeBranch = null;
+  
   //JUNGWON STORY
 
 // JUNGWON OPTIONS
@@ -1843,11 +1845,200 @@ function chooseJungwonReply(index){
 
   
 //JAKE STORY
-const storyV1JakeOptions=[["i think i've noticed it too","jake, i don't know what to say","i think we should be careful"],["yeah, i still want to talk to you","maybe we should take a little space","i don't know yet"],["okay\nmaybe we can talk tomorrow?","i think i need to talk to  first","i think i need some time to myself first"]];
-const storyV1JakeReplies=[[ [["in","yeah?"],["out","i guess i've been looking forward to talking to you too"],["in","i'm glad i'm not the only one\nbut i don't want that to put you in a difficult position"]], [["in","that's okay\ni didn't expect you to have an answer"],["out","i wasn't expecting this either"],["in","i know\ni'm sorry if this caught you off guard"]], [["in","yeah\nyou're right"],["out","i don't want to hurt anyone"],["in","neither do i\ni respect that"]] ],[ [["in","okay\ni'd like that too"],["in","but i don't want us to act like nothing changed either"]], [["in","if that's what you need\ni understand"],["out","i just need time to think"],["in","take your time\nyou don't have to explain yourself tonight"]], [["in","that's fair"],["in","you don't have to figure everything out right now"],["out","thank you for understanding"],["in","of course"]] ],[ [["in","tomorrow works for me"],["out","somewhere quiet?"],["in","yeah\nyou can pick the place"],["out","okay\ni'll let you know"],["in","sounds good"],["in","and hey"],["out","yeah?"],["in","thank you for being honest with me too"],["out","goodnight, jake"],["in","goodnight :)"]], [["in","yeah\ni understand"],["in","i think that's something you should do"],["out","i don't know how that conversation's going to go"],["in","you don't have to know yet"],["in","just be honest with him\nand with yourself"],["out","i'll try"],["in","okay"],["out","goodnight, jake"],["in","goodnight"]], [["in","okay\ntake all the time you need"],["out","i'm sorry"],["in","you don't have to apologize"],["in","i don't want you to feel like you owe me an answer"],["out","thank you, jake"],["in","take care of yourself, okay?"],["out","you too"],["in","goodnight"],["out","goodnight"]] ]];
-  
-function updateJakeChoicePanel(){const panel=document.getElementById("jake-choice-list");if(!panel)return;if(storyV1JakeStage>3){panel.remove();return}panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+storyV1JakeOptions[storyV1JakeStage-1].map((text,index)=>'<button type="button" onclick="chooseJakeReply('+index+')">'+formatChatText(text)+'</button>').join("")}
-function chooseJakeReply(index){if(window.storyEndingLocked||storyV1JakeStage<1||storyV1JakeStage>3)return;const stage=storyV1JakeStage,choice=storyV1JakeOptions[stage-1][index];if(!choice)return;addStoryV1Line("Jake","out",choice);let lines=storyV1JakeReplies[stage-1][index].slice();if(stage===1)lines.push(["in","can i ask you something?"],["out","what is it?"],["in","would you still want to talk to me?"],["in","i mean, even after this"]);if(stage===2)lines.push(["in","would you want to talk sometime?\nproperly, i mean"],["in","we don't have to decide anything\ni just think we should be honest with each other"]);playStoryV1Lines("Jake",lines,()=>{storyV1JakeStage=stage+1;persistStoryV1Stage("Jake",storyV1JakeStage);if(stage<3){updateJakeChoicePanel();return}const panel=document.getElementById("jake-choice-list");if(panel)panel.remove();if(index===1)setTimeout(()=>openChat("messages","Jungwon"),250)})}
+
+ // JAKE STORY
+
+// JAKE OPTIONS
+
+const storyV1JakeOptions = [
+  // FIRST CHOICE
+  [
+    "thank you for telling me, jake. that means a lot.",
+    "i don't want things between us to get complicated, jake."
+  ],
+
+  // SECOND CHOICE: BRANCH 1 (FIRST OPTION)
+  [
+    "you didn't. i'm glad we can still talk like this.",
+    "i don't want us to make things harder than they already are."
+  ],
+
+  // SECOND CHOICE: BRANCH 2 (SECOND OPTION)
+  [
+    "i hope things can stay okay between us.",
+    "maybe we should give each other a little space."
+  ]
+];
+
+
+// JAKE REPLIES
+
+const storyV1JakeReplies = [
+  // FIRST CHOICE REPLIES
+  [
+    // OPTION 1
+    [
+      ["in", "i'm glad you don't mind me telling you."],
+      ["in", "i didn't want to make things weird between us."]
+    ],
+
+    // OPTION 2
+    [
+      ["in", "i understand."],
+      ["in", "i don't want to put you in that position either."]
+    ]
+  ],
+
+  // SECOND CHOICE REPLIES
+  [
+    // FIRST BRANCH
+    [
+      // POSITIVE RESPONSE (OPTION 1)
+      [
+        ["in", "i'd like that too."],
+        ["in", "i don't want to lose what we have. ❤️"]
+      ],
+
+      // NEGATIVE RESPONSE (OPTION 2)
+      [
+        ["in", "i understand."],
+        ["in", "i'll respect that, i promise. ❤️"]
+      ]
+    ],
+
+    // SECOND BRANCH
+    [
+      // POSITIVE RESPONSE (OPTION 3)
+      [
+        ["in", "i'd like that too."],
+        ["in", "i don't want to lose what we have. ❤️"]
+      ],
+
+      // NEGATIVE RESPONSE (OPTION 4)
+      [
+        ["in", "i understand."],
+        ["in", "i'll respect that, i promise. ❤️"]
+      ]
+    ]
+  ]
+];
+
+
+// JAKE CHOICE PANEL
+
+function updateJakeChoicePanel(){
+  const panel = document.getElementById("jake-choice-list");
+  if(!panel) return;
+
+  let options;
+
+  if(storyV1JakeStage === 1){
+    options = storyV1JakeOptions[0];
+
+  }else if(storyV1JakeStage === 2){
+    if(storyV1JakeBranch === null) return;
+
+    options = storyV1JakeOptions[storyV1JakeBranch + 1];
+
+  }else{
+    panel.remove();
+    return;
+  }
+
+  panel.innerHTML =
+    '<div class="choice-prompt">Choose a reply</div>' +
+    options
+      .map((text, index) =>
+        '<button type="button" onclick="chooseJakeReply(' + index + ')">' +
+        formatChatText(text) +
+        '</button>'
+      ).join("");
+}
+
+
+// JAKE CHOICE HANDLER
+
+function chooseJakeReply(index){
+  if(window.storyEndingLocked) return;
+
+  if(storyV1JakeStage !== 1 && storyV1JakeStage !== 2) return;
+
+  const stage = storyV1JakeStage;
+
+  let choice;
+  let lines;
+
+  if(stage === 1){
+    // FIRST CHOICE
+
+    choice = storyV1JakeOptions[0][index];
+
+    if(!choice) return;
+
+    lines = storyV1JakeReplies[0][index]?.slice();
+
+    if(!lines) return;
+
+  }else{
+    // SECOND CHOICE
+
+    if(storyV1JakeBranch === null) return;
+
+    const branchOptions = storyV1JakeOptions[storyV1JakeBranch + 1];
+
+    choice = branchOptions[index];
+
+    if(!choice) return;
+
+    lines = storyV1JakeReplies[1][storyV1JakeBranch][index]?.slice();
+
+    if(!lines) return;
+  }
+
+  // LOCK CHOICES WHILE DIALOGUE PLAYS
+
+  storyV1JakeStage = 0;
+
+  const panel = document.getElementById("jake-choice-list");
+
+  if(panel){
+    panel.querySelectorAll("button").forEach(button => {
+      button.disabled = true;
+    });
+  }
+
+  // DISPLAY OWNER'S SELECTED REPLY
+
+  addStoryV1Line("Jake", "out", choice);
+
+  // PLAY JAKE'S RESPONSE
+
+  playStoryV1Lines("Jake", lines, ()=>{
+
+    if(stage === 1){
+      // FIRST CHOICE COMPLETED
+      // REMEMBER OWNER'S FIRST BRANCH
+
+      storyV1JakeBranch = index;
+
+      storyV1JakeStage = 2;
+      persistStoryV1Stage("Jake", storyV1JakeStage);
+
+      // SHOW SECOND CHOICE
+
+      updateJakeChoicePanel();
+
+    }else{
+      // SECOND CHOICE COMPLETED
+
+      storyV1JakeStage = 3;
+      persistStoryV1Stage("Jake", storyV1JakeStage);
+
+      const panel = document.getElementById("jake-choice-list");
+      if(panel) panel.remove();
+    }
+  });
+}
 
   
 
