@@ -3439,6 +3439,27 @@ your won`,
 },
 
 ];
+
+
+try{
+  const ending=JSON.parse(
+    localStorage.getItem(endingStorageKey)||"null"
+  );
+
+  const reward=ending?.rewardEmail;
+
+  if(ending?.rewardNotified&&reward){
+    const exists=emails.some(mail=>
+      mail.sender===reward.sender&&
+      mail.subject===reward.subject
+    );
+
+    if(!exists){
+      emails.unshift(reward);
+    }
+  }
+}catch(e){}
+
 window.gmailEmails = emails;
 
 
