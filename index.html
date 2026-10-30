@@ -1639,34 +1639,121 @@ const home=document.getElementById('home'),view=document.getElementById('appview
 function removePhotoDeletionEnding(messages){const prefixes=['Thank you for meeting up with me. That coffee felt easy','Thank you for meeting with me and giving us another chance.','I’m proud of you for choosing yourself.','I’m proud of you for choosing what feels right for you.'];for(let i=messages.length-1;i>=0;i--){if(messages[i]?.[0]==='in'&&prefixes.some(text=>String(messages[i][1]).startsWith(text))){messages.splice(i,1);if(messages[i-1]?.[0]==='day'&&messages[i-1][1]==='JUST NOW')messages.splice(i-1,1)}}return messages}
 
 /* =========================================
-   3. STORY STATE & DIALOGUE DATA
+   3. STORY STATE & LOGIC
 ========================================= */
-  
+  // STORY STATE
 let storyV1JungStage=1,storyV1JakeStage=1;
-const storyV1JungOptions=[
-  ["i am, won. i just miss us.","i don't know anymore, won."]];
-const storyV1JungReplies=[
-[
+
+  //JUNGWON STORY
+
+/* -----------------------------------------
+   JUNGWON STORY
+----------------------------------------- */
+
+// JUNGWON OPTIONS
+
+const storyV1JungOptions = [
   [
-    ["in","i miss us too, love."],
-    ["in","i don't want you to keep feeling this way."],
-    ["out","i know"],
-    ["out","i just wish things could be different"],
-    ["in","then let's try to find our way back to us, love."],
-    ["in","i don't want to lose what we have. ❤️"]
-  ],
-  [
-    ["in","is it because you've been unhappy with me?"],
-    ["in","you can be honest with me, love."],
-    ["out","i don't want to hurt you, won"],
-    ["out","but i don't want to keep hurting like this either"],
-    ["in","i hear you, love."],
-    ["in","i don't want loving me to feel this hard for you."]
+    "i am, won. i just miss us.",
+    "i don't know anymore, won."
   ]
-]
 ];
+
+
+// JUNGWON REPLIES
+
+const storyV1JungReplies = [
+  [
+    // OPTION 1
+    [
+      ["in", "I miss us too, love."],
+      ["in", "I don't want you to keep feeling this way."],
+      ["out", "i know"],
+      ["out", "i just wish things could be different"],
+      ["in", "Then let's try to find our way back to us, love."],
+      ["in", "I don't want to lose what we have. ❤️"]
+    ],
+
+    // OPTION 2
+    [
+      ["in", "Is it because you've been unhappy with me?"],
+      ["in", "You can be honest with me, love."],
+      ["out", "i don't want to hurt you, won"],
+      ["out", "but i don't want to keep hurting like this either"],
+      ["in", "I hear you, love."],
+      ["in", "I don't want loving me to feel this hard for you."]
+    ]
+  ]
+];
+
+
+// JUNGWON CHOICE PANEL
+
+function updateJungwonChoicePanel(){
+  const panel = document.getElementById("jungwon-choice-list");
+  if(!panel) return;
+
+  // Only one decision stage
+  if(storyV1JungStage !== 1){
+    panel.remove();
+    return;
+  }
+
+  panel.innerHTML =
+    '<div class="choice-prompt">Choose a reply</div>' +
+    storyV1JungOptions[0]
+      .map((text, index) =>
+        '<button type="button" onclick="chooseJungwonReply(' + index + ')">' +
+        formatChatText(text) +
+        '</button>'
+      ).join("");
+}
+
+
+// JUNGWON CHOICE HANDLER
+
+function chooseJungwonReply(index){
+  if(window.storyEndingLocked || storyV1JungStage !== 1) return;
+
+  const choice = storyV1JungOptions[0][index];
+  const replies = storyV1JungReplies[0][index];
+
+  if(!choice || !replies) return;
+
+  // Lock choices while dialogue plays
+  storyV1JungStage = 0;
+
+  const panel = document.getElementById("jungwon-choice-list");
+
+  if(panel){
+    panel.querySelectorAll("button").forEach(button => {
+      button.disabled = true;
+    });
+  }
+
+  addStoryV1Line("Jungwon", "out", choice);
+
+  const lines = replies.slice();
+
+  playStoryV1Lines("Jungwon", lines, ()=>{
+    // Mark Jungwon's branch as completed
+    storyV1JungStage = 2;
+    persistStoryV1Stage("Jungwon", storyV1JungStage);
+
+    const panel = document.getElementById("jungwon-choice-list");
+    if(panel) panel.remove();
+  });
+}
+
+  
+//JAKE STORY
 const storyV1JakeOptions=[["i think i've noticed it too","jake, i don't know what to say","i think we should be careful"],["yeah, i still want to talk to you","maybe we should take a little space","i don't know yet"],["okay\nmaybe we can talk tomorrow?","i think i need to talk to  first","i think i need some time to myself first"]];
 const storyV1JakeReplies=[[ [["in","yeah?"],["out","i guess i've been looking forward to talking to you too"],["in","i'm glad i'm not the only one\nbut i don't want that to put you in a difficult position"]], [["in","that's okay\ni didn't expect you to have an answer"],["out","i wasn't expecting this either"],["in","i know\ni'm sorry if this caught you off guard"]], [["in","yeah\nyou're right"],["out","i don't want to hurt anyone"],["in","neither do i\ni respect that"]] ],[ [["in","okay\ni'd like that too"],["in","but i don't want us to act like nothing changed either"]], [["in","if that's what you need\ni understand"],["out","i just need time to think"],["in","take your time\nyou don't have to explain yourself tonight"]], [["in","that's fair"],["in","you don't have to figure everything out right now"],["out","thank you for understanding"],["in","of course"]] ],[ [["in","tomorrow works for me"],["out","somewhere quiet?"],["in","yeah\nyou can pick the place"],["out","okay\ni'll let you know"],["in","sounds good"],["in","and hey"],["out","yeah?"],["in","thank you for being honest with me too"],["out","goodnight, jake"],["in","goodnight :)"]], [["in","yeah\ni understand"],["in","i think that's something you should do"],["out","i don't know how that conversation's going to go"],["in","you don't have to know yet"],["in","just be honest with him\nand with yourself"],["out","i'll try"],["in","okay"],["out","goodnight, jake"],["in","goodnight"]], [["in","okay\ntake all the time you need"],["out","i'm sorry"],["in","you don't have to apologize"],["in","i don't want you to feel like you owe me an answer"],["out","thank you, jake"],["in","take care of yourself, okay?"],["out","you too"],["in","goodnight"],["out","goodnight"]] ]];
+  
+function updateJakeChoicePanel(){const panel=document.getElementById("jake-choice-list");if(!panel)return;if(storyV1JakeStage>3){panel.remove();return}panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+storyV1JakeOptions[storyV1JakeStage-1].map((text,index)=>'<button type="button" onclick="chooseJakeReply('+index+')">'+formatChatText(text)+'</button>').join("")}
+function chooseJakeReply(index){if(window.storyEndingLocked||storyV1JakeStage<1||storyV1JakeStage>3)return;const stage=storyV1JakeStage,choice=storyV1JakeOptions[stage-1][index];if(!choice)return;addStoryV1Line("Jake","out",choice);let lines=storyV1JakeReplies[stage-1][index].slice();if(stage===1)lines.push(["in","can i ask you something?"],["out","what is it?"],["in","would you still want to talk to me?"],["in","i mean, even after this"]);if(stage===2)lines.push(["in","would you want to talk sometime?\nproperly, i mean"],["in","we don't have to decide anything\ni just think we should be honest with each other"]);playStoryV1Lines("Jake",lines,()=>{storyV1JakeStage=stage+1;persistStoryV1Stage("Jake",storyV1JakeStage);if(stage<3){updateJakeChoicePanel();return}const panel=document.getElementById("jake-choice-list");if(panel)panel.remove();if(index===1)setTimeout(()=>openChat("messages","Jungwon"),250)})}
+
+  
 
 /* =========================================
    4. CHAT & STORY UTILITIES
@@ -1684,67 +1771,6 @@ function playStoryV1Lines(name,lines,done){const panel=document.getElementById(n
 ========================================= */
 
 
-
-function updateJungChoicePanel(){
-  const panel=document.getElementById("jung-choice-list");
-  if(!panel)return;
-  if(storyV1JungStage>3){
-    panel.remove();
-    return;
-  }
-  panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+
-    storyV1JungOptions[storyV1JungStage-1]
-      .map((text,index)=>
-        '<button type="button" onclick="chooseJungReply('+index+')">'+
-        formatChatText(text)+'</button>'
-      ).join("");
-}
-
-function chooseJungReply(index){
-  if(window.storyEndingLocked||storyV1JungStage<1||storyV1JungStage>3)return;
-
-  const stage=storyV1JungStage;
-  const choice=storyV1JungOptions[stage-1][index];
-  if(!choice)return;
-
-  addStoryV1Line("Jungwon","out",choice);
-
-  let lines=storyV1JungReplies[stage-1][index].slice();
-
-  if(stage===1)
-    lines.push(["in","when do you think things started feeling different?"]);
-
-  if(stage===2)
-    lines.push(
-      ["in","i don't want you to feel like you owe me a future because of our past"],
-      ["in","i love you\nbut i want you to be honest with yourself too"]
-    );
-
-  if(stage===3)
-    lines.push(
-      ["in","whatever happens\ni want us to be honest with each other"],
-      ["out","i want that too"],
-      ["in","goodnight, love ❤️"],
-      ["out","goodnight, won ❤️"]
-    );
-
-  playStoryV1Lines("Jungwon",lines,()=>{
-    storyV1JungStage=stage+1;
-    persistStoryV1Stage("Jungwon",storyV1JungStage);
-
-    if(stage<3){
-      updateJungChoicePanel();
-    }else{
-      const panel=document.getElementById("jung-choice-list");
-      if(panel)panel.remove();
-    }
-  });
-}
-
-function updateJakeChoicePanel(){const panel=document.getElementById("jake-choice-list");if(!panel)return;if(storyV1JakeStage>3){panel.remove();return}panel.innerHTML='<div class="choice-prompt">Choose a reply</div>'+storyV1JakeOptions[storyV1JakeStage-1].map((text,index)=>'<button type="button" onclick="chooseJakeReply('+index+')">'+formatChatText(text)+'</button>').join("")}
-function chooseJakeReply(index){if(window.storyEndingLocked||storyV1JakeStage<1||storyV1JakeStage>3)return;const stage=storyV1JakeStage,choice=storyV1JakeOptions[stage-1][index];if(!choice)return;addStoryV1Line("Jake","out",choice);let lines=storyV1JakeReplies[stage-1][index].slice();if(stage===1)lines.push(["in","can i ask you something?"],["out","what is it?"],["in","would you still want to talk to me?"],["in","i mean, even after this"]);if(stage===2)lines.push(["in","would you want to talk sometime?\nproperly, i mean"],["in","we don't have to decide anything\ni just think we should be honest with each other"]);playStoryV1Lines("Jake",lines,()=>{storyV1JakeStage=stage+1;persistStoryV1Stage("Jake",storyV1JakeStage);if(stage<3){updateJakeChoicePanel();return}const panel=document.getElementById("jake-choice-list");if(panel)panel.remove();if(index===1)setTimeout(()=>openChat("messages","Jungwon"),250)})}
-
-  
 
 /* =========================================
    6. ENTRY & PERSONALIZATION
