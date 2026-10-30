@@ -4201,11 +4201,7 @@ window.beginStoryMessageRead=function(name){
   const data=window.storyV1PhotoEnding;
   if(!data)return;
 
-  if(data.path!=="self"){
-    window.photoDeletionStoryUnread=name;
-    window.storyEndingLocked=false;
-    return;
-  }
+ 
 
   const blocker=document.createElement("div");
   blocker.id="story-read-lock";
