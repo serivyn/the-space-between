@@ -1532,6 +1532,36 @@ max-height: 54px !important;
   border-radius: 50% !important;
 }
 
+/* FIX X BOTTOM NAV CLIPPING */
+.x-screen {
+  position: relative;
+}
+
+.x-bottom {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 24px !important;
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+  z-index: 100 !important;
+}
+
+.x-bottom button {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+.x-home-indicator {
+  bottom: 0 !important;
+  height: 24px !important;
+  z-index: 101 !important;
+}
+
 </style>
 
 
