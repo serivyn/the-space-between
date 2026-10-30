@@ -1455,6 +1455,46 @@
   border-radius: 50%;
 }
 
+/* INSTAGRAM STORY GRADIENT RINGS - EVERYONE */
+.appview.instagram-theme .ig-home-stories .ig-story-avatar {
+  border: 0 !important;
+  padding: 3px !important;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 45deg,
+    #feda75,
+    #fa7e1e,
+    #d62976,
+    #962fbf,
+    #4f5bd5,
+    #962fbf,
+    #d62976,
+    #fa7e1e,
+    #feda75
+  ) !important;
+  box-sizing: border-box;
+}
+
+/* Keep the profile photo inside the gradient ring */
+.appview.instagram-theme .ig-home-stories .ig-story-avatar .avatar.photo {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 !important;
+  margin: 0;
+  border: 2px solid #fff !important;
+  border-radius: 50%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Story owner photo */
+.appview.instagram-theme .ig-home-stories .ig-story-avatar > img.ig-story-owner-photo {
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+}
+
 </style>
 
 
