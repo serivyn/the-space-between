@@ -4889,12 +4889,29 @@ window.enterPhone=function(event){oldEnterPhoneV1(event);storyV1JungwonStage=Mat
 const oldReceivePhotoDeletionMessageV1=window.receivePhotoDeletionMessage;
 window.receivePhotoDeletionMessage=function(name,message){oldReceivePhotoDeletionMessageV1(name,message);const path=window.storyV1PhotoEnding&&window.storyV1PhotoEnding.path;if(!path)return;try{const list=name==="Jake"?jakeDynamicMessages:name==="Jungwon"?jungwonDynamicMessages:sunooDynamicMessages;sessionStorage.setItem("phone-peek-"+name.toLowerCase()+"-chat-"+ownerName,JSON.stringify(list));localStorage.setItem(endingStorageKey,JSON.stringify(window.storyV1PhotoEnding))}catch(e){}};
 window.deleteSelectedCameraRollPhotos=function(){const selected=window.cameraRollSelection||[];if(!selected.length)return;if(!confirm("Delete "+selected.length+" selected photo(s) from Recents?"))return;const jakeIds=["HVKECp5bgAAbQFV","HVcE8NEaoAAxHIQ"],deletedJake=selected.some(photo=>jakeIds.includes(photo)),deletedJungwon=selected.some(photo=>!jakeIds.includes(photo));if(!deletedJake&&!deletedJungwon)return;const order=(window.cameraRollOrder||[]).filter(photo=>!selected.includes(photo));window.cameraRollOrder=order;try{localStorage.setItem("cameraRollOrderV6",JSON.stringify(order))}catch(e){}window.cameraRollSelection=[];window.cameraRollSelectMode=false;  
-const path = deletedJake && deletedJungwon   ? "self"   : deletedJake     ? "jake"     : "jungwon";  const sender = path === "self"   ? "Sunoo"   : path === "jake"     ? "Jake"     : "Jungwon";  const message = endingMessages[path];window.storyV1PhotoEnding={path:path,sender:sender,message:message};try{localStorage.setItem(endingStorageKey,JSON.stringify(window.storyV1PhotoEnding));localStorage.removeItem(endingSeenKey)}catch(e){}window.receivePhotoDeletionMessage(sender,message);render("photos")};
+const path = deletedJake && deletedJungwon   ? "self"   : deletedJake     ? "jake"     : "jungwon";  const sender = path === "self"   ? "Sunoo"   : path === "jake"     ? "Jake"     : "Jungwon";  
+const message = endingMessages[path];
 
-window.beginStoryMessageRead=function(name){
-  if(window.photoDeletionStoryUnread!==name||window.storyEndingLocked)return;
+window.storyV1PhotoEnding = {
+  path: path,
+  sender: sender,
+  message: message
+};
 
-  window.photoDeletionStoryUnread=null;
+console.log("ENDING CREATED", window.storyV1PhotoEnding);
+
+try {
+  localStorage.setItem(
+    endingStorageKey,
+    JSON.stringify(window.storyV1PhotoEnding)
+  );
+  localStorage.removeItem(endingSeenKey);
+} catch(e) {}
+
+window.receivePhotoDeletionMessage(sender, message);
+
+render("photos");
+
   window.storyEndingLocked=true;
 
   const data=window.storyV1PhotoEnding;
