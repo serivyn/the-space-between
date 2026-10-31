@@ -4592,16 +4592,20 @@ Goodnight, love.
 Won 🤍`
   };
 
-  ending.rewardEmail=email;
+ 
+ending.rewardEmail = email;
 
-  try{
-    localStorage.setItem(
-      endingStorageKey,
-      JSON.stringify(ending)
-    );
-  }catch(e){}
+try {
+  localStorage.setItem(
+  "space-between-photo-ending-v1",
+  JSON.stringify(ending)
+);
+} catch (e) {
+  console.error("Could not save story reward:", e);
+}
 
-  return email;
+return email;
+
 }
 
 
@@ -4612,8 +4616,8 @@ function checkStoryEndingReply(name, messages) {
   if (!ending || !ending.path || !ending.sender || !ending.message) {
     try {
       ending = JSON.parse(
-        localStorage.getItem(endingStorageKey) || "null"
-      );
+  localStorage.getItem("space-between-photo-ending-v1") || "null"
+);
 
       if (ending) {
         window.storyV1PhotoEnding = ending;
@@ -4657,9 +4661,9 @@ function checkStoryEndingReply(name, messages) {
 
   try {
     localStorage.setItem(
-      endingStorageKey,
-      JSON.stringify(ending)
-    );
+  "space-between-photo-ending-v1",
+  JSON.stringify(ending)
+);
   } catch (e) {}
 
   showGmailRewardBanner(email);
@@ -5009,7 +5013,7 @@ jake`,
 const endingTitles={jungwon:"Choosing Jungwon",jake:"Choosing Jake",self:"Choosing yourself"};
 window.storyV1PhotoEnding=null;
 const oldEnterPhoneV1=window.enterPhone;
-window.enterPhone=function(event){oldEnterPhoneV1(event);storyV1JungwonStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem("space-between-script-jungwon-stage-"+ownerName)||1)));storyV1JakeStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem("space-between-script-jake-stage-"+ownerName)||1)));try{const saved=JSON.parse(localStorage.getItem(endingStorageKey)||"null");if(saved){window.storyV1PhotoEnding=saved;if(localStorage.getItem(endingSeenKey)==="true"){window.storyEndingLocked=true}else{window.photoDeletionStoryUnread=saved.sender;const list=saved.sender==="Jake"?jakeDynamicMessages:saved.sender==="Jungwon"?jungwonDynamicMessages:sunooDynamicMessages;if(!list.some(item=>item[0]==="in"&&item[1]===saved.message)){list.push(["day","JUST NOW"],["in",saved.message]);try{sessionStorage.setItem("phone-peek-"+saved.sender.toLowerCase()+"-chat-"+ownerName,JSON.stringify(list))}catch(e){}}const row=smsList.find(item=>item[0]===saved.sender);if(row){row[1]=saved.message;row[2]="now";smsList.splice(smsList.indexOf(row),1);smsList.unshift(row)}}}}catch(e){}};
+window.enterPhone=function(event){oldEnterPhoneV1(event);storyV1JungwonStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem("space-between-script-jungwon-stage-"+ownerName)||1)));storyV1JakeStage=Math.max(1,Math.min(4,Number(sessionStorage.getItem("space-between-script-jake-stage-"+ownerName)||1)));try{const saved=JSON.parse(   localStorage.getItem("space-between-photo-ending-v1")||"null" );if(saved){window.storyV1PhotoEnding=saved;if(localStorage.getItem(endingSeenKey)==="true"){window.storyEndingLocked=true}else{window.photoDeletionStoryUnread=saved.sender;const list=saved.sender==="Jake"?jakeDynamicMessages:saved.sender==="Jungwon"?jungwonDynamicMessages:sunooDynamicMessages;if(!list.some(item=>item[0]==="in"&&item[1]===saved.message)){list.push(["day","JUST NOW"],["in",saved.message]);try{sessionStorage.setItem("phone-peek-"+saved.sender.toLowerCase()+"-chat-"+ownerName,JSON.stringify(list))}catch(e){}}const row=smsList.find(item=>item[0]===saved.sender);if(row){row[1]=saved.message;row[2]="now";smsList.splice(smsList.indexOf(row),1);smsList.unshift(row)}}}}catch(e){}};
 const oldReceivePhotoDeletionMessageV1=window.receivePhotoDeletionMessage;
 window.receivePhotoDeletionMessage=function(name,message){oldReceivePhotoDeletionMessageV1(name,message);const path=window.storyV1PhotoEnding&&window.storyV1PhotoEnding.path;if(!path)return;try{const list=name==="Jake"?jakeDynamicMessages:name==="Jungwon"?jungwonDynamicMessages:sunooDynamicMessages;sessionStorage.setItem("phone-peek-"+name.toLowerCase()+"-chat-"+ownerName,JSON.stringify(list));localStorage.setItem(endingStorageKey,JSON.stringify(window.storyV1PhotoEnding))}catch(e){}};
 window.deleteSelectedCameraRollPhotos=function(){const selected=window.cameraRollSelection||[];if(!selected.length)return;if(!confirm("Delete "+selected.length+" selected photo(s) from Recents?"))return;const jakeIds=["HVKECp5bgAAbQFV","HVcE8NEaoAAxHIQ"],deletedJake=selected.some(photo=>jakeIds.includes(photo)),deletedJungwon=selected.some(photo=>!jakeIds.includes(photo));if(!deletedJake&&!deletedJungwon)return;const order=(window.cameraRollOrder||[]).filter(photo=>!selected.includes(photo));window.cameraRollOrder=order;try{localStorage.setItem("cameraRollOrderV6",JSON.stringify(order))}catch(e){}window.cameraRollSelection=[];window.cameraRollSelectMode=false;  
