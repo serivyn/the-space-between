@@ -4956,8 +4956,13 @@ function toggleVoteReminder(){const b=document.getElementById('vote-done');if(!b
 </script><script>
 
 // STORY ENDING SYSTEM
+
 (function(){
-const endingStorageKey="space-between-photo-ending-v1",endingSeenKey="space-between-photo-ending-seen-v1";
+window.storyEndingStorageKey = "space-between-photo-ending-v1";
+window.storyEndingSeenKey = "space-between-photo-ending-seen-v1";
+
+const endingStorageKey = window.storyEndingStorageKey;
+const endingSeenKey = window.storyEndingSeenKey;
 
 const endingMessages = {
   jungwon: `Hey, I've been thinking about what you told me.
