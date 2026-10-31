@@ -4730,7 +4730,7 @@ const choice = name === "Jake"
  
   addStoryV1Line(name, "out", choice);
 
-  checkStoryEndingReply(name, messages);
+   if (name === "Jake" || name === "Jungwon") {   checkStoryEndingReply(name, messages); }
 
   // REMOVE THE ENTIRE REPLY SECTION
   const replyButton = document.getElementById(
@@ -4748,6 +4748,10 @@ const choice = name === "Jake"
     button.disabled = true;
     button.remove();
   });
+
+if (name === "Sunoo") {
+  window.showPersonalEnding();
+}
 
 } // CLOSE sendStoryGoodbyeReply
 
