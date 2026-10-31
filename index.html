@@ -4697,8 +4697,20 @@ function sendStoryGoodbyeReply(name) {
     );
   } catch (e) {}
 
+  
   addStoryV1Line(name, "out", choice);
+
+  // Remove the reply button immediately
+  const replyButton = document.getElementById(
+    "story-goodbye-reply"
+  );
+
+  if (replyButton) {
+    replyButton.remove();
+  }
+
   checkStoryEndingReply(name, messages);
+
 }
 
 window.sendStoryGoodbyeReply = sendStoryGoodbyeReply;
