@@ -4972,8 +4972,12 @@ location.reload();
     localStorage.setItem(endingSeenKey,"true");
   }catch(e){}
 };
-const oldUnlockPhoneV1=window.unlockPhone;
-window.unlockPhone=function(){oldUnlockPhoneV1();if(window.storyV1PhotoEnding&&localStorage.getItem(endingSeenKey)==="true"&&!document.getElementById("personal-ending"))setTimeout(function(){window.showPersonalEnding()},80)};
+
+const oldUnlockPhoneV1 = window.unlockPhone;
+
+window.unlockPhone = function(){
+  oldUnlockPhoneV1();
+};
 })();
 </script><script>
   
