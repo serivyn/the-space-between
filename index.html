@@ -4891,35 +4891,10 @@ try {
 
 window.receivePhotoDeletionMessage(sender, message);
 
+
 render("photos");
-
-  window.storyEndingLocked=true;
-
-  const data=window.storyV1PhotoEnding;
-  if(!data)return;
-
- 
-
-  const blocker=document.createElement("div");
-  blocker.id="story-read-lock";
-  blocker.setAttribute("aria-label","Please stay with this message for a moment");
-  blocker.tabIndex=0;
-  blocker.style.cssText="position:fixed;inset:0;z-index:99999;background:transparent;cursor:wait;touch-action:none";
-  document.body.appendChild(blocker);
-
-  const stopKeys=function(event){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  };
-
-  window.storyEndingKeyBlocker=stopKeys;
-  document.addEventListener("keydown",stopKeys,true);
-  blocker.focus({preventScroll:true});
-
-  window.storyEndingTimer=setTimeout(function(){
-    window.showPersonalEnding();
-  },10000);
 };
+
 
 window.showPersonalEnding=function(){
   document.removeEventListener("keydown",window.storyEndingKeyBlocker,true);
