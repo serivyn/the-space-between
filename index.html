@@ -3792,53 +3792,114 @@ else if(id==='x'){
   `;
 }
 
+
 else if(id==='reminders'){
   body.innerHTML = `
-    <div style="padding:16px;color:#222;">
-      <div style="font-size:12px;color:#888;margin-bottom:6px;">
-        MY LISTS
-      </div>
+    <div style="
+      position:absolute;
+      inset:0;
+      overflow-y:auto;
+      background:#fff;
+      color:#1c1c1e;
+      font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+      padding-bottom:90px;
+      box-sizing:border-box;
+    ">
 
-      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
-        <span style="font-size:25px;color:#4d8cff;">☷</span>
-        <div>
-          <b style="font-size:15px;">Reminders</b>
-          <div style="font-size:11px;color:#888;">3 reminders</div>
+      <!-- TOP TOOLBAR -->
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:12px 20px 0;
+        height:64px;
+        box-sizing:border-box;
+      ">
+        <button onclick="openApp('phoneapp')" style="
+          width:46px;height:46px;
+          border-radius:50%;
+          border:1px solid #eee;
+          background:white;
+          color:#222;
+          font-size:34px;
+          font-weight:300;
+          line-height:1;
+        ">‹</button>
+
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:0;
+          border:1px solid #eee;
+          border-radius:30px;
+          height:46px;
+          padding:0 5px;
+          background:white;
+        ">
+          <button aria-label="Share" style="border:0;background:none;font-size:23px;width:43px;color:#222;">↥</button>
+          <button aria-label="More" style="border:0;background:none;font-size:21px;width:43px;color:#222;">•••</button>
+          <button aria-label="Search" style="border:0;background:none;font-size:25px;width:43px;color:#222;">⌕</button>
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
-        <span style="font-size:25px;color:#ff9f43;">▤</span>
-        <div>
-          <b style="font-size:15px;">Important</b>
-          <div style="font-size:11px;color:#888;">1 reminder</div>
+      <!-- TITLE -->
+      <div style="
+        padding:10px 20px 12px;
+        font-size:30px;
+        font-weight:700;
+        letter-spacing:-.6px;
+        color:#b56cd1;
+      ">Reminders</div>
+
+      <!-- REMINDER ITEMS -->
+      <div style="padding:0 22px;">
+
+        <div style="display:flex;gap:13px;align-items:flex-start;padding:13px 0;">
+          <span style="width:21px;height:21px;border:2px solid #c7c7cc;border-radius:50%;box-sizing:border-box;flex-shrink:0;margin-top:2px;"></span>
+          <div>
+            <div style="font-size:16px;">Reply to Jake</div>
+            <div style="font-size:14px;color:#5b7fb8;margin-top:3px;">#Important</div>
+            <div style="font-size:13px;color:#8e8e93;margin-top:3px;">Don't leave him waiting.</div>
+          </div>
         </div>
+
+        <div style="display:flex;gap:13px;align-items:flex-start;padding:13px 0;">
+          <span style="width:21px;height:21px;border:2px solid #c7c7cc;border-radius:50%;box-sizing:border-box;flex-shrink:0;margin-top:2px;"></span>
+          <div>
+            <div style="font-size:16px;">Check Jungwon's message</div>
+            <div style="font-size:14px;color:#5b7fb8;margin-top:3px;">#Important</div>
+            <div style="font-size:13px;color:#8e8e93;margin-top:3px;">Maybe answer him tonight.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;align-items:flex-start;padding:13px 0;">
+          <span style="width:21px;height:21px;border:2px solid #c7c7cc;border-radius:50%;box-sizing:border-box;flex-shrink:0;margin-top:2px;"></span>
+          <div>
+            <div style="font-size:16px;">Return the book</div>
+            <div style="font-size:14px;color:#5b7fb8;margin-top:3px;">#Home</div>
+            <div style="font-size:13px;color:#8e8e93;margin-top:3px;">Bookstore receipt inside.</div>
+          </div>
+        </div>
+
       </div>
 
-      <div style="margin-top:25px;font-size:12px;color:#888;">
-        TODAY
-      </div>
+      <!-- ADD BUTTON -->
+      <button aria-label="New Reminder" style="
+        position:fixed;
+        right:calc((100vw - 100%) / 2 + 24px);
+        bottom:calc(env(safe-area-inset-bottom, 0px) + 28px);
+        width:54px;
+        height:54px;
+        border:0;
+        border-radius:50%;
+        background:#b56cd1;
+        color:white;
+        font-size:34px;
+        font-weight:300;
+        box-shadow:0 2px 6px #0002;
+        z-index:100;
+      ">＋</button>
 
-      <div style="padding:15px 0;border-bottom:1px solid #eee;">
-        <div style="font-size:14px;">○  Reply to Jake</div>
-        <div style="margin:5px 0 0 24px;font-size:11px;color:#888;">
-          Don't leave him waiting.
-        </div>
-      </div>
-
-      <div style="padding:15px 0;border-bottom:1px solid #eee;">
-        <div style="font-size:14px;">○  Check Jungwon's message</div>
-        <div style="margin:5px 0 0 24px;font-size:11px;color:#888;">
-          Maybe answer him tonight.
-        </div>
-      </div>
-
-      <div style="padding:15px 0;border-bottom:1px solid #eee;">
-        <div style="font-size:14px;">○  Return the book</div>
-        <div style="margin:5px 0 0 24px;font-size:11px;color:#888;">
-          Bookstore receipt inside.
-        </div>
-      </div>
     </div>
   `;
 }
