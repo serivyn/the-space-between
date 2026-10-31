@@ -4467,13 +4467,43 @@ function showGmailRewardBanner(email){
   t.setAttribute('tabindex','0');
   t.setAttribute('aria-label','Open Gmail email from '+email.sender);
 
-  const openEmail=function(){
-    t.classList.remove('show');
-    t.onclick=null;
-    t.onkeydown=null;
-    t.style.cursor='';
-   
-openApp('gmail');
+  
+const openEmail = function(){
+  t.classList.remove('show');
+  t.onclick = null;
+  t.onkeydown = null;
+  t.style.cursor = '';
+
+  // Make sure the reward exists in the active Gmail list
+  window.gmailEmails = window.gmailEmails || [];
+
+  const exists = window.gmailEmails.some(mail =>
+    mail.sender === email.sender &&
+    mail.subject === email.subject
+  );
+
+  if (!exists) {
+    window.gmailEmails.unshift(email);
+  }
+
+  openApp('gmail');
+
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      const index = window.gmailEmails.findIndex(mail =>
+        mail.sender === email.sender &&
+        mail.subject === email.subject
+      );
+
+      if (index !== -1) {
+        openGmailMessage(index);
+      } else {
+        console.warn('Story reward email not found:', email);
+      }
+    });
+  });
+};
+
 
 requestAnimationFrame(function(){
   requestAnimationFrame(function(){
