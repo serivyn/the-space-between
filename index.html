@@ -5078,12 +5078,19 @@ window.showPersonalEnding=function(){
       '<h1 style="font-family:Manrope,sans-serif;font-size:clamp(28px,8vw,36px);line-height:1.08;letter-spacing:-.04em;margin:14px 0 18px">'+
         escapeHtml(endingTitles[data.path]||"The End")+
       '</h1>'+
-      '<p style="font-size:15px;line-height:1.55;color:#55515a;margin:0">'+
-        formatChatText(data.message)+
-      '</p>'+
+     
+      '<div style="font-size:15px;line-height:1.75;color:#55515a;text-align:left;margin:0">'+
+        '<p>Maybe the point was never to find the perfect ending.</p>'+
+        '<p>Maybe it was to find the choice you could make with an honest heart.</p>'+
+        '<p>Whether that choice led you to someone, back to someone, or toward yourself, I hope it felt like yours.</p>'+
+        '<p>And if this is the end of this story,</p>'+
+        '<p>let it be the beginning of another.</p>'+
+        '<p style="text-align:center;margin-top:24px;font-weight:600">The End.</p>'+
+      '</div>'+
       '<p style="margin:22px 0;font-size:14px;line-height:1.5;color:#80604b">And don’t forget to vote for ENHYPEN on MAMA 2026!</p>'+
       '<button id="story-replay-btn" style="border:0;border-radius:999px;background:#28262a;color:#fff;padding:14px 32px;font:600 14px DM Sans,sans-serif;cursor:pointer">Replay story ↻</button>'+
     '</article>';
+
 
   document.querySelector(".screen").appendChild(ending);
 
