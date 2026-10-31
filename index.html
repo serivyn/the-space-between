@@ -4348,30 +4348,11 @@ else if(id==='safari'){
 function post(name,user,type,caption,likes){return `<div class="post"><div class="posthead">${avatar(name[0],name==='Jungwon'?'#6176a8':'#dc8f70')}<div>${user}<div class="time">${name==='Jungwon'?'2 hours ago':'Yesterday'}</div></div></div><div class="postphoto ${type}">MEMORY</div><div class="likes">♡ ${likes} likes</div><p>${caption}</p><div class="time">View all 12 comments</div></div>`}
 
 // STORY ENDING TRANSITION
+
 function beginStoryMessageRead(name){
-  const data=window.storyV1PhotoEnding; if(!data||window.photoDeletionStoryUnread!==name||data.sender!==name||window.storyEndingLocked)return;
-
-
-  window.photoDeletionStoryUnread=null;
-  window.storyEndingLocked=true;
-
-  const blocker=document.createElement('div');
-  blocker.id='story-read-lock';
-  blocker.setAttribute('aria-label','Please stay with this message for a moment');
-  blocker.tabIndex=0;
-  blocker.style.cssText='position:fixed;inset:0;z-index:99999;background:transparent;cursor:wait;touch-action:none';
-  document.body.appendChild(blocker);
-
-  const stopKeys=e=>{
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  };
-
-  window.storyEndingKeyBlocker=stopKeys;
-  document.addEventListener('keydown',stopKeys,true);
-  blocker.focus({preventScroll:true});
-
-  window.storyEndingTimer=setTimeout(showPersonalEnding,10000);
+  // Disabled: the personal ending now happens
+  // after opening the story reward email.
+  return;
 }
 
 // STORY ENDING SCREEN
