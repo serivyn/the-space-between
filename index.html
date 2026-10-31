@@ -3166,18 +3166,19 @@ function deleteSelectedCameraRollPhotos(){
   window.cameraRollSelectMode=false;
 
   
-  if (deletedJake && deletedJungwon) {
-    // Both groups deleted: Sunoo's message
-    receivePhotoDeletionMessage(
-      'Sunoo',
-      'I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?'
-    );
+ 
+if (deletedJake && deletedJungwon) {
+  // Both groups deleted: Sunoo's message
+  receivePhotoDeletionMessage(
+    'Sunoo',
+    'I’m proud of you for choosing yourself. You don’t have to choose someone just because they want another chance or because someone new is waiting. You get to choose what feels right for you. You deserve a life and a love where you never have to lose yourself. I’m here, okay?'
+  );
 
-  } else if (deletedJungwon) {
-    // Jungwon photos only: Jungwon's goodbye
-    receivePhotoDeletionMessage(
-      'Jungwon',
-      Hey, I've been thinking about what you told me.
+} else if (deletedJungwon) {
+  // Jungwon photos only: Jungwon's goodbye
+  receivePhotoDeletionMessage(
+    'Jungwon',
+    `Hey, I've been thinking about what you told me.
 I won't pretend it doesn't hurt. I think a part of me was still hoping things would turn out differently. Maybe because after all this time, it's hard to imagine my life without you in it the way you've always been.
 We've spent so much of our lives together. You've been there through so many versions of me, and I've gotten to know so many versions of you. I think that's what makes this so hard. It's not just that I'm losing someone I love. It's that I'm learning how to let go of a life I thought we'd keep building together.
 But I know you've made your choice, and I don't want you to feel guilty for it. Not for being honest, and not for wanting something different.
@@ -3186,7 +3187,27 @@ I hope he makes you happy. I really do.
 And I hope, someday, when you think of me, it doesn't hurt anymore.
 Take care of yourself, okay?
 
-Always, Your Won
+Always, Your Won`
+  );
+
+} else if (deletedJake) {
+  // Jake photos only: Jake's approved goodbye
+  receivePhotoDeletionMessage(
+    'Jake',
+    `hey, pretty girl.
+funny how this all started because you forgot your umbrella.
+you know what's a little unfair? i met you because of that one little accident, and somehow i ended up wishing i'd met you years earlier.
+maybe then, things would've been a little simpler. but i guess we don't get to choose when we meet the people we end up caring about.
+i'll miss our coffees, the bookstore afternoons, and how we'd lose track of time just talking about nothing and everything.
+i won't pretend i'm not sad. i liked you more than i planned to. but you don't owe me a different answer just because i care about you.
+thank you for letting me be part of your days.
+take care, pretty girl. and bring an umbrella next time, okay? :)
+jake`
+  );
+}
+
+render('photos');
+
 
   
 } else if (deletedJake) {
@@ -4883,8 +4904,8 @@ window.unlockPhone=function(){oldUnlockPhoneV1();if(window.storyV1PhotoEnding&&l
 // PHONE APP UI ENHANCEMENTS  
 (function(){const original=window.openApp;window.openApp=function(id){const app=document.getElementById("appview"),screen=document.querySelector(".screen");app.classList.toggle("phoneapp-theme",id==="phoneapp");screen.classList.toggle("phoneapp-screen",id==="phoneapp");original(id);if(id!=="phoneapp")return;const body=document.getElementById("appbody"),tools=body.children[0],title=body.querySelector("h1"),list=document.getElementById("recent-call-list"),tabs=body.querySelector("div[style*='position:sticky']");tools.classList.add("ios-recents-tools");tools.children[0].classList.add("ios-segment");tools.querySelector("#recent-edit").classList.add("ios-edit");const filter=document.createElement("button");filter.className="ios-recents-filter";filter.setAttribute("aria-label","Filters");filter.innerHTML='<svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>';filter.onclick=()=>notify("Filters","Call filters");tools.appendChild(filter);title.classList.add("ios-recents-title");const search=document.createElement("div");search.className="ios-search";search.innerHTML='<svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg><span>Search</span><svg class="ios-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11v1a7 7 0 0 0 14 0v-1M12 19v3m-4 0h8"/></svg>';title.after(search);list.querySelectorAll(":scope > div").forEach(row=>{row.classList.add("ios-call-row");const name=row.querySelector("div[style*='flex:1'] div").textContent.trim(),date=row.querySelector(":scope > span").textContent;const person=document.createElement("span");person.className="ios-contact-avatar";person.innerHTML=avatar(name,name==="Jungwon"?"#7794c7":name==="Jake"?"#dc8f70":name==="Sunoo"?"#697db6":"#879dcc");row.prepend(person);const text=row.querySelector("div[style*='flex:1']");text.firstElementChild.classList.add("ios-contact-name");const info=row.querySelector("button");info.classList.add("ios-info");info.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></svg>';});tabs.classList.add("ios-phone-tabs");tabs.querySelectorAll("button").forEach(btn=>{const name=btn.textContent.trim().replace(/^[^A-Za-z]+/,"");const icons={Favorites:'<path d="m12 2 3 6 7 .9-5 4.8 1.2 7L12 17.4 5.8 21l1.2-7-5-4.8L9 8z"/>',Recents:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',Contacts:'<circle cx="12" cy="8" r="3"/><path d="M5 20c.5-4 3-6 7-6s6.5 2 7 6"/>',Keypad:'<circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/>',Voicemail:'<path d="M8 17H6a5 5 0 1 1 5-5v5h2v-5a5 5 0 1 1 5 5h-2"/>'};btn.innerHTML='<svg viewBox="0 0 24 24">'+(icons[name]||"")+'</svg><span>'+name+'</span>';if(name==="Recents")btn.classList.add("active");});};})();</script><script>
 
-// INSTAGRAM APP UI ENHANCEMENTS(
-function(){const prior=window.openApp;window.openApp=function(id){const screen=document.querySelector(".screen");screen.classList.toggle("instagram-screen",id==="instagram");prior(id);if(id!=="instagram")return;const body=document.getElementById("appbody");const create=body.querySelector('.ig-top .ig-left-actions button[aria-label="Create post"]');if(create)create.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>';const heart=body.querySelector(".ig-heart");if(heart)heart.innerHTML='<svg viewBox="0 0 24 24"><path d="M20.8 8.6c0 5.1-8.8 11.2-8.8 11.2S3.2 13.7 3.2 8.6A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.4Z"/></svg>';body.querySelectorAll(".ig-post-head").forEach(head=>{const more=head.querySelector(".ig-more");if(!more)return;more.innerHTML='<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';});body.querySelectorAll(".ig-actions button").forEach((button,index)=>{const icons=['<path d="M20.8 8.6c0 5.1-8.8 11.2-8.8 11.2S3.2 13.7 3.2 8.6A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.4Z"/>','<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.8-4.8a8.5 8.5 0 1 1 16.2-4.7Z"/>','<path d="m22 2-7 20-4-8-8-4Z"/><path d="M22 2 11 14"/>','<path d="M5 3h14v18l-7-4-7 4z"/>'];button.innerHTML='<svg viewBox="0 0 24 24">'+icons[index]+'</svg>';button.setAttribute("aria-label",["Like","Comment","Share","Save"][index]||"Action")});const nav=body.querySelector(".ig-bottom");if(nav)nav.querySelectorAll(".ig-nav-icon").forEach((span,index)=>{const icons=['<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/><path d="M10 21v-7h4v7z" fill="#fff" stroke="none"/>','<rect x="3" y="3" width="18" height="18" rx="5"/><path d="m10 8 6 4-6 4z"/>','<path d="m3 4 18-1-6 18-3-8z"/><path d="m12 13 9-10"/>','<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>'];span.innerHTML='<svg viewBox="0 0 24 24">'+icons[index]+'</svg>'});};})();</script><script>
+// INSTAGRAM APP UI ENHANCEMENTS
+(function(){const prior=window.openApp;window.openApp=function(id){const screen=document.querySelector(".screen");screen.classList.toggle("instagram-screen",id==="instagram");prior(id);if(id!=="instagram")return;const body=document.getElementById("appbody");const create=body.querySelector('.ig-top .ig-left-actions button[aria-label="Create post"]');if(create)create.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>';const heart=body.querySelector(".ig-heart");if(heart)heart.innerHTML='<svg viewBox="0 0 24 24"><path d="M20.8 8.6c0 5.1-8.8 11.2-8.8 11.2S3.2 13.7 3.2 8.6A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.4Z"/></svg>';body.querySelectorAll(".ig-post-head").forEach(head=>{const more=head.querySelector(".ig-more");if(!more)return;more.innerHTML='<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';});body.querySelectorAll(".ig-actions button").forEach((button,index)=>{const icons=['<path d="M20.8 8.6c0 5.1-8.8 11.2-8.8 11.2S3.2 13.7 3.2 8.6A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.4Z"/>','<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.8-4.8a8.5 8.5 0 1 1 16.2-4.7Z"/>','<path d="m22 2-7 20-4-8-8-4Z"/><path d="M22 2 11 14"/>','<path d="M5 3h14v18l-7-4-7 4z"/>'];button.innerHTML='<svg viewBox="0 0 24 24">'+icons[index]+'</svg>';button.setAttribute("aria-label",["Like","Comment","Share","Save"][index]||"Action")});const nav=body.querySelector(".ig-bottom");if(nav)nav.querySelectorAll(".ig-nav-icon").forEach((span,index)=>{const icons=['<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/><path d="M10 21v-7h4v7z" fill="#fff" stroke="none"/>','<rect x="3" y="3" width="18" height="18" rx="5"/><path d="m10 8 6 4-6 4z"/>','<path d="m3 4 18-1-6 18-3-8z"/><path d="m12 13 9-10"/>','<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>'];span.innerHTML='<svg viewBox="0 0 24 24">'+icons[index]+'</svg>'});};})();
 
 // INSTAGRAM HOME NAVIGATION FIX  
 (function(){const prior=window.openApp;window.openApp=function(id){prior(id);if(id==="instagram"){const b=document.querySelector('.ig-bottom button[aria-label="Home"]');if(b)b.onclick=()=>window.openApp("instagram")}}})();</script><script>
