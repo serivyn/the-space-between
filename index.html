@@ -4419,7 +4419,7 @@ function openChat(source,name,openLatest=false){const d=chats[name];if(!d){notif
       footer =
         '<div class="choice-list" id="story-goodbye-reply">' +
           '<div class="choice-prompt">Reply to ' + name + '</div>' +
-          '<button type="button" onclick="sendStoryGoodbyeReply(\'' +
+          '<button type="button" onclick="window.sendStoryGoodbyeReply(\'' +
             name + '\')">' +
             formatChatText(fixedReply) +
           '</button></div>';
