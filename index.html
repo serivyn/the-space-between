@@ -4698,9 +4698,12 @@ function sendStoryGoodbyeReply(name) {
   } catch (e) {}
 
   
+ 
   addStoryV1Line(name, "out", choice);
 
-  // Remove the reply button immediately
+  checkStoryEndingReply(name, messages);
+
+  // REMOVE THE ENTIRE REPLY SECTION
   const replyButton = document.getElementById(
     "story-goodbye-reply"
   );
@@ -4709,9 +4712,14 @@ function sendStoryGoodbyeReply(name) {
     replyButton.remove();
   }
 
-  checkStoryEndingReply(name, messages);
+  // Extra safeguard: remove any remaining reply button
+  document.querySelectorAll(
+    '#story-goodbye-reply button'
+  ).forEach(button => {
+    button.disabled = true;
+    button.remove();
+  });
 
-}
 
 window.sendStoryGoodbyeReply = sendStoryGoodbyeReply;
 
