@@ -4562,33 +4562,66 @@ Won 🤍`
 
   return email;
 }
+
 function checkStoryEndingReply(name,messages){
-  const ending=window.storyV1PhotoEnding;
+  const ending = window.storyV1PhotoEnding;
 
-  if(!ending||ending.path==="self")return;
-  if(ending.rewardNotified)return;
-  if(name!==ending.sender)return;
+  console.log("ENDING REPLY CHECK", {
+    name,
+    path: ending?.path,
+    sender: ending?.sender,
+    rewardNotified: ending?.rewardNotified,
+    message: ending?.message,
+    messages
+  });
 
-  const goodbyeReceived=messages.some(message=>
-    message[0]==="in"&&message[1]===ending.message
+  if(!ending || ending.path === "self") {
+    console.log("STOP: No ending or self path");
+    return;
+  }
+
+  if(ending.rewardNotified) {
+    console.log("STOP: Reward already notified");
+    return;
+  }
+
+  if(name !== ending.sender) {
+    console.log("STOP: Sender mismatch", name, ending.sender);
+    return;
+  }
+
+  const goodbyeReceived = messages.some(message =>
+    message[0] === "in" &&
+    message[1] === ending.message
   );
 
-  if(!goodbyeReceived)return;
+  if(!goodbyeReceived) {
+    console.log("STOP: Goodbye not found");
+    return;
+  }
 
-  const email=unlockStoryEmailReward();
-  if(!email)return;
+  const email = unlockStoryEmailReward();
 
-  ending.rewardNotified=true;
+  if(!email) {
+    console.log("STOP: No reward email returned");
+    return;
+  }
 
-  try{
+  console.log("REWARD EMAIL CREATED", email);
+
+  ending.rewardNotified = true;
+
+  try {
     localStorage.setItem(
       endingStorageKey,
       JSON.stringify(ending)
     );
-  }catch(e){}
+  } catch(e) {}
 
   showGmailRewardBanner(email);
+  console.log("GMAIL REWARD BANNER CALLED");
 }
+
   
 // DATE, TIME & STATUS BAR
 const now=new Date();document.getElementById('date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});function updateStatusTime(){const d=new Date(),value=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});document.getElementById('status-time').textContent=value;const lockTime=document.getElementById('lock-time');if(lockTime)lockTime.textContent=value}updateStatusTime();updateCalendarDates();setInterval(updateStatusTime,10000);
