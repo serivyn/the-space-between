@@ -4650,7 +4650,59 @@ function checkStoryEndingReply(name, messages) {
   console.log("GMAIL REWARD BANNER CALLED", email);
 }
 
-  
+
+function sendStoryGoodbyeReply(name) {
+  let ending = window.storyV1PhotoEnding;
+
+  if (!ending || !ending.path || !ending.sender || !ending.message) {
+    try {
+      ending = JSON.parse(
+        localStorage.getItem(endingStorageKey) || "null"
+      );
+      if (ending) window.storyV1PhotoEnding = ending;
+    } catch (e) {
+      return;
+    }
+  }
+
+  if (!ending || ending.sender !== name) return;
+  if (ending.path === "self") return;
+  if (ending.replySent) return;
+
+  const messages = name === "Jake"
+    ? jakeDynamicMessages
+    : name === "Jungwon"
+      ? jungwonDynamicMessages
+      : null;
+
+  if (!messages) return;
+
+  const goodbyeReceived = messages.some(message =>
+    message[0] === "in" &&
+    message[1] === ending.message
+  );
+
+  if (!goodbyeReceived) return;
+
+  const choice = name === "Jake"
+    ? "i will. and jake? thank you for everything. really."
+    : "i'll keep this with me. thank you for being you, won.";
+
+  ending.replySent = true;
+
+  try {
+    localStorage.setItem(
+      endingStorageKey,
+      JSON.stringify(ending)
+    );
+  } catch (e) {}
+
+  addStoryV1Line(name, "out", choice);
+  checkStoryEndingReply(name, messages);
+}
+
+window.sendStoryGoodbyeReply = sendStoryGoodbyeReply;
+
 // DATE, TIME & STATUS BAR
 const now=new Date();document.getElementById('date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});function updateStatusTime(){const d=new Date(),value=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});document.getElementById('status-time').textContent=value;const lockTime=document.getElementById('lock-time');if(lockTime)lockTime.textContent=value}updateStatusTime();updateCalendarDates();setInterval(updateStatusTime,10000);
 
