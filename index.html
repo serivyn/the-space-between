@@ -4448,13 +4448,25 @@ function showGmailRewardBanner(email){
     t.onclick=null;
     t.onkeydown=null;
     t.style.cursor='';
-    openApp('gmail');
-    setTimeout(function(){
-      const index=(window.gmailEmails||[]).findIndex(mail=>
-        mail.subject===email.subject&&mail.sender===email.sender
-      );
-      if(index!==-1)openGmailMessage(index);
-    },100);
+   
+openApp('gmail');
+
+requestAnimationFrame(function(){
+  requestAnimationFrame(function(){
+    const index = (window.gmailEmails || []).findIndex(mail =>
+      mail.subject === email.subject &&
+      mail.sender === email.sender
+    );
+
+    if(index !== -1){
+      openGmailMessage(index);
+    } else {
+      console.warn('Story reward email not found:', email);
+      console.log('Current Gmail inbox:', window.gmailEmails);
+    }
+  });
+});
+
   };
 
   t.onclick=openEmail;
