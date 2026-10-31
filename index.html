@@ -3016,6 +3016,7 @@ function openApp(id){
   view.classList.toggle('x-theme',id==='x');
   
   document.getElementById('app-title').textContent=({
+    gmail: 'Gmail'
     kakao:'Chats',
     instagram:'Instagram',
     messages:'Messages',
@@ -4084,7 +4085,8 @@ try{
 }catch(e){}
 
 window.gmailEmails = emails;
-
+console.log('GMAIL INBOX:', window.gmailEmails);
+console.log('STORY ENDING:', window.storyV1PhotoEnding);
 
 body.innerHTML = `
   <div style="
