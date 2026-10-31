@@ -4719,12 +4719,14 @@ const choice = name === "Jake"
 
   ending.replySent = true;
 
-  try {
-    localStorage.setItem(
-      endingStorageKey,
-      JSON.stringify(ending)
-    );
-  } catch (e) {}
+  
+try {
+  localStorage.setItem(
+    window.storyEndingStorageKey,
+    JSON.stringify(ending)
+  );
+} catch (e) {}
+
 
   
  
