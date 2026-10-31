@@ -3208,22 +3208,6 @@ jake`
 
 render('photos');
 
-
-  
-} else if (deletedJake) {
-  receivePhotoDeletionMessage(
-    'Jake', 
-    `hey, pretty girl. funny how this all started because you forgot your umbrella. you know what's a little unfair? i met you because of that one little accident, and somehow i ended up wishing i'd met you years earlier. maybe then, things would've been a little simpler. but i guess we don't get to choose when we meet the people we end up caring about.
-i'll miss our coffees, the bookstore afternoons, and how we'd lose track of time just talking about nothing and everything.
-i won't pretend i'm not sad. i liked you more than i planned to. but you don't owe me a different answer just because i care about you.
-thank you for letting me be part of your days.
-take care, pretty girl. and bring an umbrella next time, okay? :)
-jake`);
-}
-
-
-  render('photos');
-
 }
 function openCameraRollPhoto(photo){if(!Array.isArray(window.cameraRollOrder)){try{window.cameraRollOrder=JSON.parse(localStorage.getItem('cameraRollOrderV6')||'[]')}catch(e){window.cameraRollOrder=[]}}window.cameraRollIndex=Math.max(0,window.cameraRollOrder.indexOf(photo));showCameraRollPhoto()}
 function stepCameraRollPhoto(direction){const total=window.cameraRollOrder?.length||0;if(!total)return;window.cameraRollIndex=(window.cameraRollIndex+direction+total)%total;showCameraRollPhoto()}
