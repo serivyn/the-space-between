@@ -4544,51 +4544,54 @@ Won 🤍`
   return email;
 }
 
-function checkStoryEndingReply(name,messages){
-  const ending = window.storyV1PhotoEnding;
+
+function checkStoryEndingReply(name, messages) {
+  let ending = window.storyV1PhotoEnding;
+
+  // RECOVER SAVED ENDING IF NEEDED
+  if (!ending || !ending.path || !ending.sender || !ending.message) {
+    try {
+      ending = JSON.parse(
+        localStorage.getItem(endingStorageKey) || "null"
+      );
+
+      if (ending) {
+        window.storyV1PhotoEnding = ending;
+      }
+    } catch (e) {
+      console.error("Could not recover story ending:", e);
+      return;
+    }
+  }
 
   console.log("ENDING REPLY CHECK", {
     name,
     path: ending?.path,
     sender: ending?.sender,
     rewardNotified: ending?.rewardNotified,
-    message: ending?.message,
-    messages
+    message: ending?.message
   });
 
-  if(!ending || ending.path === "self") {
-    console.log("STOP: No ending or self path");
-    return;
-  }
-
-  if(ending.rewardNotified) {
-    console.log("STOP: Reward already notified");
-    return;
-  }
-
-  if(name !== ending.sender) {
-    console.log("STOP: Sender mismatch", name, ending.sender);
-    return;
-  }
+  if (!ending || ending.path === "self") return;
+  if (ending.sender !== name) return;
+  if (ending.rewardNotified) return;
 
   const goodbyeReceived = messages.some(message =>
     message[0] === "in" &&
     message[1] === ending.message
   );
 
-  if(!goodbyeReceived) {
-    console.log("STOP: Goodbye not found");
+  if (!goodbyeReceived) {
+    console.warn("STOP: Goodbye not found", ending.message);
     return;
   }
 
   const email = unlockStoryEmailReward();
 
-  if(!email) {
-    console.log("STOP: No reward email returned");
+  if (!email) {
+    console.warn("STOP: No reward email returned");
     return;
   }
-
-  console.log("REWARD EMAIL CREATED", email);
 
   ending.rewardNotified = true;
 
@@ -4597,10 +4600,11 @@ function checkStoryEndingReply(name,messages){
       endingStorageKey,
       JSON.stringify(ending)
     );
-  } catch(e) {}
+  } catch (e) {}
 
   showGmailRewardBanner(email);
-  console.log("GMAIL REWARD BANNER CALLED");
+
+  console.log("GMAIL REWARD BANNER CALLED", email);
 }
 
   
