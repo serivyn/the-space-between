@@ -4403,13 +4403,14 @@ function openChat(source,name,openLatest=false){const d=chats[name];if(!d){notif
     }
   }
 
-  if (
-    (name === "Jake" || name === "Jungwon") &&
-    ending &&
-    ending.sender === name &&
-    ending.path !== "self" &&
-    !ending.replySent
-  ) {
+ 
+if (
+  (name === "Jake" || name === "Jungwon" || name === "Sunoo") &&
+  ending &&
+  ending.sender === name &&
+  !ending.replySent
+) {
+
     const goodbyeReceived = messages.some(message =>
       message[0] === "in" &&
       message[1] === ending.message
