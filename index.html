@@ -4065,24 +4065,28 @@ your won`,
 ];
 
 
-try{
-  const ending=JSON.parse(
-    localStorage.getItem(endingStorageKey)||"null"
+
+try {
+  const ending = JSON.parse(
+    localStorage.getItem("space-between-photo-ending-v1") || "null"
   );
 
-  const reward=ending?.rewardEmail;
+  const reward = ending?.rewardEmail;
 
-  if(ending?.rewardNotified&&reward){
-    const exists=emails.some(mail=>
-      mail.sender===reward.sender&&
-      mail.subject===reward.subject
+  if (ending?.rewardNotified && reward) {
+    const exists = emails.some(mail =>
+      mail.sender === reward.sender &&
+      mail.subject === reward.subject
     );
 
-    if(!exists){
+    if (!exists) {
       emails.unshift(reward);
     }
   }
-}catch(e){}
+} catch (e) {
+  console.error("Gmail reward loading failed:", e);
+}
+
 
 window.gmailEmails = emails;
 
