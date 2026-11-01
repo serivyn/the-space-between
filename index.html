@@ -3172,7 +3172,7 @@ function showCameraRollPhoto(){
   if(!photo)return;
 
   document.getElementById('appview').classList.add('photo-viewer-active');
-
+alert(document.getElementById('appview').className);
 
   const isJake=photo==='HVKECp5bgAAbQFV'||photo==='HVcE8NEaoAAxHIQ';
   const src='images/'+(isJake?'jake-photo-':'jungwon-photo-')+photo+'.jpeg';
