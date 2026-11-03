@@ -3046,6 +3046,7 @@ const smsList=[['ENHYPEN','Have you voted?','now','E'],['Jungwon',"are you still
 ========================================= */
 function openApp(id){
   active=id;
+  document.querySelector('.screen').dataset.activeApp=id;
   document.getElementById('back-button').textContent='‹ Home';
   home.style.display='none';
   view.classList.add('open');
